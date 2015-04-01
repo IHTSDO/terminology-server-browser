@@ -90,17 +90,37 @@
                         $("taskDdl").val(options.taskId);
                     }
                     var taskChanged = function(){
-                        var taskId = $('#taskDdl').val();
-                        options.taskId = taskId;
-                        options.taskSet = true; 
-                        options.release = "MAIN/tasks/" + options.taskId;
-                        var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), 138875005, options);
-                        var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-                        var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
+                        if($taskDdl.val() == "Master")
+                        {
+                            options.release = "MAIN";
+                            options.taskId = null;
+                            options.taskSet = false;
+                            var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), 138875005, options);
+                            var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
+                            var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
 
-                        cdPanel.subscribe(tpt);
-                        cdPanel.subscribe(searchP);
-                        cdPanel.setupCanvas();
+                            cdPanel.subscribe(tpt);
+                            cdPanel.subscribe(searchP);
+                            cdPanel.setupCanvas();
+                        }
+                        else if($taskDdl.val() == "default")
+                        {
+                            
+                        }
+                        else{
+                            var taskId = $('#taskDdl').val();
+                            options.taskId = taskId;
+                            options.taskSet = true; 
+                            options.release = "MAIN/tasks/" + options.taskId;
+                            var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), 138875005, options);
+                            var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
+                            var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
+
+                            cdPanel.subscribe(tpt);
+                            cdPanel.subscribe(searchP);
+                            cdPanel.setupCanvas();
+                        }
+                        
                     }
                     $("#taskDdl").on("change", function(event) { 
                          taskChanged(this);
@@ -135,6 +155,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
                     <select style="margin-top:18px; margin-left:20px;" id="taskDdl" on-change="taskChanged()">
                             <option value="default">Select a Task</option>
+                            <option value="Master">Master</option>
                         </select>                
                     <ul class="nav navbar-nav navbar-right">
                         <img class="pull-right visible-lg" src="img/newlogo.png" alt="IHTSDO delivering SNOMED, the global clinical terminology">

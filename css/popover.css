@@ -437,6 +437,7 @@ html {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    z-index:1000;
 }
 #popoverContent .last {
     border-bottom: none;
@@ -477,4 +478,8 @@ html {
 #popoverHeader,
 #popoverContent {
     pointer-events: auto;
+}
+
+.popover-content {
+    z-index:1000;
 }

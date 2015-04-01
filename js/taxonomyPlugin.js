@@ -134,7 +134,7 @@ function taxonomyPanel(divElement, conceptId, options) {
 //        });
 
         $("#" + panel.divElement.id + "-resetButton").click(function() {
-            panel.setToConcept(panel.default.conceptId);
+            initialize();
         });
 
         $("#" + panel.divElement.id + "-apply-button").click(function() {
@@ -153,7 +153,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                         i18n_no_terms = "No terms"
                     }
                     if (panel.history.length == 0) {
-                        historyHtml = historyHtml + '<div class="text-center text-muted" style="width:100%"><em>'+ i18n_no_terms + '</span>...</em></div>';
+                        historyHtml = historyHtml + '<div class="text-center text-muted" style="width:100%"><em>'+ "No Terms" + '</span>...</em></div>';
                     }
                     historyHtml = historyHtml + '<table>';
                     var reversedHistory = panel.history.slice(0);
