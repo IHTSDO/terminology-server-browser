@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 #!/bin/sh -e
+=======
+#!/bin/sh -e
+>>>>>>> branch 'master' of https://github.com/IHTSDO/terminology-server-browser.git
