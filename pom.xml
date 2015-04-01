@@ -6,6 +6,7 @@
 
 	<groupId>org.ihtsdo.otf</groupId>
 	<artifactId>snow-owl-browser</artifactId>
+	<version>0.2-SNAPSHOT</version>
 	<name>Snomed Refset Web Front End</name>
 	<description>Snomed Snow Owl Terminology Server Web Front End</description>
 	<url>https://term.ihtsdotools.org/</url>
@@ -64,5 +65,5 @@
 			<url>https://maven.ihtsdotools.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-	<version>0.1</version>
+	
 </project>
