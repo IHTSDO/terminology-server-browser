@@ -3,7 +3,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>org.ihtsdo.otf</groupId>
 	<artifactId>terminology-server-browser</artifactId>
 	<version>0.2-SNAPSHOT</version>
@@ -65,5 +64,4 @@
 			<url>https://maven.ihtsdotools.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-	
 </project>

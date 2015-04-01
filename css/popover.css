@@ -479,7 +479,10 @@ html {
 #popoverContent {
     pointer-events: auto;
 }
+<<<<<<< HEAD
 
 .popover-content {
     z-index:1000;
 }
+=======
+>>>>>>> 54645d5d4313b0552b7a1634f391c580924012d1
