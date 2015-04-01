@@ -1,0 +1,53 @@
+<div style="margin-top: 10px" class="panel panel-default">
+    <div class="panel-body">
+        <table id="tableFavs" style="display: none;">
+            <thead>
+                <tr>
+                    <td>Term</td>
+                    <td>Concept ID</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each concepts}}
+                    <tr>
+                        <td>{{fsn}}</td>
+                        <td>{{conceptId}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <table id="" class="table table-hover table-bordered">
+            <tbody>
+            {{#if_eq concepts.length 0}}
+                <tr>
+                    <td>
+                        <span class="text-muted"> No favorites</span>
+                    </td>
+                </tr>
+            {{else}}
+                {{#each concepts}}
+                    <tr>
+                        <td>
+                            <a class="fav-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{fsn}}' style="color: inherit; text-decoration: inherit;">
+                                <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{fsn}}'>&nbsp;&nbsp;</span>
+                                {{#hasCountryIcon module}}
+                                    <div class="phoca-flagbox" style="width:22px;height:22px">
+                                        <span class="phoca-flag {{countryIcon module}}"></span>
+                                    </div>
+                                {{/hasCountryIcon}}
+                                {{fsn}}
+                            </a>
+                        </td>
+                        <td>{{conceptId}}
+                            <a href="javascript:void(0);" style="text-decoration: inherit;">
+                                <span data-concept-id='{{conceptId}}' class="pull-right glyphicon glyphicon-remove-circle"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {{/each}}
+            {{/if_eq}}
+            </tbody>
+        </table>
+        <a download="favorites.xls" id="exportFavsXls" href="javascript:void(0);"><button class="btn btn-default">Export favorites in XLS <img style="height: 23px;" src="img/excel.png"></button></a>
+    </div>
+</div>

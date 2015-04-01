@@ -1,0 +1,34 @@
+{{#if result}}
+    {{#if_gre "0" result.length}}
+        <tr><td class='text-muted'><span data-i18n-id="i18n_no_results" class="i18n">{{i18n "i18n_no_results" "No results"}}</span></td></tr>
+    {{else}}
+        {{#each result}}
+            <tr class='resultRow selectable-row{{#if_eq active false}} danger{{else}}{{#if_eq concept.active false}} danger{{/if_eq}}{{/if_eq}}'>
+                <td class='col-md-6'>
+                    <div class='result-item' data-module="{{concept.moduleId}}" data-concept-id='{{concept.conceptId}}' data-term='{{term}}'>
+                        {{#if_eq concept.definitionStatus "PRIMITIVE"}}
+                            <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{concept.moduleId}}" data-concept-id="{{concept.conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                        {{else}}
+                            <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{concept.moduleId}}" data-concept-id="{{concept.conceptId}}" data-term="{{term}}">&equiv;</span>&nbsp;&nbsp;
+                        {{/if_eq}}
+                        {{#hasCountryIcon module}}
+                            <div class="phoca-flagbox" style="width:20px;height:20px">
+                                <span class="phoca-flag {{countryIcon module}}"></span>
+                            </div>
+                        {{/hasCountryIcon}}
+                        <a href='javascript:void(0);' style='color: inherit;text-decoration: inherit;' data-module="{{concept.moduleId}}" data-concept-id='{{concept.conceptId}}' data-term='{{term}}'>{{term}}</a>
+                    </div>
+                </td>
+                <td class='text-muted small-text col-md-6 result-item' data-module="{{concept.moduleId}}" data-concept-id='{{concept.conceptId}}' data-term='{{term}}'>{{concept.fsn}}
+                </td>
+            </tr>
+        {{/each}}
+        {{#if_gr remaining 0}}
+            <tr class='more-row'><td colspan='2' class='text-center'><button class='btn btn-link' id='{{divElementId}}-more'><span data-i18n-id="i18n_load" class="i18n">{{i18n "i18n_load" "Load"}}</span> {{returnLimit}} <span data-i18n-id="i18n_more" class="i18n">{{i18n "i18n_more" "more"}}</span> ({{remaining}} <span data-i18n-id="i18n_remaining_server" class="i18n">{{i18n "i18n_remaining_server" "remaining on server"}}</span>)</button></td></tr>
+        {{else}}
+            <tr class='more-row'><td colspan='2' class='text-center text-muted'><span data-i18n-id="i18n_all_res" class="i18n">{{i18n "i18n_all_res" "All"}}</span> {{result.details.total}} <span data-i18n-id="i18n_results_displayed" class="i18n">{{i18n "i18n_results_displayed" "results are displayed"}}</span></td></tr>
+        {{/if_gr}}
+    {{/if_gre}}
+{{else}}
+    <tr><td class='text-muted'><span data-i18n-id="i18n_no_results" class="i18n">{{i18n "i18n_no_results" "No results"}}</span></td></tr>
+{{/if}}
