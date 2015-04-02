@@ -154,7 +154,8 @@ function searchPanel(divElement, options) {
         $("#" + panel.divElement.id + "-historyButton").click(function (event) {
             $("#" + panel.divElement.id + "-historyButton").popover({
                 trigger: 'manual',
-                placement: 'bottomRight',
+                placement: 'bottom',
+                template: '<div class="popover" style="z-index:1000; position:fixed;" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
                 html: true,
                 content: function () {
                     historyHtml = '<div style="height:100px;overflow:auto;">';

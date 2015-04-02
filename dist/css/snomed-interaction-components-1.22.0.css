@@ -4,6 +4,9 @@
 .drop-validTarget {
     background-color: lightblue;
 }
+.badge {
+    display:none;
+}
 /*
  * Phoca Flags 1.0.0 by Jan Pavelka
  * Copyright 2013 Jan Pavelka ( http://www.phoca.cz )
@@ -398,6 +401,10 @@
 /*  Colors */
 html {
     font-size: 100%;
+}
+
+.popover {
+    z-index:1000;
 }
 .borderBox {
     -moz-box-sizing: border-box;
@@ -834,7 +841,6 @@ html {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    z-index:1000;
 }
 #popoverContent .last {
     border-bottom: none;
@@ -876,13 +882,10 @@ html {
 #popoverContent {
     pointer-events: auto;
 }
-<<<<<<< HEAD
 
 .popover-content {
     z-index:1000;
 }
-=======
->>>>>>> 54645d5d4313b0552b7a1634f391c580924012d1
 
 /*
 To change this license header, choose License Headers in Project Properties.
@@ -1047,6 +1050,9 @@ and open the template in the editor.
 @-webkit-keyframes spin {
     from { -webkit-transform: rotate(0deg);}
     to { -webkit-transform: rotate(359deg);}
+}
+.badge {
+    display:none;
 }
 .icon-spin {
     animation: 1.5s linear 0s normal none infinite spin;
