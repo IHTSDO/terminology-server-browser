@@ -310,7 +310,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId, function (result) {
+        xhr = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId, function (result) {
 
         }).done(function (result) {
             var firstMatch = result;
@@ -333,7 +333,6 @@ function conceptDetails(divElement, conceptId, options) {
                 options: options,
                 firstMatch: firstMatch,
                 divElementId: panel.divElement.id,
-                edition: options.edition,
                 release: options.release,
                 server: options.serverUrl.substr(0, options.serverUrl.length - 10),
                 langRefset: panel.options.langRefset,
@@ -1029,7 +1028,7 @@ function conceptDetails(divElement, conceptId, options) {
             }
             conceptRequested = 0;
 
-//            membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/members";
+//            membersUrl = options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId + "/members";
 
         }).fail(function () {
             panel.relsPId = divElement.id + "-rels-panel";
@@ -1066,7 +1065,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren.abort();
             console.log("aborting children call...");
         }
-        xhrChildren = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function (result) {
+        xhrChildren = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function (result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function (result) {
             // load relationships panel
@@ -1185,12 +1184,12 @@ function conceptDetails(divElement, conceptId, options) {
 
     this.getReferences = function (conceptId){
         $("#references-" + panel.divElement.id + "-accordion").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        console.log(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/references");
+        console.log(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/references");
         if (xhrReferences != null) {
             xhrReferences.abort();
             console.log("aborting references call...");
         }
-        xhrReferences = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/references?form=" + panel.options.selectedView, function(result) {
+        xhrReferences = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/references?form=" + panel.options.selectedView, function(result) {
 
         }).done(function(result){
             Handlebars.registerHelper('if_gr', function(a,b, opts) {
@@ -1282,7 +1281,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren.abort();
             console.log("aborting children call...");
         }
-        xhrChildren = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
+        xhrChildren = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
         }).done(function(result) {
             result.sort(function(a, b) {
                 if (a.fsn.toLowerCase() < b.fsn.toLowerCase())
@@ -1360,7 +1359,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrParents.abort();
             console.log("aborting children call...");
         }
-        xhrParents = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents", function(result) {
+        xhrParents = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents", function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
             result.sort(function(a, b) {
@@ -1430,7 +1429,7 @@ function conceptDetails(divElement, conceptId, options) {
     }
 
     this.loadMembers = function(returnLimit, skipTo, paginate){
-        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/members?limit=" + returnLimit;
+        var membersUrl = options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId + "/members?limit=" + returnLimit;
         if (skipTo > 0){
             membersUrl = membersUrl + "&skip=" + skipTo;
         }else{
@@ -3384,13 +3383,7 @@ function searchPanel(divElement, options) {
                 if (isNumber(t)) {
                     if (t.substr(-2, 1) == "0") {
                         // Search conceptId
-                        if(options.taskSet)
-                        {
-                            var url = options.serverUrl + "/" + options.edition + "/" + options.release + "/tasks/" + options.taskId + "/concepts/" + t;
-                        }
-                        else{
-                            var url = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + t;
-                        }
+                        var url = options.serverUrl + "/" + options.release + "/concepts/" + t;
                         xhr = $.getJSON(url,function (result) {
 
                         }).done(function (result) {
@@ -3456,7 +3449,7 @@ function searchPanel(divElement, options) {
                             $('#' + panel.divElement.id + '-searchBar2').html("");
                         });
                     } else if (t.substr(-2, 1) == "1") {
-                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions/" + t,function (result) {
+                        xhr = $.getJSON(options.serverUrl + "/" + options.release + "/descriptions/" + t,function (result) {
 
                         }).done(function (result) {
                             console.log(result);
@@ -3511,7 +3504,7 @@ function searchPanel(divElement, options) {
                         t = t.replace(")","");
                     }
                     var startTime = Date.now();
-                    var searchUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions?query=" + encodeURIComponent(t) + "&limit=50";
+                    var searchUrl = options.serverUrl + "/" + options.release + "/descriptions?query=" + encodeURIComponent(t) + "&limit=50";
                     if (panel.options.semTagFilter != "none") {
                         searchUrl = searchUrl + "&semanticFilter=" + panel.options.semTagFilter;
                     }
@@ -4609,7 +4602,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var selectedLabel = $(event.target).attr('data-term');
                 panel.history.push({term: selectedLabel, conceptId: selectedId, time: time});
                 if (typeof selectedId != "undefined") {
-                    $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
+                    $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
                         // done
                     }).done(function(result) {
                         panel.setupParents(result, {conceptId: selectedId, fsn: selectedLabel, definitionStatus: "Primitive", module: selectedModule});
@@ -4677,7 +4670,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
         }
 
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
         }).done(function(result) {
             result.sort(function(a, b) {
                 if (a.fsn.toLowerCase() < b.fsn.toLowerCase())
@@ -4749,7 +4742,7 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.wrapInParents = function(conceptId, liItem) {
         var topUl = $("#" + panel.divElement.id + "-panelBody").find('ul:first');
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
             // done
         }).done(function(parents) {
             if (parents.length > 0) {
@@ -4838,14 +4831,14 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.setToConcept = function(conceptId, term, definitionStatus, module) {
         $("#" + panel.divElement.id + "-panelBody").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form="+panel.options.selectedView, function(result) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents?form="+panel.options.selectedView, function(result) {
             // done
         }).done(function(result) {
             if (definitionStatus != "Primitive" && definitionStatus != "Fully defined") {
                 definitionStatus = "Primitive";
             }
             if (typeof term == "undefined"){
-                $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(res){
+                $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(res){
                     term = res.fsn;
                     panel.setupParents(result, {conceptId: conceptId, fsn: term, definitionStatus: definitionStatus, module: module});
                 });
@@ -4996,7 +4989,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(result) {
+        xhr = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(result) {
 
         }).done(function(result) {
             panel.setToConcept(conceptId, result.fsn);
@@ -5126,7 +5119,7 @@ function refsetPanel(divElement, options) {
     panel.loadRefsets();
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate){
-        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/members?limit=" + returnLimit;
+        var membersUrl = options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/members?limit=" + returnLimit;
         if (skipTo > 0){
             membersUrl = membersUrl + "&skip=" + skipTo;
         }else{

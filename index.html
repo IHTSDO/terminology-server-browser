@@ -63,8 +63,7 @@
 			function initialize() {
 				// Example: common options object
 				var options = {
-					serverUrl: "/snowowl",
-					edition: "snomed-ct",
+					serverUrl: "/snowowl/snomed-ct/v2",
                     release: "MAIN",
 					selectedView: "inferred",
 					displayChildren: false,
@@ -77,52 +76,33 @@
 					searchLang: "english",
 					diagrammingMarkupEnabled: false,
 					statusSearchFilter: "activeOnly",
-					highlightByEffectiveTime: "false",
-                    taskSet: false,
-                    taskId: null
+					highlightByEffectiveTime: "false"
 				};
-                var getTaskList = $.getJSON(options.serverUrl + "/" + options.edition + "/" + "MAIN" + "/tasks").done(function(result) {
+                var getTaskList = $.getJSON(options.serverUrl + "/branches/MAIN/children").done(function(result) {
                     var $taskDdl = $('#taskDdl');
                     $.each(result.items, function() {
-                        $('<option>').val(this.taskId).text(this.description).appendTo($taskDdl);
+                        var relativePath = this.path.substring("MAIN/".length);
+
+                        // Find project branches.
+                        // Ignore sub-branches and release branches with format 2015-01-31
+                        if (relativePath.indexOf("/") == -1 && relativePath.match("\\d{4}-\\d{2}-\\d{2}") == null) {
+                            $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
+                        }
                     });
-                    if(options.taskSet == true){
-                        $("taskDdl").val(options.taskId);
-                    }
-                    var taskChanged = function(){
-                        if($taskDdl.val() == "Master")
-                        {
-                            options.release = "MAIN";
-                            options.taskId = null;
-                            options.taskSet = false;
-                            var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), 138875005, options);
-                            var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-                            var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
+                    $("taskDdl").val(options.release);
+                    var branchChanged = function(){
+                        var branchPath = $('#taskDdl').val();
+                        options.release = branchPath;
+                        var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), 138875005, options);
+                        var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
+                        var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
 
-                            cdPanel.subscribe(tpt);
-                            cdPanel.subscribe(searchP);
-                            cdPanel.setupCanvas();
-                        }
-                        else if($taskDdl.val() == "default")
-                        {
-                            
-                        }
-                        else{
-                            var taskId = $('#taskDdl').val();
-                            options.taskId = taskId;
-                            options.taskSet = true; 
-                            options.release = "MAIN/tasks/" + options.taskId;
-                            var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), 138875005, options);
-                            var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-                            var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
-
-                            cdPanel.subscribe(tpt);
-                            cdPanel.subscribe(searchP);
-                            cdPanel.setupCanvas();
-                        }
+                        cdPanel.subscribe(tpt);
+                        cdPanel.subscribe(searchP);
+                        cdPanel.setupCanvas();
                     }
                     $("#taskDdl").on("change", function(event) { 
-                         taskChanged(this);
+                         branchChanged(this);
                     });
                 });
                 
@@ -153,9 +133,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
                     <select style="margin-top:18px; margin-left:20px;" id="taskDdl" on-change="taskChanged()">
-                            <option value="default">Select a Task</option>
-                            <option value="Master">Master</option>
-                        </select>                
+                            <option value="MAIN">MAIN</option>
+                        </select>
                     <ul class="nav navbar-nav navbar-right">
                         <img class="pull-right visible-lg" src="img/newlogo.png" alt="IHTSDO delivering SNOMED, the global clinical terminology">
                     </ul>

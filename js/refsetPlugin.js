@@ -87,7 +87,7 @@ function refsetPanel(divElement, options) {
     panel.loadRefsets();
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate){
-        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/members?limit=" + returnLimit;
+        var membersUrl = options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/members?limit=" + returnLimit;
         if (skipTo > 0){
             membersUrl = membersUrl + "&skip=" + skipTo;
         }else{

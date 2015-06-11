@@ -342,7 +342,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var selectedLabel = $(event.target).attr('data-term');
                 panel.history.push({term: selectedLabel, conceptId: selectedId, time: time});
                 if (typeof selectedId != "undefined") {
-                    $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
+                    $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
                         // done
                     }).done(function(result) {
                         panel.setupParents(result, {conceptId: selectedId, fsn: selectedLabel, definitionStatus: "Primitive", module: selectedModule});
@@ -410,7 +410,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
         }
 
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
         }).done(function(result) {
             result.sort(function(a, b) {
                 if (a.fsn.toLowerCase() < b.fsn.toLowerCase())
@@ -482,7 +482,7 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.wrapInParents = function(conceptId, liItem) {
         var topUl = $("#" + panel.divElement.id + "-panelBody").find('ul:first');
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
             // done
         }).done(function(parents) {
             if (parents.length > 0) {
@@ -571,14 +571,14 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.setToConcept = function(conceptId, term, definitionStatus, module) {
         $("#" + panel.divElement.id + "-panelBody").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form="+panel.options.selectedView, function(result) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents?form="+panel.options.selectedView, function(result) {
             // done
         }).done(function(result) {
             if (definitionStatus != "Primitive" && definitionStatus != "Fully defined") {
                 definitionStatus = "Primitive";
             }
             if (typeof term == "undefined"){
-                $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(res){
+                $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(res){
                     term = res.fsn;
                     panel.setupParents(result, {conceptId: conceptId, fsn: term, definitionStatus: definitionStatus, module: module});
                 });
@@ -729,7 +729,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(result) {
+        xhr = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(result) {
 
         }).done(function(result) {
             panel.setToConcept(conceptId, result.fsn);

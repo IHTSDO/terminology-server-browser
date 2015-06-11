@@ -467,7 +467,7 @@ function searchPanel(divElement, options) {
                 if (isNumber(t)) {
                     if (t.substr(-2, 1) == "0") {
                         // Search conceptId
-                        var url = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + t;
+                        var url = options.serverUrl + "/" + options.release + "/concepts/" + t;
                         xhr = $.getJSON(url,function (result) {
 
                         }).done(function (result) {
@@ -533,7 +533,7 @@ function searchPanel(divElement, options) {
                             $('#' + panel.divElement.id + '-searchBar2').html("");
                         });
                     } else if (t.substr(-2, 1) == "1") {
-                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions/" + t,function (result) {
+                        xhr = $.getJSON(options.serverUrl + "/" + options.release + "/descriptions/" + t,function (result) {
 
                         }).done(function (result) {
                             console.log(result);
@@ -588,7 +588,7 @@ function searchPanel(divElement, options) {
                         t = t.replace(")","");
                     }
                     var startTime = Date.now();
-                    var searchUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions?query=" + encodeURIComponent(t) + "&limit=50";
+                    var searchUrl = options.serverUrl + "/" + options.release + "/descriptions?query=" + encodeURIComponent(t) + "&limit=50";
                     if (panel.options.semTagFilter != "none") {
                         searchUrl = searchUrl + "&semanticFilter=" + panel.options.semTagFilter;
                     }
