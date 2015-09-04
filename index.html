@@ -82,7 +82,7 @@
                     var $taskDdl = $('#taskDdl');
                     $.each(result.items, function() {
                         var relativePath = this.path.substring("MAIN/".length);
-
+                        $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
                         // Find project branches.
                         // Ignore sub-branches and release branches with format 2015-01-31
 //                        if (relativePath.indexOf("/") == -1 && relativePath.match("\\d{4}-\\d{2}-\\d{2}") == null) {
