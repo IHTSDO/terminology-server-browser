@@ -78,7 +78,7 @@
 					statusSearchFilter: "activeOnly",
 					highlightByEffectiveTime: "false"
 				};
-                var getTaskList = $.getJSON(options.serverUrl + "/branches/MAIN/children").done(function(result) {
+                var getTaskList = $.getJSON("/snowowl/snomed-ct/v2/branches/MAIN/children").done(function(result) {
                     var $taskDdl = $('#taskDdl');
                     $.each(result.items, function() {
                         var relativePath = this.path.substring("MAIN/".length);
