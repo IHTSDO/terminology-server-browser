@@ -162,10 +162,11 @@ function conceptDetails(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-historyButton").click(function(event) {
             $("#" + panel.divElement.id + "-historyButton").popover({
                 trigger: 'manual',
-                placement: 'bottomRight',
+                placement: 'left',
+                template: '<div class="popover" style="z-index:1000; position:fixed;" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
                 html: true,
                 content: function() {
-                    var historyHtml = '<div style="height:100px;overflow:auto;">';
+                    var historyHtml = '<div style="height:100px; z-index:1000; overflow:auto;">';
                     historyHtml = historyHtml + '<table>';
                     var reversedHistory = panel.history.slice(0);
                     reversedHistory.reverse();
@@ -309,7 +310,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId, function (result) {
+        xhr = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId, function (result) {
 
         }).done(function (result) {
             var firstMatch = result;
@@ -332,7 +333,6 @@ function conceptDetails(divElement, conceptId, options) {
                 options: options,
                 firstMatch: firstMatch,
                 divElementId: panel.divElement.id,
-                edition: options.edition,
                 release: options.release,
                 server: options.serverUrl.substr(0, options.serverUrl.length - 10),
                 langRefset: panel.options.langRefset,
@@ -1028,7 +1028,7 @@ function conceptDetails(divElement, conceptId, options) {
             }
             conceptRequested = 0;
 
-//            membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/members";
+//            membersUrl = options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId + "/members";
 
         }).fail(function () {
             panel.relsPId = divElement.id + "-rels-panel";
@@ -1065,7 +1065,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren.abort();
             console.log("aborting children call...");
         }
-        xhrChildren = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function (result) {
+        xhrChildren = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function (result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function (result) {
             // load relationships panel
@@ -1184,12 +1184,12 @@ function conceptDetails(divElement, conceptId, options) {
 
     this.getReferences = function (conceptId){
         $("#references-" + panel.divElement.id + "-accordion").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        console.log(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/references");
+        console.log(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/references");
         if (xhrReferences != null) {
             xhrReferences.abort();
             console.log("aborting references call...");
         }
-        xhrReferences = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/references?form=" + panel.options.selectedView, function(result) {
+        xhrReferences = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/references?form=" + panel.options.selectedView, function(result) {
 
         }).done(function(result){
             Handlebars.registerHelper('if_gr', function(a,b, opts) {
@@ -1281,7 +1281,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren.abort();
             console.log("aborting children call...");
         }
-        xhrChildren = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
+        xhrChildren = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
         }).done(function(result) {
             result.sort(function(a, b) {
                 if (a.fsn.toLowerCase() < b.fsn.toLowerCase())
@@ -1359,7 +1359,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrParents.abort();
             console.log("aborting children call...");
         }
-        xhrParents = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents", function(result) {
+        xhrParents = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents", function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
             result.sort(function(a, b) {
@@ -1429,7 +1429,7 @@ function conceptDetails(divElement, conceptId, options) {
     }
 
     this.loadMembers = function(returnLimit, skipTo, paginate){
-        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/members?limit=" + returnLimit;
+        var membersUrl = options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId + "/members?limit=" + returnLimit;
         if (skipTo > 0){
             membersUrl = membersUrl + "&skip=" + skipTo;
         }else{

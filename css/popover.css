@@ -2,6 +2,10 @@
 html {
     font-size: 100%;
 }
+
+.popover {
+    z-index:1000;
+}
 .borderBox {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -477,4 +481,8 @@ html {
 #popoverHeader,
 #popoverContent {
     pointer-events: auto;
+}
+
+.popover-content {
+    z-index:1000;
 }

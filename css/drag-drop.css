@@ -4,3 +4,6 @@
 .drop-validTarget {
     background-color: lightblue;
 }
+.badge {
+    display:none;
+}

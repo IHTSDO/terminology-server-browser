@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ihtsdo.otf</groupId>
 	<artifactId>terminology-server-browser</artifactId>
-	<version>0.2</version>
+	<version>0.3</version>
 	<name>Snomed Refset Web Front End</name>
 	<description>Snomed Snow Owl Terminology Server Web Front End</description>
 	<url>https://term.ihtsdotools.org/</url>
@@ -64,9 +64,13 @@
 			<url>https://maven.ihtsdotools.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
+<<<<<<< HEAD
 	
 <<<<<<< HEAD
 </project>
 =======
 </project>
 >>>>>>> branch 'master' of https://github.com/IHTSDO/terminology-server-browser.git
+=======
+</project>
+>>>>>>> develop

@@ -63,16 +63,8 @@
 			function initialize() {
 				// Example: common options object
 				var options = {
-					serverUrl: "/snowowl",
-					edition: "snomed-ct",
-					release: "MAIN",
-//					serverUrl: "/snapshot",
-//					edition: "en-edition",
-//					release: "v20150131",
-					showIds: false,
-					hideNotAcceptable: true,
-					displayInactiveDescriptions: false,
-					displaySynonyms: true,
+					serverUrl: "/snowowl/snomed-ct/v2/browser",
+                    release: "MAIN",
 					selectedView: "inferred",
 					displayChildren: false,
 					langRefset: "900000000000509007",
@@ -84,23 +76,23 @@
 					searchLang: "english",
 					diagrammingMarkupEnabled: false,
 					statusSearchFilter: "activeOnly",
-					highlightByEffectiveTime: "false",
-                    taskSet: false,
-                    taskId: null
+					highlightByEffectiveTime: "false"
 				};
-                var getTaskList = $.getJSON(options.serverUrl + "/" + options.edition + "/" + "MAIN" + "/tasks").done(function(result) {
+                var getTaskList = $.getJSON("/snowowl/snomed-ct/v2/branches/MAIN/children").done(function(result) {
                     var $taskDdl = $('#taskDdl');
                     $.each(result.items, function() {
-                        $('<option>').val(this.taskId).text(this.description).appendTo($taskDdl);
+                        var relativePath = this.path.substring("MAIN/".length);
+
+                        // Find project branches.
+                        // Ignore sub-branches and release branches with format 2015-01-31
+                        if (relativePath.indexOf("/") == -1 && relativePath.match("\\d{4}-\\d{2}-\\d{2}") == null) {
+                            $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
+                        }
                     });
-                    if(options.taskSet == true){
-                        $("taskDdl").val(options.taskId);
-                    }
-                    var taskChanged = function(){
-                        var taskId = $('#taskDdl').val();
-                        options.taskId = taskId;
-                        options.taskSet = true; 
-                        options.release = "MAIN/tasks/" + options.taskId;
+                    $("taskDdl").val(options.release);
+                    var branchChanged = function(){
+                        var branchPath = $('#taskDdl').val();
+                        options.release = branchPath;
                         var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), 138875005, options);
                         var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
                         var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
@@ -110,14 +102,11 @@
                         cdPanel.setupCanvas();
                     }
                     $("#taskDdl").on("change", function(event) { 
-                         taskChanged(this);
+                         branchChanged(this);
                     });
                 });
-
-				// Example: load first widget using plain javascript
+                
 				var txValue1 = 138875005; // SNOMED CT Concept
-//				var txValue1 = 404684003; // Clinical finding (finding)
-//				var txValue1 = 280115004; // Acquired body structure (body structure)
 
 				var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), txValue1, options);
 				var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
@@ -126,16 +115,7 @@
 				cdPanel.subscribe(tpt);
 				cdPanel.subscribe(searchP);
 				cdPanel.setupCanvas();
-
-				// Setup resizable panels (jquery-splitter plugin)
 				$('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
-
-
-				// Quick Test search
-//				var $fh = $('#fh-tabs li a');
-//				$fh[1].click();
-//				$('#bp-search_canvas-searchBox').val('arm');
-//				searchP.updateStatusFilterLabel();
 			}
 			$(document).ready(function() {
 				initialize();
@@ -144,28 +124,42 @@
 
 	</head>
     <body>
+        <nav class="navbar navbar-default  navbar-static-top" role="navigation">
+            <div>
+                <div class="navbar-header">
+                <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand"><strong>
+                        &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_app_name">IHTSDO SNOMED Terminology Server Browser</span></strong></a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
+                    <select style="margin-top:18px; margin-left:20px;" id="taskDdl" on-change="taskChanged()">
+                            <option value="MAIN">MAIN</option>
+                        </select>
+                    <ul class="nav navbar-nav navbar-right">
+                        <img class="pull-right visible-lg" src="img/newlogo.png" alt="IHTSDO delivering SNOMED, the global clinical terminology">
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="browsing-perspective" class="container-fluid">
+            <div id="spliter2" class="row" style="width:100%; height: 91%; position: absolute;">
+                <div class="a panel panel-default" style="border-radius: 0px;">
+                    <ul class="nav nav-tabs" id="fh-tabs">
+                        <li class="active"><a href="#bp-taxonomy_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span></a></li>
+                        <li><a href="#bp-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="bp-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
+                        <div class="tab-pane" id="bp-search_canvas" style="padding: 0px;margin: 0;"></div>
+                    </div>
 
-	<div id="browsing-perspective" class="container-fluid">
-		<div id="spliter2" class="row" style="width:100%; height: 91%; position: absolute;">
-			<div class="a panel panel-default" style="border-radius: 0px;">
-				<ul class="nav nav-tabs" id="fh-tabs">
-					<li class="active"><a href="#bp-taxonomy_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span></a></li>
-					<li><a href="#bp-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="bp-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
-					<div class="tab-pane" id="bp-search_canvas" style="padding: 0px;margin: 0;"></div>
-				</div>
-                
-			</div>
-			<div class="col-md-6 panel panel-default" style="border-radius: 0px;" >
-                <select id="taskDdl" on-change="taskChanged()" class="col-md-4">
-                <option value="default">Select a Task</option>
-                </select>
-				<div class="col-md-12" id="bp-cd1_canvas" style="padding: 0px;margin: 0;"></div>
-			</div>
-		</div>
-	</div>
+                </div>
+                <div class="col-md-6 panel panel-default" style="border-radius: 0px;" >
+
+                    <div class="col-md-12" id="bp-cd1_canvas" style="padding: 0px;margin: 0;"></div>
+                </div>
+            </div>
+        </div>
 
 	</body>
 </html>

@@ -154,7 +154,8 @@ function searchPanel(divElement, options) {
         $("#" + panel.divElement.id + "-historyButton").click(function (event) {
             $("#" + panel.divElement.id + "-historyButton").popover({
                 trigger: 'manual',
-                placement: 'bottomRight',
+                placement: 'bottom',
+                template: '<div class="popover" style="z-index:1000; position:fixed;" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
                 html: true,
                 content: function () {
                     historyHtml = '<div style="height:100px;overflow:auto;">';
@@ -466,13 +467,7 @@ function searchPanel(divElement, options) {
                 if (isNumber(t)) {
                     if (t.substr(-2, 1) == "0") {
                         // Search conceptId
-                        if(options.taskSet)
-                        {
-                            var url = options.serverUrl + "/" + options.edition + "/" + options.release + "/tasks/" + options.taskId + "/concepts/" + t;
-                        }
-                        else{
-                            var url = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + t;
-                        }
+                        var url = options.serverUrl + "/" + options.release + "/concepts/" + t;
                         xhr = $.getJSON(url,function (result) {
 
                         }).done(function (result) {
@@ -538,7 +533,7 @@ function searchPanel(divElement, options) {
                             $('#' + panel.divElement.id + '-searchBar2').html("");
                         });
                     } else if (t.substr(-2, 1) == "1") {
-                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions/" + t,function (result) {
+                        xhr = $.getJSON(options.serverUrl + "/" + options.release + "/descriptions/" + t,function (result) {
 
                         }).done(function (result) {
                             console.log(result);
@@ -593,7 +588,7 @@ function searchPanel(divElement, options) {
                         t = t.replace(")","");
                     }
                     var startTime = Date.now();
-                    var searchUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions?query=" + encodeURIComponent(t) + "&limit=50";
+                    var searchUrl = options.serverUrl + "/" + options.release + "/descriptions?query=" + encodeURIComponent(t) + "&limit=50";
                     if (panel.options.semTagFilter != "none") {
                         searchUrl = searchUrl + "&semanticFilter=" + panel.options.semTagFilter;
                     }

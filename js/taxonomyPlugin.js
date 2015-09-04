@@ -134,7 +134,7 @@ function taxonomyPanel(divElement, conceptId, options) {
 //        });
 
         $("#" + panel.divElement.id + "-resetButton").click(function() {
-            panel.setToConcept(panel.default.conceptId);
+            initialize();
         });
 
         $("#" + panel.divElement.id + "-apply-button").click(function() {
@@ -145,15 +145,16 @@ function taxonomyPanel(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-historyButton").click(function (event) {
             $("#" + panel.divElement.id + "-historyButton").popover({
                 trigger: 'manual',
-                placement: 'bottomRight',
+                placement: 'auto',
                 html: true,
+                template: '<div class="popover" style="z-index:1000; position:fixed;" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
                 content: function () {
                     historyHtml = '<div style="height:100px;overflow:auto;">';
                     if (typeof i18n_no_terms == "undefined") {
                         i18n_no_terms = "No terms"
                     }
                     if (panel.history.length == 0) {
-                        historyHtml = historyHtml + '<div class="text-center text-muted" style="width:100%"><em>'+ i18n_no_terms + '</span>...</em></div>';
+                        historyHtml = historyHtml + '<div class="text-center text-muted" style="width:100%"><em>'+ "No Terms" + '</span>...</em></div>';
                     }
                     historyHtml = historyHtml + '<table>';
                     var reversedHistory = panel.history.slice(0);
@@ -341,7 +342,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var selectedLabel = $(event.target).attr('data-term');
                 panel.history.push({term: selectedLabel, conceptId: selectedId, time: time});
                 if (typeof selectedId != "undefined") {
-                    $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
+                    $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
                         // done
                     }).done(function(result) {
                         panel.setupParents(result, {conceptId: selectedId, fsn: selectedLabel, definitionStatus: "Primitive", module: selectedModule});
@@ -409,7 +410,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
         }
 
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {
         }).done(function(result) {
             result.sort(function(a, b) {
                 if (a.fsn.toLowerCase() < b.fsn.toLowerCase())
@@ -481,7 +482,7 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.wrapInParents = function(conceptId, liItem) {
         var topUl = $("#" + panel.divElement.id + "-panelBody").find('ul:first');
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
             // done
         }).done(function(parents) {
             if (parents.length > 0) {
@@ -570,14 +571,14 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.setToConcept = function(conceptId, term, definitionStatus, module) {
         $("#" + panel.divElement.id + "-panelBody").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form="+panel.options.selectedView, function(result) {
+        $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents?form="+panel.options.selectedView, function(result) {
             // done
         }).done(function(result) {
             if (definitionStatus != "Primitive" && definitionStatus != "Fully defined") {
                 definitionStatus = "Primitive";
             }
             if (typeof term == "undefined"){
-                $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(res){
+                $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(res){
                     term = res.fsn;
                     panel.setupParents(result, {conceptId: conceptId, fsn: term, definitionStatus: definitionStatus, module: module});
                 });
@@ -728,7 +729,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(result) {
+        xhr = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(result) {
 
         }).done(function(result) {
             panel.setToConcept(conceptId, result.fsn);
