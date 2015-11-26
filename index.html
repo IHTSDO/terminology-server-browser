@@ -80,6 +80,7 @@
 				};
                 var getTaskList = $.getJSON("/snowowl/snomed-ct/v2/branches").done(function(result) {
                     var $taskDdl = $('#taskDdl');
+                    result.items.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} );
                     $.each(result.items, function() {
                         var relativePath = this.path.substring("MAIN/".length);
                         $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
