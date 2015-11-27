@@ -5,7 +5,6 @@
     background-color: lightblue;
 }
 .badge {
-    display:none;
 }
 /*
  * Phoca Flags 1.0.0 by Jan Pavelka
@@ -1052,7 +1051,6 @@ and open the template in the editor.
     to { -webkit-transform: rotate(359deg);}
 }
 .badge {
-    display:none;
 }
 .icon-spin {
     animation: 1.5s linear 0s normal none infinite spin;

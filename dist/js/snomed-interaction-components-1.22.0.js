@@ -657,14 +657,14 @@ function conceptDetails(divElement, conceptId, options) {
 
             if (firstMatch.relationships) {
                 var tempArray = [];
-//                $.each(firstMatch.relationships, function(index, item)
-//                {
-//                    if(item.characteristicType === "INFERRED_RELATIONSHIP")
-//                    {
-//                        tempArray.push(item);   
-//                    }
-//                });
-//                firstMatch.relationships = tempArray;
+                $.each(firstMatch.relationships, function(index, item)
+                {
+                    if(item.characteristicType === "INFERRED_RELATIONSHIP")
+                    {
+                        tempArray.push(item);   
+                    }
+                });
+                firstMatch.relationships = tempArray;
                 firstMatch.relationships.sort(function (a, b) {
                     if (a.groupId < b.groupId) {
                         return -1;
@@ -7875,7 +7875,7 @@ function program14(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\n            <span class='i18n text-muted' data-i18n-id='i18n_no_attributes'>"
-    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_no_attributes", "No relationships", options) : helperMissing.call(depth0, "i18n", "i18n_no_attributes", "No relationships", options)))
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_no_attributes", "No Attributes", options) : helperMissing.call(depth0, "i18n", "i18n_no_attributes", "No Attributes", options)))
     + "</span>\n        ";
   return buffer;
   }
