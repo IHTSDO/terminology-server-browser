@@ -540,9 +540,9 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 }
             });
-            Handlebars.registerHelper('removeSemtag', function (term) {
-                return 
-            });
+//            Handlebars.registerHelper('removeSemtag', function (term) {
+//                return 
+//            });
             Handlebars.registerHelper('if_eq', function (a, b, opts) {
                 if (opts != "undefined") {
                     if (a == b)
@@ -884,9 +884,9 @@ function conceptDetails(divElement, conceptId, options) {
                         return opts.inverse(this);
                 }
             });
-            Handlebars.registerHelper('removeSemtag', function (term) {
-                panel.removeSemtag(term);
-            });
+//            Handlebars.registerHelper('removeSemtag', function (term) {
+//                panel.removeSemtag(term);
+//            });
             Handlebars.registerHelper('setLastGroup', function (a) {
                 panel.lastGroup = a;
             });
