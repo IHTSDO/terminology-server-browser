@@ -885,7 +885,7 @@ function conceptDetails(divElement, conceptId, options) {
                 }
             });
             Handlebars.registerHelper('removeSemtag', function (term) {
-                return
+                return panel.removeSemtag(term);
             });
             Handlebars.registerHelper('setLastGroup', function (a) {
                 panel.lastGroup = a;
