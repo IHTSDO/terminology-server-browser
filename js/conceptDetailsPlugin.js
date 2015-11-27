@@ -656,6 +656,15 @@ function conceptDetails(divElement, conceptId, options) {
 
 
             if (firstMatch.relationships) {
+                var tempArray = [];
+                $.each(firstMatch.relationships, function(index, item)
+                {
+                    if(item.characteristicType === "INFERRED_RELATIONSHIP")
+                    {
+                        tempArray.push(item);   
+                    }
+                });
+                firstMatch.relationships = tempArray;
                 firstMatch.relationships.sort(function (a, b) {
                     if (a.groupId < b.groupId) {
                         return -1;
@@ -675,6 +684,7 @@ function conceptDetails(divElement, conceptId, options) {
                         return 0;
                     }
                 });
+                
             }
             if (firstMatch.statedRelationships) {
                 firstMatch.statedRelationships.sort(function (a, b) {
@@ -885,7 +895,9 @@ function conceptDetails(divElement, conceptId, options) {
                 }
             });
             Handlebars.registerHelper('removeSemtag', function (term) {
-                return panel.removeSemtag(term);
+                console.log(term);
+                console.log(panel);
+                return term;
             });
             Handlebars.registerHelper('setLastGroup', function (a) {
                 panel.lastGroup = a;
