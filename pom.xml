@@ -64,13 +64,4 @@
 			<url>https://maven.ihtsdotools.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-<<<<<<< HEAD
-	
-<<<<<<< HEAD
 </project>
-=======
-</project>
->>>>>>> branch 'master' of https://github.com/IHTSDO/terminology-server-browser.git
-=======
-</project>
->>>>>>> develop
