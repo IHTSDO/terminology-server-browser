@@ -2227,7 +2227,7 @@ function program14(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\n            <span class='i18n text-muted' data-i18n-id='i18n_no_attributes'>"
-    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_no_attributes", "No relationships", options) : helperMissing.call(depth0, "i18n", "i18n_no_attributes", "No relationships", options)))
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_no_attributes", "No Attributes", options) : helperMissing.call(depth0, "i18n", "i18n_no_attributes", "No Attributes", options)))
     + "</span>\n        ";
   return buffer;
   }
@@ -3660,11 +3660,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-panelBody'>\n        <div style=\"display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; \">\n            <h4><span>Options</span></h4>\n            <div id='";
+    + "-panelBody'>\n<!--\n        <div style=\"display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; \">\n            <h4><span>Options</span></h4>\n            <div id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-searchConfigBar' style='margin-bottom: 10px;'>\n                <!--<nav class='navbar navbar-default' role='navigation' style='min-height: 28px;border-radius: 0px;border-bottom: 1px lightgray solid;'>-->\n                <!--<ul class=\"list-group\">-->\n                <!--&lt;!&ndash;<li class=\"list-group-item\">&ndash;&gt;-->\n                <!--<li class=\"list-group-item\"><button class='btn btn-link' id='";
+    + "-searchConfigBar' style='margin-bottom: 10px;'>\n-->\n                <!--<nav class='navbar navbar-default' role='navigation' style='min-height: 28px;border-radius: 0px;border-bottom: 1px lightgray solid;'>-->\n                <!--<ul class=\"list-group\">-->\n                <!--&lt;!&ndash;<li class=\"list-group-item\">&ndash;&gt;-->\n                <!--<li class=\"list-group-item\"><button class='btn btn-link' id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -3698,7 +3698,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += escapeExpression(stack1)
     + "-regexButton'><span class='i18n' data-i18n-id='i18n_regex_search_mode'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_regex_search_mode", "Regular Expressions search mode", options) : helperMissing.call(depth0, "i18n", "i18n_regex_search_mode", "Regular Expressions search mode", options)))
-    + "</span></a>-->\n                        <!--</li>-->\n                    <!--</ul>-->\n                <!--</div>-->\n                <div style=\"margin-top: 5px\" class=\"btn-group\">\n                    <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                        Status: <span id=\"";
+    + "</span></a>-->\n                        <!--</li>-->\n                    <!--</ul>-->\n                <!--</div>-->\n<!--\n                <div style=\"margin-top: 5px\" class=\"btn-group\">\n                    <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                        Status: <span id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -3720,7 +3720,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += escapeExpression(stack1)
     + "-inactiveOnlyButton' data-i18n-id='i18n_inactive_only'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_inactive_only", "Inactive components only", options) : helperMissing.call(depth0, "i18n", "i18n_inactive_only", "Inactive components only", options)))
-    + "</a>\n                        </li>\n                    </ul>\n                </div>\n                <!--<div style=\"margin-top: 5px; \" class=\"checkbox\">-->\n                    <!--<label>-->\n                        <!--<input id=\"";
+    + "</a>\n                        </li>\n                    </ul>\n                </div>\n-->\n                <!--<div style=\"margin-top: 5px; \" class=\"checkbox\">-->\n                    <!--<label>-->\n                        <!--<input id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -3776,11 +3776,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-inactiveOnlyButton'><span class='i18n' data-i18n-id='i18n_inactive_only'>Inactive components only</span></button></li>-->\n                <!--</ul>-->\n                <!--</li>-->\n                <!--</ul>-->\n                <!--</nav>-->\n            </div>\n            <div id=\"";
+    + "-inactiveOnlyButton'><span class='i18n' data-i18n-id='i18n_inactive_only'>Inactive components only</span></button></li>-->\n                <!--</ul>-->\n                <!--</li>-->\n                <!--</ul>-->\n                <!--</nav>-->\n<!--\n            </div>\n            <div id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-searchBar2\"></div>\n        </div>\n        <div style=\"display: inline; width: 66%; float: right; padding: 5px;\">\n            <form>\n                <div class=\"form-group\" style=\"margin-bottom: 2px;\">\n                    <label for=\"";
+    + "-searchBar2\"></div>\n        </div>\n-->\n        <div style=\"display: inline; width: 100%; float: left; padding: 5px;\">\n            <form>\n                <div class=\"form-group\" style=\"margin-bottom: 2px;\">\n                    <label for=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
