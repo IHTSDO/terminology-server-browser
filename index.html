@@ -77,6 +77,31 @@
 					diagrammingMarkupEnabled: false,
 					highlightByEffectiveTime: "false"
 				};
+                var getUrlParameter = function getUrlParameter(sParam) {
+                    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : sParameterName[1];
+                        }
+                    }
+                };
+                var focusConcept = 138875005;
+                if(getUrlParameter('branch'))
+                    {
+                        options.release = getUrlParameter('branch');
+                    }
+                if(getUrlParameter('concept'))
+                    {
+                        focusConcept = getUrlParameter('concept');
+                    }
+                
+                
                 var getTaskList = $.getJSON("/snowowl/snomed-ct/v2/branches").done(function(result) {
                     var $taskDdl = $('#taskDdl');
                     result.items.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} );
@@ -89,13 +114,13 @@
 //                            $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
 //                        }
                     });
-                    $("taskDdl").val(options.release);
+                    $("#taskDdl").val(options.release).change();
                     var branchChanged = function(){
                         var branchPath = $('#taskDdl').val();
                         options.release = branchPath;
-                        var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), 138875005, options);
+                        var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
                         var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-                        var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
+                        var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
 
                         cdPanel.subscribe(tpt);
                         cdPanel.subscribe(searchP);
@@ -108,9 +133,9 @@
                 
 				var txValue1 = 138875005; // SNOMED CT Concept
 
-				var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), txValue1, options);
+				var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
 				var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-				var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), "404684003", options);
+				var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
 
 				cdPanel.subscribe(tpt);
 				cdPanel.subscribe(searchP);
