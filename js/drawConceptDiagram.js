@@ -43,7 +43,7 @@ function drawConceptDiagram (concept, div, options) {
     var y = 10;
     var maxX = 10;
     var sctClass = "";
-    if (concept.definitionStatus == "Primitive") {
+    if (concept.definitionStatus == "FULLY_DEFINED ") {
         sctClass = "sct-primitive-concept";
     } else {
         sctClass = "sct-defined-concept";
@@ -53,7 +53,7 @@ function drawConceptDiagram (concept, div, options) {
     x = x + 90;
     y = y + rect1.getBBox().height + 40;
     var circle1;
-    if (concept.definitionStatus == "Primitive") {
+    if (concept.definitionStatus == "PRIMITIVE") {
         circle1 = drawSubsumedByNode(svg, x, y);
     } else {
         circle1 = drawEquivalentNode(svg, x, y);
@@ -68,7 +68,7 @@ function drawConceptDiagram (concept, div, options) {
     // load stated parents
     sctClass = "sct-defined-concept";
     $.each(svgIsaModel, function(i, relationship) {
-        if (relationship.target.definitionStatus == "Primitive") {
+        if (relationship.target.definitionStatus == "PRIMITIVE") {
             sctClass = "sct-primitive-concept";
         } else {
             sctClass = "sct-defined-concept";
@@ -84,7 +84,7 @@ function drawConceptDiagram (concept, div, options) {
     // load ungrouped attributes
     var maxRoleNumber = 0;
     $.each(svgAttrModel, function(i, relationship) {
-        if (relationship.target.definitionStatus == "Primitive") {
+        if (relationship.target.definitionStatus == "PRIMITIVE") {
             sctClass = "sct-primitive-concept";
         } else {
             sctClass = "sct-defined-concept";
@@ -110,7 +110,7 @@ function drawConceptDiagram (concept, div, options) {
         connectElements(svg, groupNode, conjunctionNode, 'right', 'left');
         $.each(svgAttrModel, function(m, relationship) {
             if (relationship.groupId == i) {
-                if (relationship.target.definitionStatus == "Primitive") {
+                if (relationship.target.definitionStatus == "PRIMITIVE") {
                     sctClass = "sct-primitive-concept";
                 } else {
                     sctClass = "sct-defined-concept";

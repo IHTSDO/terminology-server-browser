@@ -1397,7 +1397,7 @@ function conceptDetails(divElement, conceptId, options) {
                     }else{
                         auxHtml = auxHtml + "<i class='glyphicon glyphicon-chevron-right treeButton' data-ind='" + ind + "'></i></button>";
                     }
-                    if (field.definitionStatus == "Primitive"){
+                    if (field.definitionStatus == "PRIMITIVE"){
                         auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.module + "' data-concept-id='" + field.conceptId + "' data-term='" + field.fsn + "'>&nbsp;&nbsp;</span>&nbsp;&nbsp";
                     }else{
                         auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.module + "' data-concept-id='" + field.conceptId + "' data-term='" + field.fsn + "'>&equiv;</span>&nbsp;&nbsp";
