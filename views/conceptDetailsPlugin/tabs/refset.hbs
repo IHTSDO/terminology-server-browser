@@ -28,7 +28,7 @@
         {{#if_eq type "SIMPLE_REFSET"}}
         <tr class='{{#if active}}{{else}}danger{{/if}}'>
             <td>
-                {{#if_eq refset.definitionStatus "Primitive"}}
+                {{#if_eq refset.definitionStatus "PRIMITIVE"}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{refset.module}}" data-concept-id="{{refset.conceptId}}" data-term="{{refset.fsn}}" data-def-status="{{refset.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
                 {{else}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{refset.module}}" data-concept-id="{{refset.conceptId}}" data-term="{{refset.fsn}}" data-def-status="{{refset.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
@@ -67,7 +67,7 @@
         {{#if_eq type "SIMPLEMAP"}}
         <tr class='{{#if active}}{{else}}danger{{/if}}'>
             <td>
-                {{#if_eq refset.definitionStatus "Primitive"}}
+                {{#if_eq refset.definitionStatus "PRIMITIVE"}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{refset.module}}"  data-concept-id="{{refset.conceptId}}" data-term="{{refset.fsn}}" data-def-status="{{refset.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
                 {{else}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{refset.module}}"  data-concept-id="{{refset.conceptId}}" data-term="{{refset.fsn}}" data-def-status="{{refset.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
@@ -107,7 +107,7 @@
         {{#if_eq type "ATTRIBUTE_VALUE"}}
         <tr class='{{#if active}}{{else}}danger{{/if}}'>
             <td>
-                {{#if_eq refset.definitionStatus "Primitive"}}
+                {{#if_eq refset.definitionStatus "PRIMITIVE"}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{refset.module}}" data-concept-id="{{refset.conceptId}}" data-term="{{refset.fsn}}" data-def-status="{{refset.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
                 {{else}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{refset.module}}" data-concept-id="{{refset.conceptId}}" data-term="{{refset.fsn}}" data-def-status="{{refset.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
@@ -115,7 +115,7 @@
                 {{refset.fsn}}
             </td>
             <td>
-                {{#if_eq cidValue.definitionStatus "Primitive"}}
+                {{#if_eq cidValue.definitionStatus "PRIMITIVE"}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')"  data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.fsn}}" data-def-status="{{cidValue.definitionStatus}}"><span  class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
                 {{else}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')"  data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.fsn}}" data-def-status="{{cidValue.definitionStatus}}"><span  class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
@@ -152,7 +152,7 @@
         {{#if_eq type "ASSOCIATION"}}
         <tr class='{{#if active}}{{else}}danger{{/if}}'>
             <td>
-                {{#if_eq refset.definitionStatus "Primitive"}}
+                {{#if_eq refset.definitionStatus "PRIMITIVE"}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{refset.module}}" data-concept-id="{{refset.conceptId}}" data-term="{{refset.fsn}}" data-def-status="{{refset.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
                 {{else}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{refset.module}}" data-concept-id="{{refset.conceptId}}" data-term="{{refset.fsn}}" data-def-status="{{refset.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
@@ -160,7 +160,7 @@
                 {{refset.fsn}}
             </td>
             <td>
-                {{#if_eq cidValue.definitionStatus "Primitive"}}
+                {{#if_eq cidValue.definitionStatus "PRIMITIVE"}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.fsn}}" data-def-status="{{cidValue.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
                 {{else}}
                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.fsn}}" data-def-status="{{cidValue.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;

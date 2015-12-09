@@ -217,13 +217,13 @@ function taxonomyPanel(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-inferredViewButton").click(function (event) {
             panel.options.selectedView = 'inferred';
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
-            panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "Primitive"});
+            panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});
         });
 
         $("#" + panel.divElement.id + "-statedViewButton").click(function (event) {
             panel.options.selectedView = 'stated';
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
-            panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "Primitive"});
+            panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});
         });
         //$("#" + panel.divElement.id + "-inferredViewButton").click();
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
@@ -345,7 +345,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                     $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
                         // done
                     }).done(function(result) {
-                        panel.setupParents(result, {conceptId: selectedId, fsn: selectedLabel, definitionStatus: "Primitive", module: selectedModule});
+                        panel.setupParents(result, {conceptId: selectedId, fsn: selectedLabel, definitionStatus: "PRIMITIVE", module: selectedModule});
                     }).fail(function() {
                     });
                 }
@@ -497,7 +497,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                         parentLiHtml = parentLiHtml + "up";
                     }
                     parentLiHtml = parentLiHtml + " treeButton'  id='" + panel.divElement.id + "-treeicon-" + parent.conceptId + "'></i></button>";
-                    if (parent.definitionStatus == "Primitive") {
+                    if (parent.definitionStatus == "PRIMITIVE") {
                         parentLiHtml = parentLiHtml + '<span class="badge alert-warning" data-concept-id="' + parent.conceptId + '" data-term="' + parent.fsn + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&nbsp;&nbsp;</span>&nbsp;&nbsp;';
                     } else {
                         parentLiHtml = parentLiHtml + '<span class="badge alert-warning" data-concept-id="' + parent.conceptId + '" data-term="' + parent.fsn + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&equiv;</span>&nbsp;&nbsp;';
@@ -574,8 +574,8 @@ function taxonomyPanel(divElement, conceptId, options) {
         $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId + "/parents?form="+panel.options.selectedView, function(result) {
             // done
         }).done(function(result) {
-            if (definitionStatus != "Primitive" && definitionStatus != "Fully defined") {
-                definitionStatus = "Primitive";
+            if (definitionStatus != "PRIMITIVE" && definitionStatus != "FULLY_DEFINED") {
+                definitionStatus = "PRIMITIVE";
             }
             if (typeof term == "undefined"){
                 $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(res){
@@ -723,7 +723,7 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.setupCanvas();
     if (!conceptId || conceptId == 138875005) {
-        this.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "Primitive"});
+        this.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});
     } else {
         if (xhr != null) {
             xhr.abort();
