@@ -4401,7 +4401,7 @@ function taxonomyPanel(divElement, conceptId, options) {
 //        });
 
         $("#" + panel.divElement.id + "-resetButton").click(function() {
-            initialize();
+            panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});
         });
 
         $("#" + panel.divElement.id + "-apply-button").click(function() {
