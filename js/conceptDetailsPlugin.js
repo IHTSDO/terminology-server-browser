@@ -654,14 +654,20 @@ function conceptDetails(divElement, conceptId, options) {
 
             if (firstMatch.relationships) {
                 var tempArray = [];
+                var tempArrayStated = [];
                 $.each(firstMatch.relationships, function(index, item)
                 {
                     if(item.characteristicType === "INFERRED_RELATIONSHIP")
                     {
                         tempArray.push(item);   
                     }
+                    else if(item.characteristicType === "STATED_RELATIONSHIP")
+                    {
+                        tempArrayStated.push(item);   
+                    }
                 });
                 firstMatch.relationships = tempArray;
+                firstMatch.statedRelationships = tempArrayStated;
                 firstMatch.relationships.sort(function (a, b) {
                     if (a.groupId < b.groupId) {
                         return -1;
@@ -681,9 +687,6 @@ function conceptDetails(divElement, conceptId, options) {
                         return 0;
                     }
                 });
-                
-            }
-            if (firstMatch.statedRelationships) {
                 firstMatch.statedRelationships.sort(function (a, b) {
                     if (a.groupId < b.groupId) {
                         return -1;
@@ -703,6 +706,7 @@ function conceptDetails(divElement, conceptId, options) {
                         return 0;
                     }
                 });
+                
             }
             Handlebars.registerHelper('push', function (element, array) {
                 array.push(element);

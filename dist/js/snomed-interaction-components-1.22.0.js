@@ -654,14 +654,20 @@ function conceptDetails(divElement, conceptId, options) {
 
             if (firstMatch.relationships) {
                 var tempArray = [];
+                var tempArrayStated = [];
                 $.each(firstMatch.relationships, function(index, item)
                 {
                     if(item.characteristicType === "INFERRED_RELATIONSHIP")
                     {
                         tempArray.push(item);   
                     }
+                    else if(item.characteristicType === "STATED_RELATIONSHIP")
+                    {
+                        tempArrayStated.push(item);   
+                    }
                 });
                 firstMatch.relationships = tempArray;
+                firstMatch.statedRelationships = tempArrayStated;
                 firstMatch.relationships.sort(function (a, b) {
                     if (a.groupId < b.groupId) {
                         return -1;
@@ -681,9 +687,6 @@ function conceptDetails(divElement, conceptId, options) {
                         return 0;
                     }
                 });
-                
-            }
-            if (firstMatch.statedRelationships) {
                 firstMatch.statedRelationships.sort(function (a, b) {
                     if (a.groupId < b.groupId) {
                         return -1;
@@ -703,6 +706,7 @@ function conceptDetails(divElement, conceptId, options) {
                         return 0;
                     }
                 });
+                
             }
             Handlebars.registerHelper('push', function (element, array) {
                 array.push(element);
@@ -5757,7 +5761,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" style=\"padding: 5px;\">\n                <div class=\"pull-right\">\n                    <div class=\"\" role=\"group\" aria-label=\"...\">\n                        <div class=\"\" >Inferred View</div>\n                    </div>\n                    <div><span class=\"text-muted text-center\" id=\"home-";
+    + "\" style=\"padding: 5px;\">\n                <div class=\"pull-right\">\n                    <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n                        <button type=\"button\" class=\"btn btn-default\" id=\"home-";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-stated-button\">Stated</button>\n                        <button type=\"button\" class=\"btn btn-default\" id=\"home-";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-inferred-button\">Inferred</button>\n                    </div>\n                    <div><span class=\"text-muted text-center\" id=\"home-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6993,7 +7005,7 @@ function program32(depth0,data,depth2) {
   else { helper = (depth0 && depth0.groupId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\n                    ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(23, program23, data),fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.characteristicType), "INFERRED_RELATIONSHIP", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.characteristicType), "INFERRED_RELATIONSHIP", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(23, program23, data),fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.characteristicType), "STATED_RELATIONSHIP", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.characteristicType), "STATED_RELATIONSHIP", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                        <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                            <tr><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
