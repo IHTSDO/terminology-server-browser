@@ -1,7 +1,7 @@
 <div style='line-height: 100%;'>
+    {{setLastGroup null}}
     {{#if_eq options.selectedView "stated"}}
         {{#each statedRoles}}
-            <!--<br>-->
             {{#eqLastGroup groupId}}
                 </div>
                 {{setLastGroup groupId}}
@@ -28,7 +28,6 @@
         {{/if_eq}}
     {{else}}
         {{#each inferredRoles}}
-            <!--<br>inferred-->
                     {{#eqLastGroup groupId}}
                         </div>
                         {{setLastGroup groupId}}

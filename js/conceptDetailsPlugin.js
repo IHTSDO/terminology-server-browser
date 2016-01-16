@@ -330,7 +330,7 @@ function conceptDetails(divElement, conceptId, options) {
             });
 
             var context = {
-                options: options,
+                options: panel.options,
                 firstMatch: firstMatch,
                 divElementId: panel.divElement.id,
                 release: options.release,
@@ -641,6 +641,7 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#home-' + panel.divElement.id + '-inferred-button').addClass("btn-default");
                 $('#home-' + panel.divElement.id + '-inferred-button').removeClass("btn-primary");
                 $('#home-' + panel.divElement.id + '-inferred-button').click(function (event) {
+                    console.log('inferred');
                     panel.options.selectedView = "inferred";
                     panel.updateCanvas();
                 });
@@ -721,7 +722,7 @@ function conceptDetails(divElement, conceptId, options) {
                 }
             });
             var context = {
-                options: options,
+                options: panel.options,
                 firstMatch: firstMatch,
                 inferredParents: panel.inferredParents,
                 inferredRoles: panel.inferredRoles,
@@ -918,7 +919,7 @@ function conceptDetails(divElement, conceptId, options) {
                 return "";
             });
             var context = {
-                options: options,
+                options: panel.options,
                 statedRoles: panel.statedRoles,
                 inferredRoles: panel.inferredRoles
             };

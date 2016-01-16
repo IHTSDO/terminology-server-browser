@@ -221,9 +221,6 @@ function dropT(ev, id) {
 
         if (!conceptId) {
         } else {
-            if (panel.options.selectedView == "undefined") {
-                panel.options.selectedView = "inferred";
-            }
             if (typeof conceptId != "undefined") {
                 var d = new Date();
                 var time = d.getTime();
