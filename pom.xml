@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ihtsdo.otf</groupId>
 	<artifactId>terminology-server-browser</artifactId>
-	<version>0.11-SNAPSHOT</version>
+	<version>0.11</version>
 	<name>Snomed Refset Web Front End</name>
 	<description>Snomed Snow Owl Terminology Server Web Front End</description>
 	<url>https://term.ihtsdotools.org/</url>
