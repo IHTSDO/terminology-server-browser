@@ -226,6 +226,9 @@ function dropT(ev, id) {
                 var time = d.getTime();
                 panel.history.push({term: term, conceptId: conceptId, time: time});
                 panel.setToConcept(conceptId, term, definitionStatus, module);
+                panel.options.focusConcept = conceptId;
+                panel.options.focusTerm = term;
+                panel.options.focusDef = definitionStatus;
                 channel.publish(panel.divElement.id, {
                     term: term,
                     conceptId: conceptId,

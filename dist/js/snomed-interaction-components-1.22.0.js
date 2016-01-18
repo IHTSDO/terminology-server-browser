@@ -4489,13 +4489,27 @@ function taxonomyPanel(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-inferredViewButton").click(function (event) {
             panel.options.selectedView = 'inferred';
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
-            panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});
+            console.log(panel.options.focusConcept);
+            if(panel.options.focusConcept)
+            {
+                panel.setupParents([], {conceptId: panel.options.focusConcept, fsn: panel.options.focusTerm, definitionStatus: panel.options.focusDef});
+            }
+            else{
+                panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});   
+            }
+            
         });
 
         $("#" + panel.divElement.id + "-statedViewButton").click(function (event) {
             panel.options.selectedView = 'stated';
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
-            panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});
+            if(panel.options.focusConcept)
+            {
+                panel.setupParents([], {conceptId: panel.options.focusConcept, fsn: panel.options.focusTerm, definitionStatus: panel.options.focusDef});
+            }
+            else{
+                panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});   
+            }
         });
         //$("#" + panel.divElement.id + "-inferredViewButton").click();
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
@@ -5600,6 +5614,9 @@ function dropT(ev, id) {
                 var time = d.getTime();
                 panel.history.push({term: term, conceptId: conceptId, time: time});
                 panel.setToConcept(conceptId, term, definitionStatus, module);
+                panel.options.focusConcept = conceptId;
+                panel.options.focusTerm = term;
+                panel.options.focusDef = definitionStatus;
                 channel.publish(panel.divElement.id, {
                     term: term,
                     conceptId: conceptId,
