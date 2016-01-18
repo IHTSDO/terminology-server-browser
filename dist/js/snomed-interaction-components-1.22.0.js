@@ -4489,10 +4489,9 @@ function taxonomyPanel(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-inferredViewButton").click(function (event) {
             panel.options.selectedView = 'inferred';
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
-            console.log(panel.options.focusConcept);
             if(panel.options.focusConcept)
             {
-                panel.setupParents([], {conceptId: panel.options.focusConcept, fsn: panel.options.focusTerm, definitionStatus: panel.options.focusDef});
+                panel.setToConcept(panel.options.focusConcept);
             }
             else{
                 panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});   
@@ -4505,7 +4504,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
             if(panel.options.focusConcept)
             {
-                panel.setupParents([], {conceptId: panel.options.focusConcept, fsn: panel.options.focusTerm, definitionStatus: panel.options.focusDef});
+                panel.setToConcept(panel.options.focusConcept);
             }
             else{
                 panel.setupParents([], {conceptId: 138875005, fsn: "SNOMED CT Concept", definitionStatus: "PRIMITIVE"});   
@@ -4628,6 +4627,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var selectedLabel = $(event.target).attr('data-term');
                 panel.history.push({term: selectedLabel, conceptId: selectedId, time: time});
                 if (typeof selectedId != "undefined") {
+                    console.log(panel.options.selectedView);
                     $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
                         // done
                     }).done(function(result) {
