@@ -4865,11 +4865,40 @@ function taxonomyPanel(divElement, conceptId, options) {
             }
             if (typeof term == "undefined"){
                 $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(res){
+                    var rels = [];
+                    $.each(res.relationships, function(j, rel){
+                        console.log(rel.type.conceptId);
+                        if (rel.characteristicType === panel.options.selectedView.toUpperCase() + '_RELATIONSHIP' && rel.type.conceptId === "116680003"){
+                            $.each(result, function(i, field){
+                                if(field.conceptId === rel.target.conceptId)
+                                {
+                                    rels.push(field);
+                                }
+                            });
+                        }
+                    
+                    });
                     term = res.fsn;
-                    panel.setupParents(result, {conceptId: conceptId, fsn: term, definitionStatus: definitionStatus, module: module});
+                    panel.setupParents(rels, {conceptId: conceptId, fsn: term, definitionStatus: definitionStatus, module: module});
                 });
             }else{
-                panel.setupParents(result, {conceptId: conceptId, fsn: term, definitionStatus: definitionStatus, module: module});
+                $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + conceptId, function(res){
+                    var rels = [];
+                    $.each(res.relationships, function(j, rel){
+                        console.log(rel.type.conceptId);
+                        if (rel.characteristicType === panel.options.selectedView.toUpperCase() + '_RELATIONSHIP' && rel.type.conceptId === "116680003"){
+                            $.each(result, function(i, field){
+                                if(field.conceptId === rel.target.conceptId)
+                                {
+                                    rels.push(field);
+                                }
+                            });
+                        }
+                    
+                    });
+                    term = res.fsn;
+                    panel.setupParents(rels, {conceptId: conceptId, fsn: term, definitionStatus: definitionStatus, module: module});
+                });
             }
         }).fail(function() {
             $("#" + panel.divElement.id + "-panelBody").html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
