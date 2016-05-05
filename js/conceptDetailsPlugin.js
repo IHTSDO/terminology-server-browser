@@ -328,6 +328,9 @@ function conceptDetails(divElement, conceptId, options) {
                         return opts.inverse(this);
                 }
             });
+            Handlebars.registerHelper('parseCS', function (search, replacement, string) {
+                return string.split(search).join(replacement).toLowerCase();
+            });
 
             var context = {
                 options: panel.options,
