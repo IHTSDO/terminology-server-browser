@@ -40,6 +40,7 @@ function conceptDetails(divElement, conceptId, options) {
     var xhrReferences = null;
     var xhrParents = null;
     var xhrMembers = null;
+    var xhrAds = null;
     var conceptRequested = 0;
     panel.subscriptionsColor = [];
     panel.subscriptions = [];
@@ -304,6 +305,7 @@ function conceptDetails(divElement, conceptId, options) {
         $('#' + panel.childrenPId).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $("#diagram-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+        $('#ads-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
 
         // load attributes
         if (xhr != null) {
@@ -1148,6 +1150,7 @@ function conceptDetails(divElement, conceptId, options) {
                         $("#" + iconId).addClass("glyphicon-refresh");
                         $("#" + iconId).addClass("icon-spin");
                         panel.getChildren($(event.target).closest("li").attr('data-concept-id'), true);
+                        panel.getAds($(event.target).closest("li").attr('data-concept-id'), true);
                     } else if ($("#" + iconId).hasClass("glyphicon-minus")) {
 //                    $("#" + iconId).removeClass("glyphicon-minus");
 //                    $("#" + iconId).addClass("glyphicon-chevron-right");
@@ -1368,6 +1371,30 @@ function conceptDetails(divElement, conceptId, options) {
             $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-minus");
         });
     }
+    
+    this.getAds = function(conceptId, forceShow) {
+        if (typeof panel.options.selectedView == "undefined") {
+            panel.options.selectedView = "inferred";
+        }
+
+        if (panel.options.selectedView == "inferred") {
+            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
+        } else {
+            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
+        }
+
+        if (xhrAds != null) {
+            xhrAds.abort();
+            console.log("aborting ads call...");
+        }
+        xhrAds = $.getJSON("/ads_api/concepts/" + options.release + "/" + conceptId, function(result) {
+        }).done(function(result) {
+        	console.log("Received ADS for " + conceptId);
+        }).fail(function(){
+        	console.log("Failed to recover ADS for " + conceptId);
+        });
+    }
+    
 
     this.getParent = function(conceptId, target){
         if (xhrParents != null) {
