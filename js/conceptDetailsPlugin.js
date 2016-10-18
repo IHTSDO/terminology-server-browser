@@ -1043,10 +1043,11 @@ function conceptDetails(divElement, conceptId, options) {
             if (typeof(switchLanguage) == "function") {
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
-            conceptRequested = 0;
+
 
 //            membersUrl = options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId + "/members";
-
+            panel.getAds(conceptRequested);
+            conceptRequested = 0;
         }).fail(function () {
             panel.relsPId = divElement.id + "-rels-panel";
             panel.attributesPId = divElement.id + "-attributes-panel";
@@ -1373,25 +1374,22 @@ function conceptDetails(divElement, conceptId, options) {
     }
     
     this.getAds = function(conceptId, forceShow) {
-        if (typeof panel.options.selectedView == "undefined") {
-            panel.options.selectedView = "inferred";
-        }
-
-        if (panel.options.selectedView == "inferred") {
-            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
-        } else {
-            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
-        }
-
         if (xhrAds != null) {
             xhrAds.abort();
             console.log("aborting ads call...");
         }
-        xhrAds = $.getJSON("/ads_api/concepts/" + options.release + "/" + conceptId, function(result) {
+        xhrAds = $.getJSON("/ads_api/concept/" + options.release + "/" + conceptId, function(result) {
         }).done(function(result) {
         	console.log("Received ADS for " + conceptId);
+            var context = {
+                    result: result,
+                    divElementId: panel.divElement.id,
+                };
+        	$('#ads-' + panel.divElement.id/*+ "-accordion"*/).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](context));
         }).fail(function(){
         	console.log("Failed to recover ADS for " + conceptId);
+        	$('#ads-' + panel.divElement.id).html("<div class='alert alert-warning'><span class='i18n' data-i18n-id='i18n_ajax_failed'>No ADS information available for this concept, check expected project selected</span></div>");
+
         });
     }
     
@@ -1662,7 +1660,7 @@ function conceptDetails(divElement, conceptId, options) {
     // Subsription methods
     this.subscribe = function(panelToSubscribe) {
         var panelId = panelToSubscribe.divElement.id;
-//        console.log('Subscribing to id: ' + panelId);
+        console.log( panel.divElement.id + ' subscribing to id: ' + panelId);
         var alreadySubscribed = false;
         $.each(panel.subscriptionsColor, function(i, field){
             if (field == panelToSubscribe.markerColor){
@@ -1671,7 +1669,7 @@ function conceptDetails(divElement, conceptId, options) {
         });
         if (!alreadySubscribed) {
             var subscription = channel.subscribe(panelId, function(data, envelope) {
-//                console.log("listening in " + panel.divElement.id);
+                console.log("listening in " + panel.divElement.id);
                 panel.conceptId = data.conceptId;
                 if ($("#home-children-" + panel.divElement.id + "-body").length > 0){
                 }else{

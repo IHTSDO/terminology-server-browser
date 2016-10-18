@@ -1,0 +1,43 @@
+<table class='table table-default' >
+	<tr>
+		<td>
+			<h4>
+				<span ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">{{result.fsn}}</span>
+				<div class="btn-group" style="margin:3px" role="group" aria-label="...">
+					<button type="button" class="btn btn-default" id="ads-{{divElementId}}-siblings-button">Siblings</button>
+					<button type="button" class="btn btn-default active" id="ads-{{divElementId}}-descendants-button">Descendants</button>
+				</div>
+			</h4>
+			<br>SCTID: {{result.id}}
+		</td>
+	</tr>
+</table>
+<h4>
+Descendants {{ result.statedDetailsFD.descendantCount }}
+<div class="btn-group" style="margin:3px" role="group" aria-label="...">
+	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-prim-button">Primitive</button>
+	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-fd-button">FullyDefined</button>
+	<button type="button" class="btn btn-default active" id="ads-{{divElementId}}-both-button">Both</button>
+</div>
+</h4>
+
+<h2>Descendant Templates:</h2>
+{{#each result.statedDetailsFD.descendantTemplates}}
+	<h5>Template - {{ template.id }}</h5>
+	<div style="margin-top: 10px;" class="panel panel-default">
+		<div class="panel-heading">
+			<h3 style="font-size: 12px" class="panel-title">
+				<a style="text-decoration: inherit;" data-toggle="collapse" data-parent="#ads-{{divElementId}}-accordion"">
+					<span id="ads-{{@index}}-span" class="references glyphicon glyphicon-{{#if_gr length 10}}chevron-right{{else}}chevron-down{{/if_gr}}"></span>
+				</a> {{template.id}} - {{count}}
+			</h3>
+		</div>
+		<div id="ads-{{@index}}" class="panel-collapse">
+			<div class="panel-body">
+					{{#each template.templateStructure}}
+								{{id}}
+					{{/each}}
+			</div>
+		</div>
+	</div>
+{{/each}}
