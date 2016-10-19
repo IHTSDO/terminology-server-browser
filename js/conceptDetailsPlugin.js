@@ -646,7 +646,7 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#home-' + panel.divElement.id + '-inferred-button').addClass("btn-default");
                 $('#home-' + panel.divElement.id + '-inferred-button').removeClass("btn-primary");
                 $('#home-' + panel.divElement.id + '-inferred-button').click(function (event) {
-                    console.log('inferred');
+                    //console.log('inferred');
                     panel.options.selectedView = "inferred";
                     panel.updateCanvas();
                 });
@@ -1373,11 +1373,12 @@ function conceptDetails(divElement, conceptId, options) {
     }
     
 	this.getAds = function(conceptId, forceShow) {
-		if (xhrAds != null || adsObj.conceptId == conceptId) {
-			xhrAds.abort();
+		if ( adsObj.conceptId == conceptId) {
 			console.log("skipping ads call...");
-			updateAdsPanel(panel.options);
+			adsObj.panel = panel;
+			adsObj.updatePanel();
 		} else {
+			adsObj.conceptId = conceptId;
 			xhrAds = $.getJSON("/ads_api/concept/" + options.release + "/" + conceptId,
 							function(result) {}
 					).done(function(result) {
@@ -1387,16 +1388,16 @@ function conceptDetails(divElement, conceptId, options) {
 							divElementId : panel.divElement.id,
 						};
 						adsObj.context = context;
-						adsObj.conceptId = conceptId;
+						adsObj.panel = panel;
 						adsObj.panelId = panel.divElement.id;
-						updateAdsPanel(panel.options);
+						adsObj.updatePanel();
 					}).fail(function() {
 							console.log("Failed to recover ADS for " + conceptId);
 							$('#ads-' + panel.divElement.id)
 									.html("<div class='alert alert-warning'><span class='i18n' data-i18n-id='i18n_ajax_failed'>No ADS information available for this concept, check expected project selected</span></div>");
-						});
+					});
 		}
-	}
+	};
 
     this.getParent = function(conceptId, target){
         if (xhrParents != null) {
