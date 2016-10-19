@@ -1383,12 +1383,8 @@ function conceptDetails(divElement, conceptId, options) {
 							function(result) {}
 					).done(function(result) {
 						console.log("Received ADS data for " + conceptId);
-						var context = {
-							result : result,
-							divElementId : panel.divElement.id,
-						};
-						adsObj.context = context;
-						adsObj.panel = panel;
+						adsObj.result = result;
+						adsObj.options = panel.options;
 						adsObj.panelId = panel.divElement.id;
 						adsObj.updatePanel();
 					}).fail(function() {

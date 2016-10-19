@@ -2,27 +2,24 @@
 	<tr>
 		<td>
 			<h4>
-				<span ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">{{result.fsn}}</span>
-				<div class="btn-group" style="margin:3px" role="group" aria-label="...">
-					<button type="button" class="btn btn-default" id="ads-{{divElementId}}-siblings-button">Siblings</button>
-					<button type="button" class="btn btn-default" id="ads-{{divElementId}}-descendants-button">Descendants</button>
-				</div>
+				<span ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">{{fsn}}</span>
 			</h4>
-			<br>SCTID: {{result.id}}
 		</td>
 	</tr>
 </table>
 <h4>
-Descendants {{ result.statedDetailsFD.descendantCount }}
-<div class="btn-group" style="margin:3px" role="group" aria-label="...">
-	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-prim-button">Primitive</button>
-	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-fd-button">FullyDefined</button>
-	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-both-button">Both</button>
+<div class="btn-group" style="margin:20px" role="group" aria-label="...">
+	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-siblings-button">Siblings</button>
+	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-descendants-button">Descendants</button>
 </div>
+<div class="btn-group" style="margin:20px" role="group" aria-label="...">
+	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-Prim-button">Primitive</button>
+	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-FD-button">FullyDefined</button>
+	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-Both-button">Both</button>
+</div>
+SCTID: {{id}} Siblings: {{ selectedDetails.siblingCount }} Descendants: {{ selectedDetails.descendantCount }}</h4>
 </h4>
-
-<h2>Descendant Templates:</h2>
-{{#each result.statedDetailsFD.descendantTemplates}}
+{{#each selectedTemplates}}
 	<h5>Template - {{ template.id }}</h5>
 	<div style="margin-top: 10px;" class="panel panel-default">
 		<div class="panel-heading">

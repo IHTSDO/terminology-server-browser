@@ -1,19 +1,51 @@
-
+function peek (code) {
+	try {
+		return eval(code); 
+	} catch (e) {
+		console.log("Skipping error " + e.message);
+	}
+	return "eval failed";
+}
 var adsObj = {  
 	conceptId : null,
-	panel : null,
+	options : null,
 	panelId: null,
-	context: null,
+	result: null,
+	hbsData: {},
 	adsView  : "descendants",
 	showTemplates:"Both",
 
 	updatePanel: function() {
-		console.log ("Updating ADS Panel selectedView: " + this.panel.options.selectedView +
+		console.log ("Updating ADS Panel selectedView: " + this.options.selectedView +
 					" adsView: " + this.adsView +
 					" showingTemplates: " + this.showTemplates);
-		
-		$('#ads-' + this.panelId/*+ "-accordion"*/).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](this.context));
+		this.setupData();
+		$('#ads-' + this.panelId/*+ "-accordion"*/).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](this.hbsData));
 		this.setupButtons();
+	},
+	
+	setupData: function() {
+		this.hbsData.divElementId = this.panelId;
+		this.hbsData.id = this.result.id;
+		this.hbsData.fsn = this.result.fsn;
+		if (this.showTemplates == "Both") {
+			this.mergeData();
+		} else {
+			var selectedDetails = this.options.selectedView + "Details" + this.showTemplates;
+			this.hbsData.selectedDetails = eval ("this.result." + selectedDetails);
+			if (this.adsView == "descendants") {
+				this.hbsData.selectedTemplates = this.hbsData.selectedDetails.descendantTemplates;
+				this.hbsData.adsView = "Descendant";
+			} else {
+				this.hbsData.selectedTemplates = this.hbsData.selectedDetails.siblingTemplates;
+				this.hbsData.adsView = "Sibling";
+			}
+		}
+		console.log ("Selected array contains " + peek("adsObj.hbsData.selectedTemplates.length"));
+	},
+	
+	mergeData: function() {
+		console.log ("MergingData");
 	},
 	
 	setupButtons: function() {
@@ -24,43 +56,27 @@ var adsObj = {
 	setupSDButtons: function() {
 		// load relationships panel and home parents/roles
 		if (this.adsView == "descendants") {
-			$('#ads-' + this.panelId + '-siblings-button').unbind();
-			$('#ads-' + this.panelId + '-descendants-button').unbind();
-			$('#ads-' + this.panelId + '-descendants-button').addClass("btn-primary");
-			$('#ads-' + this.panelId + '-descendants-button').removeClass("btn-default");
-			$('#ads-' + this.panelId + '-siblings-button').addClass("btn-default");
-			$('#ads-' + this.panelId + '-siblings-button').removeClass("btn-primary");
-			$('#ads-' + this.panelId + '-siblings-button').click(function (event) {
-				adsObj.adsView = "siblings";
-				adsObj.updatePanel();
-			});
+			this.setupButton("descendants",true,"adsView");
+			this.setupButton("siblings",false,"adsView");
 		} else {
-			$('#ads-' + this.panelId + '-siblings-button').unbind();
-			$('#ads-' + this.panelId + '-descendants-button').unbind();
-			$('#ads-' + this.panelId + '-siblings-button').addClass("btn-primary");
-			$('#ads-' + this.panelId + '-siblings-button').removeClass("btn-default");
-			$('#ads-' + this.panelId + '-descendants-button').addClass("btn-default");
-			$('#ads-' + this.panelId + '-descendants-button').removeClass("btn-primary");
-			$('#ads-' + this.panelId + '-descendants-button').click(function (event) {
-				adsObj.adsView = "descendants";
-				adsObj.updatePanel();
-			});
+			this.setupButton("siblings",true,"adsView");
+			this.setupButton("descendants",false,"adsView");
 		}
 	},
 	
 	setupPrimFdButtons : function() {
-		if (this.showTemplates == "prim") {
-			this.setupButton("prim",true,"showTemplates");
-			this.setupButton("fd",false,"showTemplates");
-			this.setupButton("both",false,"showTemplates");
-		} else if (this.showTemplates == "fd") {
-			this.setupButton("fd",true,"showTemplates");
-			this.setupButton("prim",false,"showTemplates");
-			this.setupButton("both",false,"showTemplates");
+		if (this.showTemplates == "Prim") {
+			this.setupButton("Prim",true,"showTemplates");
+			this.setupButton("FD",false,"showTemplates");
+			this.setupButton("Both",false,"showTemplates");
+		} else if (this.showTemplates == "FD") {
+			this.setupButton("FD",true,"showTemplates");
+			this.setupButton("Prim",false,"showTemplates");
+			this.setupButton("Both",false,"showTemplates");
 		} else {
-			this.setupButton("both",true,"showTemplates");
-			this.setupButton("prim",false,"showTemplates");
-			this.setupButton("fd",false,"showTemplates");
+			this.setupButton("Both",true,"showTemplates");
+			this.setupButton("Prim",false,"showTemplates");
+			this.setupButton("FD",false,"showTemplates");
 		}
 	},
 	

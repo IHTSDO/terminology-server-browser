@@ -706,34 +706,40 @@ function program6(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "')\" ondragleave=\"removeHighlight();\" ondragover=\"allowDrop(event)\">"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</span>\n				<div class=\"btn-group\" style=\"margin:3px\" role=\"group\" aria-label=\"...\">\n					<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
+    + "')\" ondragleave=\"removeHighlight();\" ondragover=\"allowDrop(event)\">";
+  if (helper = helpers.fsn) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.fsn); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</span>\n			</h4>\n		</td>\n	</tr>\n</table>\n<h4>\n<div class=\"btn-group\" style=\"margin:20px\" role=\"group\" aria-label=\"...\">\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-siblings-button\">Siblings</button>\n					<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
+    + "-siblings-button\">Siblings</button>\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-descendants-button\">Descendants</button>\n				</div>\n			</h4>\n			<br>SCTID: "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n		</td>\n	</tr>\n</table>\n<h4>\nDescendants "
-    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.statedDetailsFD)),stack1 == null || stack1 === false ? stack1 : stack1.descendantCount)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n<div class=\"btn-group\" style=\"margin:3px\" role=\"group\" aria-label=\"...\">\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
+    + "-descendants-button\">Descendants</button>\n</div>\n<div class=\"btn-group\" style=\"margin:20px\" role=\"group\" aria-label=\"...\">\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-prim-button\">Primitive</button>\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
+    + "-Prim-button\">Primitive</button>\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-fd-button\">FullyDefined</button>\n	<button type=\"button\" class=\"btn btn-default active\" id=\"ads-";
+    + "-FD-button\">FullyDefined</button>\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-both-button\">Both</button>\n</div>\n</h4>\n\n<h2>Descendant Templates:</h2>\n";
-  stack1 = helpers.each.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.statedDetailsFD)),stack1 == null || stack1 === false ? stack1 : stack1.descendantTemplates), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+    + "-Both-button\">Both</button>\n</div>\nSCTID: ";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + " Siblings: "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.selectedDetails)),stack1 == null || stack1 === false ? stack1 : stack1.siblingCount)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + " Descendants: "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.selectedDetails)),stack1 == null || stack1 === false ? stack1 : stack1.descendantCount)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</h4>\n</h4>\n";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.selectedTemplates), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
   });
