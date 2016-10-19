@@ -13,7 +13,7 @@ var adsObj = {
 	result: null,
 	hbsData: {},
 	adsView  : "descendants",
-	showTemplates:"Both",
+	showTemplates:"Prim",
 
 	updatePanel: function() {
 		console.log ("Updating ADS Panel selectedView: " + this.options.selectedView +
@@ -29,23 +29,49 @@ var adsObj = {
 		this.hbsData.id = this.result.id;
 		this.hbsData.fsn = this.result.fsn;
 		if (this.showTemplates == "Both") {
-			this.mergeData();
+			this.mergePrimFdData();
 		} else {
 			var selectedDetails = this.options.selectedView + "Details" + this.showTemplates;
 			this.hbsData.selectedDetails = eval ("this.result." + selectedDetails);
 			if (this.adsView == "descendants") {
 				this.hbsData.selectedTemplates = this.hbsData.selectedDetails.descendantTemplates;
 				this.hbsData.adsView = "Descendant";
+				this.hbsData.count = this.hbsData.selectedDetails.descendantCount;
 			} else {
 				this.hbsData.selectedTemplates = this.hbsData.selectedDetails.siblingTemplates;
 				this.hbsData.adsView = "Sibling";
+				this.hbsData.count = this.hbsData.selectedDetails.siblingCount;
 			}
 		}
+		adsObj.hbsData.selectedTemplates.sort(function(a,b) {return (a.count > b.count) ? -1 : ((a.count < b.count) ? 1 : 0);} );
 		console.log ("Selected array contains " + peek("adsObj.hbsData.selectedTemplates.length"));
 	},
 	
-	mergeData: function() {
-		console.log ("MergingData");
+	mergePrimFdData: function() {
+		console.log ("Merging Primitive Inferred Data");
+		var selectedDetailPrimStr = this.options.selectedView + "DetailsPrim";
+		var selectedDetailFDStr = this.options.selectedView + "DetailsFD";
+		var primDetails = eval ("this.result." + selectedDetailPrimStr);
+		var fdDetails = eval ("this.result." + selectedDetailFDStr);
+		var primArray, fdArray;
+		if (this.adsView == "descendants") {
+			this.hbsData.count = primDetails.descendantCount + fdDetails.descendantCount;
+			primArray = primDetails.descendantTemplates;
+			fdArray = fdDetails.descendantTemplates;
+			this.hbsData.adsView = "Descendant";
+		} else {
+			this.hbsData.count = primDetails.siblingCount + fdDetails.siblingCount;
+			primArray = primDetails.siblingTemplates;
+			fdArray = fdDetails.siblingTemplates;
+			this.hbsData.adsView = "Sibling";
+		}
+		this.mergeArrays(primArray, fdArray);
+	},
+	
+	mergeArrays: function(primArray, fdArray) {
+		var combined = primArray.concat(fdArray);
+		combined.sort(function(a,b) {return (a.template.id > b.template.id) ? 1 : ((a.template.id < b.template.id) ? -1 : 0);} );
+		this.hbsData.selectedTemplates = combined;
 	},
 	
 	setupButtons: function() {

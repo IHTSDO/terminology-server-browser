@@ -702,15 +702,19 @@ function program6(depth0,data) {
   return buffer;
   }
 
-  buffer += "<table class='table table-default' >\n	<tr>\n		<td>\n			<h4>\n				<span ondrop=\"dropC(event, '";
+  buffer += "<br/>\n<h4>\n	<span ondrop=\"dropC(event, '";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\" ondragleave=\"removeHighlight();\" ondragover=\"allowDrop(event)\">";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + " |";
   if (helper = helpers.fsn) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.fsn); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\n			</h4>\n		</td>\n	</tr>\n</table>\n<h4>\n<div class=\"btn-group\" style=\"margin:20px\" role=\"group\" aria-label=\"...\">\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
+    + "|</span>\n</h4>\n<h4>\n<div class=\"btn-group\" style=\"margin:20px\" role=\"group\" aria-label=\"...\">\n	<button type=\"button\" class=\"btn btn-default\" id=\"ads-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -730,14 +734,14 @@ function program6(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-Both-button\">Both</button>\n</div>\nSCTID: ";
-  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+    + "-Both-button\">Both</button>\n</div>\n";
+  if (helper = helpers.adsView) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.adsView); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + " Siblings: "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.selectedDetails)),stack1 == null || stack1 === false ? stack1 : stack1.siblingCount)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " Descendants: "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.selectedDetails)),stack1 == null || stack1 === false ? stack1 : stack1.descendantCount)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "s: ";
+  if (helper = helpers.count) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.count); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
     + "</h4>\n</h4>\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.selectedTemplates), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }

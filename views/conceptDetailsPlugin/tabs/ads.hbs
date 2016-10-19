@@ -1,12 +1,7 @@
-<table class='table table-default' >
-	<tr>
-		<td>
-			<h4>
-				<span ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">{{fsn}}</span>
-			</h4>
-		</td>
-	</tr>
-</table>
+<br/>
+<h4>
+	<span ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">{{id}} |{{fsn}}|</span>
+</h4>
 <h4>
 <div class="btn-group" style="margin:20px" role="group" aria-label="...">
 	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-siblings-button">Siblings</button>
@@ -17,7 +12,7 @@
 	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-FD-button">FullyDefined</button>
 	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-Both-button">Both</button>
 </div>
-SCTID: {{id}} Siblings: {{ selectedDetails.siblingCount }} Descendants: {{ selectedDetails.descendantCount }}</h4>
+{{ adsView }}s: {{ count }}</h4>
 </h4>
 {{#each selectedTemplates}}
 	<h5>Template - {{ template.id }}</h5>
