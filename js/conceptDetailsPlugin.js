@@ -1151,7 +1151,6 @@ function conceptDetails(divElement, conceptId, options) {
                         $("#" + iconId).addClass("glyphicon-refresh");
                         $("#" + iconId).addClass("icon-spin");
                         panel.getChildren($(event.target).closest("li").attr('data-concept-id'), true);
-                        panel.getAds($(event.target).closest("li").attr('data-concept-id'), true);
                     } else if ($("#" + iconId).hasClass("glyphicon-minus")) {
 //                    $("#" + iconId).removeClass("glyphicon-minus");
 //                    $("#" + iconId).addClass("glyphicon-chevron-right");
@@ -1373,26 +1372,31 @@ function conceptDetails(divElement, conceptId, options) {
         });
     }
     
-    this.getAds = function(conceptId, forceShow) {
-        if (xhrAds != null) {
-            xhrAds.abort();
-            console.log("aborting ads call...");
-        }
-        xhrAds = $.getJSON("/ads_api/concept/" + options.release + "/" + conceptId, function(result) {
-        }).done(function(result) {
-        	console.log("Received ADS for " + conceptId);
-            var context = {
-                    result: result,
-                    divElementId: panel.divElement.id,
-                };
-        	$('#ads-' + panel.divElement.id/*+ "-accordion"*/).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](context));
-        }).fail(function(){
-        	console.log("Failed to recover ADS for " + conceptId);
-        	$('#ads-' + panel.divElement.id).html("<div class='alert alert-warning'><span class='i18n' data-i18n-id='i18n_ajax_failed'>No ADS information available for this concept, check expected project selected</span></div>");
-
-        });
-    }
-    
+	this.getAds = function(conceptId, forceShow) {
+		if (xhrAds != null || adsObj.conceptId == conceptId) {
+			xhrAds.abort();
+			console.log("skipping ads call...");
+			updateAdsPanel(panel.options);
+		} else {
+			xhrAds = $.getJSON("/ads_api/concept/" + options.release + "/" + conceptId,
+							function(result) {}
+					).done(function(result) {
+						console.log("Received ADS data for " + conceptId);
+						var context = {
+							result : result,
+							divElementId : panel.divElement.id,
+						};
+						adsObj.context = context;
+						adsObj.conceptId = conceptId;
+						adsObj.panelId = panel.divElement.id;
+						updateAdsPanel(panel.options);
+					}).fail(function() {
+							console.log("Failed to recover ADS for " + conceptId);
+							$('#ads-' + panel.divElement.id)
+									.html("<div class='alert alert-warning'><span class='i18n' data-i18n-id='i18n_ajax_failed'>No ADS information available for this concept, check expected project selected</span></div>");
+						});
+		}
+	}
 
     this.getParent = function(conceptId, target){
         if (xhrParents != null) {

@@ -671,10 +671,12 @@ function program1(depth0,data) {
   buffer += escapeExpression(stack1)
     + "\n			</h3>\n		</div>\n		<div id=\"ads-"
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" class=\"panel-collapse\">\n			<div class=\"panel-body\">\n					";
+    + "\" class=\"panel-collapse\">\n			<div class=\"panel-body\">\n				";
   stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.template)),stack1 == null || stack1 === false ? stack1 : stack1.templateStructure), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n			</div>\n		</div>\n	</div>\n";
+  buffer += "\n				<div id=\"ads-"
+    + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-diagram-body\" class=\"row\" style=\"overflow: auto; width: 1000;\"/>\n			</div>\n		</div>\n	</div>\n";
   return buffer;
   }
 function program2(depth0,data) {
@@ -692,11 +694,11 @@ function program4(depth0,data) {
 function program6(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\n								";
+  buffer += "\n					";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\n					";
+    + "\n				";
   return buffer;
   }
 

@@ -20,6 +20,7 @@ module.exports = function(grunt) {
                     'js/refsetPlugin.js',
                     'js/favoritesPlugin.js',
                     'js/util.js',
+                    'js/authoringDecisionSupport.js',
                     'views/compiled/templates.js'
                 ],
                 dest: 'dist/js/<%= pkg.name %>-<%= pkg.version %>.js'

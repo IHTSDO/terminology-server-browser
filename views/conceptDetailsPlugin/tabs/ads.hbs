@@ -34,9 +34,10 @@ Descendants {{ result.statedDetailsFD.descendantCount }}
 		</div>
 		<div id="ads-{{@index}}" class="panel-collapse">
 			<div class="panel-body">
-					{{#each template.templateStructure}}
-								{{id}}
-					{{/each}}
+				{{#each template.templateStructure}}
+					{{id}}
+				{{/each}}
+				<div id="ads-{{@index}}-diagram-body" class="row" style="overflow: auto; width: 1000;"/>
 			</div>
 		</div>
 	</div>
