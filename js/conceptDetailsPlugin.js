@@ -1661,7 +1661,7 @@ function conceptDetails(divElement, conceptId, options) {
     // Subsription methods
     this.subscribe = function(panelToSubscribe) {
         var panelId = panelToSubscribe.divElement.id;
-        console.log( panel.divElement.id + ' subscribing to id: ' + panelId);
+        //console.log( panel.divElement.id + ' subscribing to id: ' + panelId);
         var alreadySubscribed = false;
         $.each(panel.subscriptionsColor, function(i, field){
             if (field == panelToSubscribe.markerColor){
@@ -1670,7 +1670,7 @@ function conceptDetails(divElement, conceptId, options) {
         });
         if (!alreadySubscribed) {
             var subscription = channel.subscribe(panelId, function(data, envelope) {
-                console.log("listening in " + panel.divElement.id);
+                //console.log("listening in " + panel.divElement.id);
                 panel.conceptId = data.conceptId;
                 if ($("#home-children-" + panel.divElement.id + "-body").length > 0){
                 }else{

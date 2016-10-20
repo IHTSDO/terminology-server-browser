@@ -1,4 +1,4 @@
-function drawConceptDiagram (concept, div, options) {
+function drawConceptDiagram (concept, div, options, allowDownload) {
     var svgIsaModel = [];
     var svgAttrModel = [];
     if (options.selectedView == "stated") {
@@ -25,18 +25,21 @@ function drawConceptDiagram (concept, div, options) {
         }
     }
     var context = {
-        divElementId: div.attr('id')
+        divElementId: div.attr('id'),
+        allowDownload: allowDownload
     };
     console.log(context);
     div.html(JST["views/conceptDetailsPlugin/tabs/details/diagram.hbs"](context));
 
     var parentDiv = $("#" + div.attr('id') + "-diagram-body");
     parentDiv.svg('destroy');
-
+   
+    //Calculate height based on the number of relationships plus constant for parent
+    var svgHeight = (150 + (30 * concept.relationships.length)) + "px";
     parentDiv.svg({
         settings: {
             width: '1000px',
-            height: '2000px'}});
+            height: svgHeight}});
     var svg = parentDiv.svg('get');
     loadDefs(svg);
     var x = 10;
@@ -124,47 +127,41 @@ function drawConceptDiagram (concept, div, options) {
             }
         });
     }
-    var svgCode = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' + parentDiv.html();
-    svgCode = svgCode.substr(0, svgCode.indexOf("svg") + 4) +
-        ' xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" ' +
-        svgCode.substr(svgCode.indexOf("svg") + 4)
-    svgCode = svgCode.replace('width="1000px" height="2000px"', 'width="' + maxX + '" height="' + y + '"');
-    var b64 = Base64.encode(svgCode);
-
-    $("#" + div.attr('id') + "-download-button").disableTextSelect();
-    $("#" + div.attr('id') + "-progress-button").disableTextSelect();
-    $("#" + div.attr('id') + "-png-button").disableTextSelect();
-    $("#" + div.attr('id') + "-svg-button").disableTextSelect();
-    $("#" + div.attr('id') + "-download-button").removeClass('disabled');
-    $("#" + div.attr('id') + "-download-button").unbind().click(function(event) {
-        $("#" + div.attr('id') + "-download-button").hide();
-        $("#" + div.attr('id') + "-progress-button").show();
-        $.post(options.serverUrl.replace("snomed", "") + "util/svg2png", { svgContent: svgCode}).done(function( response ) {
-            //console.log(response);
-            $("#" + div.attr('id') + "-progress-button").hide();
-            $("#" + div.attr('id') + "-png-button").show();
-            $("#" + div.attr('id') + "-svg-button").show();
-
-            $("#" + div.attr('id') + "-png-button").unbind().click(function(event) {
-                window.open(options.serverUrl.replace("snomed", "") + response);
-            });
-            $("#" + div.attr('id') + "-svg-button").unbind().click(function(event) {
-                window.open(options.serverUrl.replace("snomed", "") + response.replace(".png", ".svg"));
-            });
-
-            //$(div).prepend($("<a href-lang='image/svg+xml' href=options.serverUrl.replace("snomed", "")+response+"' download='diagram.png'>Download as PNG</a>&nbsp;&nbsp;&nbsp;"));
-        }).fail(function() {
-            console.log("Error");
-        });
-    });
-
-
-
-    //$(div).prepend($("<a href-lang='image/svg+xml' href='data:image/svg+xml;base64,\n"+b64+"' download='diagram.svg'>Download as SVG</a>"));
-
-
-
-
+    
+    if (allowDownload) {
+	    var svgCode = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' + parentDiv.html();
+	    svgCode = svgCode.substr(0, svgCode.indexOf("svg") + 4) +
+	        ' xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" ' +
+	        svgCode.substr(svgCode.indexOf("svg") + 4)
+	    svgCode = svgCode.replace('width="1000px" height="2000px"', 'width="' + maxX + '" height="' + y + '"');
+	    var b64 = Base64.encode(svgCode);
+	
+	    $("#" + div.attr('id') + "-download-button").disableTextSelect();
+	    $("#" + div.attr('id') + "-progress-button").disableTextSelect();
+	    $("#" + div.attr('id') + "-png-button").disableTextSelect();
+	    $("#" + div.attr('id') + "-svg-button").disableTextSelect();
+	    $("#" + div.attr('id') + "-download-button").removeClass('disabled');
+	    $("#" + div.attr('id') + "-download-button").unbind().click(function(event) {
+	        $("#" + div.attr('id') + "-download-button").hide();
+	        $("#" + div.attr('id') + "-progress-button").show();
+	        $.post(options.serverUrl.replace("snomed", "") + "util/svg2png", { svgContent: svgCode}).done(function( response ) {
+	            //console.log(response);
+	            $("#" + div.attr('id') + "-progress-button").hide();
+	            $("#" + div.attr('id') + "-png-button").show();
+	            $("#" + div.attr('id') + "-svg-button").show();
+	
+	            $("#" + div.attr('id') + "-png-button").unbind().click(function(event) {
+	                window.open(options.serverUrl.replace("snomed", "") + response);
+	            });
+	            $("#" + div.attr('id') + "-svg-button").unbind().click(function(event) {
+	                window.open(options.serverUrl.replace("snomed", "") + response.replace(".png", ".svg"));
+	            });
+	
+	        }).fail(function() {
+	            console.log("Error");
+	        });
+	    });
+    }
 }
 
 function saveAsPng(svg) {

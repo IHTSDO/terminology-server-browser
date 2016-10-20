@@ -8,10 +8,13 @@ function peek (code) {
 }
 var adsObj = {  
 	conceptId : null,
+	characteristicType: "STATED_RELATIONSHIP",
 	options : null,
 	panelId: null,
 	result: null,
-	hbsData: {},
+	hbsData: {
+		selectedTemplates: null
+	},
 	adsView  : "descendants",
 	showTemplates:"Prim",
 
@@ -22,12 +25,70 @@ var adsObj = {
 		this.setupData();
 		$('#ads-' + this.panelId/*+ "-accordion"*/).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](this.hbsData));
 		this.setupButtons();
+		if (typeof this.hbsData.selectedTemplates != "undefined") {
+			for (var i=0; i<this.hbsData.selectedTemplates.length; i++) {
+				if (typeof this.hbsData.selectedTemplates[i].equivConcept == "undefined") {
+					this.convertTemplateToEquivalentConcept(this.hbsData.selectedTemplates[i]);
+				}
+				drawConceptDiagram (this.hbsData.selectedTemplates[i].equivConcept, $("#ads-" + i), this.options, false);
+			}
+		}
+	},
+	
+	convertTemplateToEquivalentConcept: function(templateWithCount) {
+		var concept = {
+						sctid: this.result.id,
+						fsn: this.result.fsn,
+						definitionStatus: "PRIMITIVE"
+		};
+		var relationships = new Array();
+		var groupId = 0;
+		var structures = templateWithCount.template.templateStructure;
+		for (var i=0; i<structures.length; i++) {
+			var thisShapeStructure = structures[i].shapeStructure;
+			//TODO Add an "ungrouped" flag and set group to 0 if so
+			groupId++;
+			for (var j=0; j<thisShapeStructure.length; j++) {
+				var relationship = {
+						type: {
+							active: true,
+							fsn : thisShapeStructure[j],
+							characteristicType: this.characteristicType
+						},
+						target: {
+							active: true,
+							fsn : "TBA"
+						},
+						active: true,
+						groupId: groupId
+				};
+				relationships.push(relationship);
+			}
+		}
+		//Templates only consider attributes, but concept diagrams must also have a parent
+		var parentRelationship = {
+				active: true,
+				type: { conceptId : 116680003 },
+				target: { 	fsn: "TBA",
+							definitionStatus: "PRIMITIVE"},
+				groupId: 0
+		};
+		relationships.push(parentRelationship);
+		concept.relationships = relationships;
+		templateWithCount.equivConcept = concept;
 	},
 	
 	setupData: function() {
 		this.hbsData.divElementId = this.panelId;
 		this.hbsData.id = this.result.id;
 		this.hbsData.fsn = this.result.fsn;
+		
+		if (this.options.selectedView == "stated") {
+			characteristicType = "STATED_RELATIONSHIP";
+		} else {
+			characteristicType = "INFERRED_RELATIONSHIP";
+		}
+		
 		if (this.showTemplates == "Both") {
 			this.mergePrimFdData();
 		} else {
