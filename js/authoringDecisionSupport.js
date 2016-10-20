@@ -72,6 +72,19 @@ var adsObj = {
 		var combined = primArray.concat(fdArray);
 		combined.sort(function(a,b) {return (a.template.id > b.template.id) ? 1 : ((a.template.id < b.template.id) ? -1 : 0);} );
 		this.hbsData.selectedTemplates = combined;
+		//Now loop through the sorted array and replace any duplicates with a merged count
+		for(var i=0; i<combined.length -1; ++i) {
+			if(combined[i].template.id == combined[i+1].template.id) {
+				var mergedCount = combined[i].count + combined[i+1].count;
+				var mergedObject = { template : { 
+													id : combined[i].template.id,
+													shapeStructure: combined[i].template.templateStructure
+												},
+										count: mergedCount
+									}
+				combined.splice(i, 2, mergedObject);
+			}
+		}
 	},
 	
 	setupButtons: function() {
