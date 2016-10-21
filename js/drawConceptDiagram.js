@@ -38,7 +38,7 @@ function drawConceptDiagram (concept, div, options, allowDownload) {
     var svgHeight = (150 + (30 * concept.relationships.length)) + "px";
     parentDiv.svg({
         settings: {
-            width: '1000px',
+            width: '650px',
             height: svgHeight}});
     var svg = parentDiv.svg('get');
     loadDefs(svg);

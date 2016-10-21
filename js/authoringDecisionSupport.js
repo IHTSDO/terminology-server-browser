@@ -38,21 +38,24 @@ var adsObj = {
 	convertTemplateToEquivalentConcept: function(templateWithCount) {
 		var concept = {
 						sctid: this.result.id,
-						fsn: this.result.fsn,
+						fsn: ">> " + this.result.fsn,
 						definitionStatus: "PRIMITIVE"
 		};
 		var relationships = new Array();
 		var groupId = 0;
 		var structures = templateWithCount.template.templateStructure;
 		for (var i=0; i<structures.length; i++) {
-			var thisShapeStructure = structures[i].shapeStructure;
+			
 			//TODO Add an "ungrouped" flag and set group to 0 if so
 			groupId++;
-			for (var j=0; j<thisShapeStructure.length; j++) {
+			for (var j=0; j<structures[i].groupTemplateParts.length; j++) {
+				var thisTemplatePart = structures[i].groupTemplateParts[j];
+				var cardinality = thisTemplatePart.cardinality > 1 ? thisTemplatePart.cardinality + " x ": ""
 				var relationship = {
 						type: {
 							active: true,
-							fsn : thisShapeStructure[j],
+							conceptId : thisTemplatePart.id,
+							fsn :  cardinality + thisTemplatePart.fsn,
 							characteristicType: this.characteristicType
 						},
 						target: {
@@ -69,7 +72,7 @@ var adsObj = {
 		var parentRelationship = {
 				active: true,
 				type: { conceptId : 116680003 },
-				target: { 	fsn: "TBA",
+				target: { 	fsn: this.result.fsn,
 							definitionStatus: "PRIMITIVE"},
 				groupId: 0
 		};
@@ -139,7 +142,7 @@ var adsObj = {
 				var mergedCount = combined[i].count + combined[i+1].count;
 				var mergedObject = { template : { 
 													id : combined[i].template.id,
-													shapeStructure: combined[i].template.templateStructure
+													templateStructure: combined[i].template.templateStructure
 												},
 										count: mergedCount
 									}
