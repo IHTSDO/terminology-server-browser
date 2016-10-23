@@ -28,14 +28,14 @@ function drawConceptDiagram (concept, div, options, allowDownload) {
         divElementId: div.attr('id'),
         allowDownload: allowDownload
     };
-    console.log(context);
+    //console.log(context);
     div.html(JST["views/conceptDetailsPlugin/tabs/details/diagram.hbs"](context));
 
     var parentDiv = $("#" + div.attr('id') + "-diagram-body");
     parentDiv.svg('destroy');
    
     //Calculate height based on the number of relationships plus constant for parent
-    var svgHeight = (150 + (30 * concept.relationships.length)) + "px";
+    var svgHeight = (140 + (35 * concept.relationships.length)) + "px";
     parentDiv.svg({
         settings: {
             width: '650px',

@@ -12,25 +12,22 @@
 	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-FD-button">FullyDefined</button>
 	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-Both-button">Both</button>
 </div>
-{{ adsView }}s: {{ count }}</h4>
+{{ adsView }}s: {{ count }} using {{ selectedTemplates.length }} templates</h4>
 </h4>
 {{#each selectedTemplates}}
-	<h5>Template - {{ template.id }}</h5>
-	<div style="margin-top: 10px;" class="panel panel-default">
-		<div class="panel-heading">
-			<h3 style="font-size: 12px" class="panel-title">
-				<a style="text-decoration: inherit;" data-toggle="collapse" data-parent="#ads-{{divElementId}}-accordion"">
-					<span id="ads-{{@index}}-span" class="references glyphicon glyphicon-{{#if_gr length 10}}chevron-right{{else}}chevron-down{{/if_gr}}"></span>
-				</a> {{template.id}} - {{count}}
-			</h3>
+	<hr/>
+	<div class="pull-right">
+		<div class="pull-left">
+			<h4>Usage: {{count}}  Examples: &nbsp;</h4>
+			<ul>
+			{{#each examples }}
+				<li><a href="" title="{{ fsn }} ">{{ id }}</a></li>
+			{{/each}}
+			</ul>
 		</div>
-		<div id="ads-{{@index}}" class="panel-collapse">
-			<div class="panel-body">
-				{{#each template.templateStructure}}
-					{{id}}
-				{{/each}}
-				<div id="ads-{{@index}}-diagram-body" class="row hasSVG" style="overflow: auto; width: 1000;"/>
-			</div>
+	</div>
+	<div id="ads-{{@index}}" style="margin-top: 10px;" class="panel panel-default">
+		<div id="ads-{{@index}}-diagram-body" class="hasSVG">
 		</div>
 	</div>
 {{/each}}
