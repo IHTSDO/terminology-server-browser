@@ -23,14 +23,22 @@ var adsObj = {
 					" adsView: " + this.adsView +
 					" showingTemplates: " + this.showTemplates);
 		this.setupData();
+		console.log("Ads data setup complete");
+		this.hbsData.dataOK = (this.hbsData.selectedTemplates.length < 200);
+
 		$('#ads-' + this.panelId/*+ "-accordion"*/).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](this.hbsData));
 		this.setupButtons();
-		if (typeof this.hbsData.selectedTemplates != "undefined") {
-			for (var i=0; i<this.hbsData.selectedTemplates.length; i++) {
-				if (typeof this.hbsData.selectedTemplates[i].equivConcept == "undefined") {
-					this.convertTemplateToEquivalentConcept(this.hbsData.selectedTemplates[i]);
+		
+		if (!this.hbsData.dataOK){
+			$('#ads-' + this.panelId + "-content").html("<div class='alert alert-warning'>Too many different templates (>200)</div>");
+		} else {
+			if (typeof this.hbsData.selectedTemplates != "undefined") {
+				for (var i=0; i<this.hbsData.selectedTemplates.length; i++) {
+					if (typeof this.hbsData.selectedTemplates[i].equivConcept == "undefined") {
+						this.convertTemplateToEquivalentConcept(this.hbsData.selectedTemplates[i]);
+					}
+					drawConceptDiagram (this.hbsData.selectedTemplates[i].equivConcept, $("#ads-" + i), this.options, false);
 				}
-				drawConceptDiagram (this.hbsData.selectedTemplates[i].equivConcept, $("#ads-" + i), this.options, false);
 			}
 		}
 	},
@@ -83,7 +91,7 @@ var adsObj = {
 	
 	setupData: function() {
 		this.hbsData.divElementId = this.panelId;
-		this.hbsData.id = this.result.id;
+		this.hbsData.sctId = this.result.sctId;
 		this.hbsData.fsn = this.result.fsn;
 		
 		if (this.options.selectedView == "stated") {
@@ -108,7 +116,7 @@ var adsObj = {
 			}
 		}
 		adsObj.hbsData.selectedTemplates.sort(function(a,b) {return (a.count > b.count) ? -1 : ((a.count < b.count) ? 1 : 0);} );
-		console.log ("Selected array contains " + peek("adsObj.hbsData.selectedTemplates.length"));
+		console.log ("Selected template array contains " + peek("adsObj.hbsData.selectedTemplates.length"));
 	},
 	
 	mergePrimFdData: function() {
@@ -195,6 +203,15 @@ var adsObj = {
 			var buttonAction = new Function ("event", functionStr);
 			$('#ads-' + this.panelId + '-' + buttonName +'-button').click(buttonAction);
 		}
+	},
+	
+	selectConcept : function (sctId) {
+		$('#details-tab-link-' + this.panelId).click(); 
+		updateCD(this.panelId, sctId);
+		/*channel.publish(this.panelId, {
+			conceptId: sctId,
+			source: this.panelId
+		});*/
 	}
 	
 }

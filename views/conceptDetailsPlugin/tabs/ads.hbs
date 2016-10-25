@@ -1,6 +1,6 @@
 <br/>
 <h4>
-	<span ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">{{id}} |{{fsn}}|</span>
+	<span ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">{{sctId}} |{{fsn}}|</span>
 </h4>
 <h4>
 <div class="btn-group" style="margin:20px" role="group" aria-label="...">
@@ -14,20 +14,28 @@
 </div>
 {{ adsView }}s: {{ count }} using {{ selectedTemplates.length }} templates</h4>
 </h4>
-{{#each selectedTemplates}}
-	<hr/>
-	<div class="pull-right">
-		<div class="pull-left">
-			<h4>Usage: {{count}}  Examples: &nbsp;</h4>
-			<ul>
-			{{#each examples }}
-				<li><a href="" title="{{ fsn }} ">{{ id }}</a></li>
-			{{/each}}
-			</ul>
+<div id="ads-{{divElementId}}-content"></div>
+
+{{#if dataOK}}
+	{{#each selectedTemplates}}
+		<hr/>
+		<div class="pull-right">
+			<div class="pull-left">
+				<h4>Usage: {{count}}  Examples: &nbsp;</h4>
+				<ul>
+				{{#each examples }}
+					<li>
+						<a id="ads-example" href="javascript:adsObj.selectConcept({{ id }})" title="{{ fsn }} ">{{ id }}</a>
+						<a class="glyphicon glyphicon-book" href="http://snomed.info/id/{{id}}" title="Open {{id}}|{{fsn}}| in SCT Browser" target="_sctBrowser"/>
+					</li>
+				{{/each}}
+				</ul>
+			</div>
 		</div>
-	</div>
-	<div id="ads-{{@index}}" style="margin-top: 10px;" class="panel panel-default">
-		<div id="ads-{{@index}}-diagram-body" class="hasSVG">
+		<div id="ads-{{@index}}" style="margin-top: 10px;" class="panel panel-default">
+			<div id="ads-{{@index}}-diagram-body">
+			</div>
 		</div>
-	</div>
-{{/each}}
+	{{/each}}
+{{/if}}
+
