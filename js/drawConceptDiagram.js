@@ -35,7 +35,7 @@ function drawConceptDiagram (concept, div, options, allowDownload) {
     parentDiv.svg('destroy');
    
     //Calculate height based on the number of relationships plus constant for parent
-    var svgHeight = (140 + (35 * concept.relationships.length)) + "px";
+    var svgHeight = (150 + (50 * concept.relationships.length)) + "px";
     parentDiv.svg({
         settings: {
             width: '650px',

@@ -1386,7 +1386,9 @@ function conceptDetails(divElement, conceptId, options) {
 						adsObj.result = result;
 						adsObj.options = panel.options;
 						adsObj.panelId = panel.divElement.id;
-						adsObj.updatePanel();
+						setTimeout(function () {
+							adsObj.updatePanel();
+						}, 1000)
 					}).fail(function() {
 							console.log("Failed to recover ADS for " + conceptId);
 							$('#ads-' + panel.divElement.id)

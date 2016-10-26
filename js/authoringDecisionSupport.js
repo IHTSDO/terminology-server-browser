@@ -51,7 +51,7 @@ var adsObj = {
 		};
 		var relationships = new Array();
 		var groupId = 0;
-		var structures = templateWithCount.template.templateStructure;
+		var structures = templateWithCount.conceptTemplate.templateStructure;
 		for (var i=0; i<structures.length; i++) {
 			
 			//TODO Add an "ungrouped" flag and set group to 0 if so
@@ -110,9 +110,9 @@ var adsObj = {
 				this.hbsData.adsView = "Descendant";
 				this.hbsData.count = this.hbsData.selectedDetails.descendantCount;
 			} else {
-				this.hbsData.selectedTemplates = this.hbsData.selectedDetails.siblingTemplates;
-				this.hbsData.adsView = "Sibling";
-				this.hbsData.count = this.hbsData.selectedDetails.siblingCount;
+				this.hbsData.selectedTemplates = this.hbsData.selectedDetails.childTemplates;
+				this.hbsData.adsView = "Child";
+				this.hbsData.count = this.hbsData.selectedDetails.childCount;
 			}
 		}
 		adsObj.hbsData.selectedTemplates.sort(function(a,b) {return (a.count > b.count) ? -1 : ((a.count < b.count) ? 1 : 0);} );
@@ -132,31 +132,50 @@ var adsObj = {
 			fdArray = fdDetails.descendantTemplates;
 			this.hbsData.adsView = "Descendant";
 		} else {
-			this.hbsData.count = primDetails.siblingCount + fdDetails.siblingCount;
-			primArray = primDetails.siblingTemplates;
-			fdArray = fdDetails.siblingTemplates;
-			this.hbsData.adsView = "Sibling";
+			this.hbsData.count = primDetails.childCount + fdDetails.childCount;
+			primArray = primDetails.childTemplates;
+			fdArray = fdDetails.childTemplates;
+			this.hbsData.adsView = "Child";
 		}
 		this.mergeArrays(primArray, fdArray);
 	},
 	
 	mergeArrays: function(primArray, fdArray) {
 		var combined = primArray.concat(fdArray);
-		combined.sort(function(a,b) {return (a.template.id > b.template.id) ? 1 : ((a.template.id < b.template.id) ? -1 : 0);} );
-		this.hbsData.selectedTemplates = combined;
+		combined.sort(function(a,b) {return (a.conceptTemplate.id > b.conceptTemplate.id) ? 1 : ((a.conceptTemplate.id < b.conceptTemplate.id) ? -1 : 0);} );
+		this.hbsData.selectedconceptTemplates = combined;
 		//Now loop through the sorted array and replace any duplicates with a merged count
 		for(var i=0; i<combined.length -1; ++i) {
-			if(combined[i].template.id == combined[i+1].template.id) {
+			if(combined[i].conceptTemplate.id == combined[i+1].conceptTemplate.id) {
 				var mergedCount = combined[i].count + combined[i+1].count;
-				var mergedObject = { template : { 
-													id : combined[i].template.id,
-													templateStructure: combined[i].template.templateStructure
+				var mergedExamples = this.mergeExamples (combined[i].examples, combined[i+1].examples);
+				var mergedObject = { conceptTemplate : { 
+													id : combined[i].conceptTemplate.id,
+													templateStructure: combined[i].conceptTemplate.templateStructure
 												},
+										examples: mergedExamples,
 										count: mergedCount
 									}
 				combined.splice(i, 2, mergedObject);
 			}
 		}
+	},
+	
+	mergeExamples: function(examples1, examples2) {
+		var mergedExamples = new Array();
+		var notFilled = true;
+		for (var x=0; x<10 && notFilled; x++) {
+			if (examples1.length > x) {
+				mergedExamples.push(examples1[x]);
+			}
+			if (examples2.length > x) {
+				mergedExamples.push(examples2[x]);
+			}
+			if (mergedExamples.length >= 10) {
+				notFilled = false;
+			}
+		}
+		return mergedExamples;
 	},
 	
 	setupButtons: function() {
@@ -168,9 +187,9 @@ var adsObj = {
 		// load relationships panel and home parents/roles
 		if (this.adsView == "descendants") {
 			this.setupButton("descendants",true,"adsView");
-			this.setupButton("siblings",false,"adsView");
+			this.setupButton("children",false,"adsView");
 		} else {
-			this.setupButton("siblings",true,"adsView");
+			this.setupButton("children",true,"adsView");
 			this.setupButton("descendants",false,"adsView");
 		}
 	},
@@ -208,10 +227,6 @@ var adsObj = {
 	selectConcept : function (sctId) {
 		$('#details-tab-link-' + this.panelId).click(); 
 		updateCD(this.panelId, sctId);
-		/*channel.publish(this.panelId, {
-			conceptId: sctId,
-			source: this.panelId
-		});*/
 	}
 	
 }
