@@ -85,7 +85,11 @@ var adsObj = {
 				groupId: 0
 		};
 		relationships.push(parentRelationship);
-		concept.relationships = relationships;
+		if (this.options.selectedView == "stated") {
+			concept.statedRelationships = relationships;
+		} else {
+			concept.relationships = relationships;
+		}
 		templateWithCount.equivConcept = concept;
 	},
 	
@@ -143,7 +147,7 @@ var adsObj = {
 	mergeArrays: function(primArray, fdArray) {
 		var combined = primArray.concat(fdArray);
 		combined.sort(function(a,b) {return (a.conceptTemplate.id > b.conceptTemplate.id) ? 1 : ((a.conceptTemplate.id < b.conceptTemplate.id) ? -1 : 0);} );
-		this.hbsData.selectedconceptTemplates = combined;
+		this.hbsData.selectedTemplates = combined;
 		//Now loop through the sorted array and replace any duplicates with a merged count
 		for(var i=0; i<combined.length -1; ++i) {
 			if(combined[i].conceptTemplate.id == combined[i+1].conceptTemplate.id) {
