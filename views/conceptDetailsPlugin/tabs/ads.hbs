@@ -12,12 +12,12 @@
 	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-FD-button">FullyDefined</button>
 	<button type="button" class="btn btn-default" id="ads-{{divElementId}}-Both-button">Both</button>
 </div>
-{{ adsView }} count: {{ count }} using {{ selectedTemplates.length }} templates</h4>
+{{ adsView }} count: {{ count }} using {{ selectedPatterns.length }} patterns</h4>
 </h4>
 <div id="ads-{{divElementId}}-content"></div>
 
 {{#if dataOK}}
-	{{#each selectedTemplates}}
+	{{#each selectedPatterns}}
 		<hr/>
 		<div class="pull-right">
 			<div class="pull-left">
@@ -25,8 +25,8 @@
 				<ul>
 				{{#each examples }}
 					<li>
-						<a id="ads-example" href="javascript:adsObj.selectConcept({{ id }})" title="{{ fsn }} ">{{ id }}</a>
-						<a class="glyphicon glyphicon-book" href="http://snomed.info/id/{{id}}" title="Open {{id}}|{{fsn}}| in SCT Browser" target="_sctBrowser"/>
+						<a id="ads-example" href="javascript:adsObj.selectConcept({{ sctId }})" title="{{ fsn }} ">{{ sctId }}</a>
+						<a class="glyphicon glyphicon-book" href="http://snomed.info/id/{{sctId}}" title="Open {{sctId}}|{{fsn}}| in SCT Browser" target="_sctBrowser"/>
 					</li>
 				{{/each}}
 				</ul>

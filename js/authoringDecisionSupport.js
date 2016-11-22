@@ -13,37 +13,37 @@ var adsObj = {
 	panelId: null,
 	result: null,
 	hbsData: {
-		selectedTemplates: null
+		selectedPatterns: null
 	},
 	adsView  : "descendants",
-	showTemplates:"Prim",
+	showPatterns:"Prim",
 
 	updatePanel: function() {
 		console.log ("Updating ADS Panel selectedView: " + this.options.selectedView +
 					" adsView: " + this.adsView +
-					" showingTemplates: " + this.showTemplates);
+					" showingPatterns: " + this.showPatterns);
 		this.setupData();
 		console.log("Ads data setup complete");
-		this.hbsData.dataOK = (this.hbsData.selectedTemplates.length < 200);
+		this.hbsData.dataOK = (this.hbsData.selectedPatterns.length < 200);
 
 		$('#ads-' + this.panelId/*+ "-accordion"*/).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](this.hbsData));
 		this.setupButtons();
 		
 		if (!this.hbsData.dataOK){
-			$('#ads-' + this.panelId + "-content").html("<div class='alert alert-warning'>Too many different templates (>200)</div>");
+			$('#ads-' + this.panelId + "-content").html("<div class='alert alert-warning'>Too many different patterns (>200)</div>");
 		} else {
-			if (typeof this.hbsData.selectedTemplates != "undefined") {
-				for (var i=0; i<this.hbsData.selectedTemplates.length; i++) {
-					if (typeof this.hbsData.selectedTemplates[i].equivConcept == "undefined") {
-						this.convertTemplateToEquivalentConcept(this.hbsData.selectedTemplates[i]);
+			if (typeof this.hbsData.selectedPatterns != "undefined") {
+				for (var i=0; i<this.hbsData.selectedPatterns.length; i++) {
+					if (typeof this.hbsData.selectedPatterns[i].equivConcept == "undefined") {
+						this.convertPatternToEquivalentConcept(this.hbsData.selectedPatterns[i]);
 					}
-					drawConceptDiagram (this.hbsData.selectedTemplates[i].equivConcept, $("#ads-" + i), this.options, false);
+					drawConceptDiagram (this.hbsData.selectedPatterns[i].equivConcept, $("#ads-" + i), this.options, false);
 				}
 			}
 		}
 	},
 	
-	convertTemplateToEquivalentConcept: function(templateWithCount) {
+	convertPatternToEquivalentConcept: function(patternWithCount) {
 		var concept = {
 						sctid: this.result.id,
 						fsn: ">> " + this.result.fsn,
@@ -51,19 +51,19 @@ var adsObj = {
 		};
 		var relationships = new Array();
 		var groupId = 0;
-		var structures = templateWithCount.conceptTemplate.templateStructure;
+		var structures = patternWithCount.conceptPattern.patternStructure;
 		for (var i=0; i<structures.length; i++) {
 			
 			//TODO Add an "ungrouped" flag and set group to 0 if so
 			groupId++;
-			for (var j=0; j<structures[i].groupTemplateParts.length; j++) {
-				var thisTemplatePart = structures[i].groupTemplateParts[j];
-				var cardinality = thisTemplatePart.cardinality > 1 ? thisTemplatePart.cardinality + " x ": ""
+			for (var j=0; j<structures[i].groupPatternParts.length; j++) {
+				var thisPatternPart = structures[i].groupPatternParts[j];
+				var cardinality = thisPatternPart.cardinality > 1 ? thisPatternPart.cardinality + " x ": ""
 				var relationship = {
 						type: {
 							active: true,
-							conceptId : thisTemplatePart.id,
-							fsn :  cardinality + thisTemplatePart.fsn,
+							conceptId : thisPatternPart.id,
+							fsn :  cardinality + thisPatternPart.fsn,
 							characteristicType: this.characteristicType
 						},
 						target: {
@@ -76,7 +76,7 @@ var adsObj = {
 				relationships.push(relationship);
 			}
 		}
-		//Templates only consider attributes, but concept diagrams must also have a parent
+		//Patterns only consider attributes, but concept diagrams must also have a parent
 		var parentRelationship = {
 				active: true,
 				type: { conceptId : 116680003 },
@@ -90,7 +90,7 @@ var adsObj = {
 		} else {
 			concept.relationships = relationships;
 		}
-		templateWithCount.equivConcept = concept;
+		patternWithCount.equivConcept = concept;
 	},
 	
 	setupData: function() {
@@ -104,23 +104,23 @@ var adsObj = {
 			characteristicType = "INFERRED_RELATIONSHIP";
 		}
 		
-		if (this.showTemplates == "Both") {
+		if (this.showPatterns == "Both") {
 			this.mergePrimFdData();
 		} else {
-			var selectedDetails = this.options.selectedView + "Details" + this.showTemplates;
+			var selectedDetails = this.options.selectedView + "Details" + this.showPatterns;
 			this.hbsData.selectedDetails = eval ("this.result." + selectedDetails);
 			if (this.adsView == "descendants") {
-				this.hbsData.selectedTemplates = this.hbsData.selectedDetails.descendantTemplates;
+				this.hbsData.selectedPatterns = this.hbsData.selectedDetails.descendantPatterns;
 				this.hbsData.adsView = "Descendant";
 				this.hbsData.count = this.hbsData.selectedDetails.descendantCount;
 			} else {
-				this.hbsData.selectedTemplates = this.hbsData.selectedDetails.childTemplates;
+				this.hbsData.selectedPatterns = this.hbsData.selectedDetails.childPatterns;
 				this.hbsData.adsView = "Child";
 				this.hbsData.count = this.hbsData.selectedDetails.childCount;
 			}
 		}
-		adsObj.hbsData.selectedTemplates.sort(function(a,b) {return (a.count > b.count) ? -1 : ((a.count < b.count) ? 1 : 0);} );
-		console.log ("Selected template array contains " + peek("adsObj.hbsData.selectedTemplates.length"));
+		adsObj.hbsData.selectedPatterns.sort(function(a,b) {return (a.count > b.count) ? -1 : ((a.count < b.count) ? 1 : 0);} );
+		console.log ("Selected pattern array contains " + peek("adsObj.hbsData.selectedPatterns.length"));
 	},
 	
 	mergePrimFdData: function() {
@@ -132,13 +132,13 @@ var adsObj = {
 		var primArray, fdArray;
 		if (this.adsView == "descendants") {
 			this.hbsData.count = primDetails.descendantCount + fdDetails.descendantCount;
-			primArray = primDetails.descendantTemplates;
-			fdArray = fdDetails.descendantTemplates;
+			primArray = primDetails.descendantPatterns;
+			fdArray = fdDetails.descendantPatterns;
 			this.hbsData.adsView = "Descendant";
 		} else {
 			this.hbsData.count = primDetails.childCount + fdDetails.childCount;
-			primArray = primDetails.childTemplates;
-			fdArray = fdDetails.childTemplates;
+			primArray = primDetails.childPatterns;
+			fdArray = fdDetails.childPatterns;
 			this.hbsData.adsView = "Child";
 		}
 		this.mergeArrays(primArray, fdArray);
@@ -146,16 +146,16 @@ var adsObj = {
 	
 	mergeArrays: function(primArray, fdArray) {
 		var combined = primArray.concat(fdArray);
-		combined.sort(function(a,b) {return (a.conceptTemplate.id > b.conceptTemplate.id) ? 1 : ((a.conceptTemplate.id < b.conceptTemplate.id) ? -1 : 0);} );
-		this.hbsData.selectedTemplates = combined;
+		combined.sort(function(a,b) {return (a.conceptPattern.id > b.conceptPattern.id) ? 1 : ((a.conceptPattern.id < b.conceptPattern.id) ? -1 : 0);} );
+		this.hbsData.selectedPatterns = combined;
 		//Now loop through the sorted array and replace any duplicates with a merged count
 		for(var i=0; i<combined.length -1; ++i) {
-			if(combined[i].conceptTemplate.id == combined[i+1].conceptTemplate.id) {
+			if(combined[i].conceptPattern.id == combined[i+1].conceptPattern.id) {
 				var mergedCount = combined[i].count + combined[i+1].count;
 				var mergedExamples = this.mergeExamples (combined[i].examples, combined[i+1].examples);
-				var mergedObject = { conceptTemplate : { 
-													id : combined[i].conceptTemplate.id,
-													templateStructure: combined[i].conceptTemplate.templateStructure
+				var mergedObject = { conceptPattern : { 
+													id : combined[i].conceptPattern.id,
+													patternStructure: combined[i].conceptPattern.patternStructure
 												},
 										examples: mergedExamples,
 										count: mergedCount
@@ -199,18 +199,18 @@ var adsObj = {
 	},
 	
 	setupPrimFdButtons : function() {
-		if (this.showTemplates == "Prim") {
-			this.setupButton("Prim",true,"showTemplates");
-			this.setupButton("FD",false,"showTemplates");
-			this.setupButton("Both",false,"showTemplates");
-		} else if (this.showTemplates == "FD") {
-			this.setupButton("FD",true,"showTemplates");
-			this.setupButton("Prim",false,"showTemplates");
-			this.setupButton("Both",false,"showTemplates");
+		if (this.showPatterns == "Prim") {
+			this.setupButton("Prim",true,"showPatterns");
+			this.setupButton("FD",false,"showPatterns");
+			this.setupButton("Both",false,"showPatterns");
+		} else if (this.showPatterns == "FD") {
+			this.setupButton("FD",true,"showPatterns");
+			this.setupButton("Prim",false,"showPatterns");
+			this.setupButton("Both",false,"showPatterns");
 		} else {
-			this.setupButton("Both",true,"showTemplates");
-			this.setupButton("Prim",false,"showTemplates");
-			this.setupButton("FD",false,"showTemplates");
+			this.setupButton("Both",true,"showPatterns");
+			this.setupButton("Prim",false,"showPatterns");
+			this.setupButton("FD",false,"showPatterns");
 		}
 	},
 	
