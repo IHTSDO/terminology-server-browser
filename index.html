@@ -101,13 +101,12 @@
 						options.release = getUrlParameter('branch');
 					}
 				if(getUrlParameter('concept'))
-					{
-						focusConcept = getUrlParameter('concept');
-					}
+				{
+					focusConcept = getUrlParameter('concept');
+				}
 				
-				
-				var getTaskList = $.getJSON("/snowowl/snomed-ct/v2/branches").done(function(result) {
-					var $taskDdl = $('#taskDdl');
+				var getProjectList = $.getJSON("/snowowl/snomed-ct/v2/branches/MAIN/children?immediateChildren=true").done(function(result) {
+					var $projectDdl = $('#projectDdl');
 					result.items.sort(function(a,b) {
 					  if(a.name.split('-')[0] === b.name.split('-')[0])
 					  {
@@ -131,16 +130,12 @@
 					});
 					$.each(result.items, function() {
 						var relativePath = this.path.substring("MAIN/".length);
-						$('<option>').val(this.path).text(this.name).appendTo($taskDdl);
-						// Find project branches.
-						// Ignore sub-branches and release branches with format 2015-01-31
-//						if (relativePath.indexOf("/") == -1 && relativePath.match("\\d{4}-\\d{2}-\\d{2}") == null) {
-//							$('<option>').val(this.path).text(this.name).appendTo($taskDdl);
-//						}
+						$('<option>').val(this.path).text(this.name).appendTo($projectDdl);
 					});
-					$("#taskDdl").val(options.release).change();
+					$("#projectDdl").val(options.release).change();
 					var branchChanged = function(){
-						var branchPath = $('#taskDdl').val();
+						getTaskList();
+						var branchPath = $('#projectDdl').val();
 						options.release = branchPath;
 						var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
 						var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
@@ -150,10 +145,61 @@
 						cdPanel.subscribe(searchP);
 						cdPanel.setupCanvas();
 					}
-					$("#taskDdl").on("change", function(event) { 
+					$("#projectDdl").on("change", function(event) { 
 						 branchChanged(this);
 					});
 				});
+				
+				var getTaskList = function () {
+						$.getJSON("/snowowl/snomed-ct/v2/branches/" + $('#projectDdl').val() +"/children?immediateChild=true").done(function(result) {
+						var $taskDdl = $('#taskDdl');
+						result.items.sort(function(a,b) {
+						  if(a.name.split('-')[0] === b.name.split('-')[0])
+						  {
+							  a = a.name.split('-');
+							  b = b.name.split('-');
+							  if(a.length === 1)
+							  {
+								return -1   
+							  }
+							  else if(b.length === 1)
+							  {
+								return 1   
+							  }
+							  else{
+								return parseInt(a[1]) - parseInt(b[1]);
+							  }
+						  }
+						  else{
+							  return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);
+						  }
+						});
+						$.each(result.items, function() {
+							var relativePath = this.path.substring("MAIN/".length);
+							$('<option>').val(this.path).text(this.name).appendTo($taskDdl);
+						});
+						//$("#taskDdl").val(options.release).change();
+						var branchChanged = function(){
+							var branchPath = $('#taskDdl').val();
+							//If no task selected in the task dropdown, use the project
+							if (branchPath == "None") {
+								branchPath = $('#projectDdl').val();
+							}
+							options.release = branchPath;
+							var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
+							var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
+							var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
+	
+							cdPanel.subscribe(tpt);
+							cdPanel.subscribe(searchP);
+							cdPanel.setupCanvas();
+						}
+						$("#taskDdl").on("change", function(event) { 
+							 branchChanged(this);
+						});
+					});
+				}
+				
 				var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
 				var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
 				var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
@@ -178,9 +224,14 @@
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
-					<select style="margin-top:18px; margin-left:20px;" id="taskDdl" on-change="taskChanged()">
+					<span style="margin-left:10px">Project:</span>
+					<select style="margin-top:18px; margin-left:2px;" id="projectDdl" on-change="taskChanged()">
 							<option value="MAIN">MAIN</option>
-						</select>
+					</select>
+					<span style="margin-left:10px">Task:</span>
+					<select style="margin-top:18px; margin-left:2px;" id="taskDdl" on-change="taskChanged()">
+							<option value="None">None</option>
+					</select>
 					<ul class="nav navbar-nav navbar-right">
 						<img class="pull-right visible-lg" src="img/newlogo.png" alt="IHTSDO delivering SNOMED, the global clinical terminology">
 					</ul>
