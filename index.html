@@ -133,7 +133,7 @@
 						$('<option>').val(this.path).text(this.name).appendTo($projectDdl);
 					});
 					$("#projectDdl").val(options.release).change();
-					var branchChanged = function(){
+					var projectChanged = function(){
 						getTaskList();
 						var branchPath = $('#projectDdl').val();
 						options.release = branchPath;
@@ -146,13 +146,15 @@
 						cdPanel.setupCanvas();
 					}
 					$("#projectDdl").on("change", function(event) { 
-						 branchChanged(this);
+						 projectChanged(this);
 					});
 				});
 				
 				var getTaskList = function () {
 						$.getJSON("/snowowl/snomed-ct/v2/branches/" + $('#projectDdl').val() +"/children?immediateChild=true").done(function(result) {
 						var $taskDdl = $('#taskDdl');
+						$taskDdl.html("");
+						$('<option>').val("None").text("None").appendTo($taskDdl);
 						result.items.sort(function(a,b) {
 						  if(a.name.split('-')[0] === b.name.split('-')[0])
 						  {
@@ -178,8 +180,7 @@
 							var relativePath = this.path.substring("MAIN/".length);
 							$('<option>').val(this.path).text(this.name).appendTo($taskDdl);
 						});
-						//$("#taskDdl").val(options.release).change();
-						var branchChanged = function(){
+						var taskChanged = function(){
 							var branchPath = $('#taskDdl').val();
 							//If no task selected in the task dropdown, use the project
 							if (branchPath == "None") {
@@ -195,7 +196,7 @@
 							cdPanel.setupCanvas();
 						}
 						$("#taskDdl").on("change", function(event) { 
-							 branchChanged(this);
+							 taskChanged(this);
 						});
 					});
 				}
@@ -225,7 +226,7 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
 					<span style="margin-left:10px">Project:</span>
-					<select style="margin-top:18px; margin-left:2px;" id="projectDdl" on-change="taskChanged()">
+					<select style="margin-top:18px; margin-left:2px;" id="projectDdl" on-change="projectChanged()">
 							<option value="MAIN">MAIN</option>
 					</select>
 					<span style="margin-left:10px">Task:</span>
