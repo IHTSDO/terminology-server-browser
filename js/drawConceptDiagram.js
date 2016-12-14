@@ -1,3 +1,5 @@
+
+
 function drawConceptDiagram (concept, div, options, allowDownload) {
     var svgIsaModel = [];
     var svgAttrModel = [];
@@ -39,7 +41,7 @@ function drawConceptDiagram (concept, div, options, allowDownload) {
     var svgHeight = (140 + (50 * relCount)) + "px";
     parentDiv.svg({
         settings: {
-            width: '650px',
+            width: '750px',
             height: svgHeight}});
     var svg = parentDiv.svg('get');
     loadDefs(svg);

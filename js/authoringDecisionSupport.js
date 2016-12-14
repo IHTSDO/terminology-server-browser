@@ -6,6 +6,7 @@ function peek (code) {
 	}
 	return "eval failed";
 }
+
 var adsObj = {  
 	conceptId : null,
 	characteristicType: "STATED_RELATIONSHIP",
@@ -19,26 +20,40 @@ var adsObj = {
 	showPatterns:"Prim",
 
 	updatePanel: function() {
-		console.log ("Updating ADS Panel selectedView: " + this.options.selectedView +
-					" adsView: " + this.adsView +
-					" showingPatterns: " + this.showPatterns);
+		//console.log ("Updating ADS Panel selectedView: " + this.options.selectedView +
+		//			" adsView: " + this.adsView +
+		//			" showingPatterns: " + this.showPatterns);
 		this.setupData();
-		console.log("Ads data setup complete");
+		//console.log("Ads data setup complete");
 		this.hbsData.dataOK = (this.hbsData.selectedPatterns.length < 200);
 
-		$('#ads-' + this.panelId/*+ "-accordion"*/).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](this.hbsData));
+		$('#ads-' + this.panelId).html(JST["views/conceptDetailsPlugin/tabs/ads.hbs"](this.hbsData));
 		this.setupButtons();
 		
 		if (!this.hbsData.dataOK){
 			$('#ads-' + this.panelId + "-content").html("<div class='alert alert-warning'>Too many different patterns (>200)</div>");
 		} else {
-			if (typeof this.hbsData.selectedPatterns != "undefined") {
-				for (var i=0; i<this.hbsData.selectedPatterns.length; i++) {
-					if (typeof this.hbsData.selectedPatterns[i].equivConcept == "undefined") {
-						this.convertPatternToEquivalentConcept(this.hbsData.selectedPatterns[i]);
-					}
-					drawConceptDiagram (this.hbsData.selectedPatterns[i].equivConcept, $("#ads-" + i), this.options, false);
+			this.drawAdsConceptDiagrams(0);
+		}
+	},
+	
+	drawAdsConceptDiagrams: function (calledCount) {
+		//Have we been called before?
+		calledCount = (typeof calledCount === 'undefined') ? 0 : calledCount;
+		//Is our panel visible?  If yes, draw, if no try again in 300ms if we haven't already 
+		var isVisible = $('#ads-' + this.panelId).is(":visible");
+		if (isVisible && typeof this.hbsData.selectedPatterns != "undefined") {
+			for (var i=0; i<this.hbsData.selectedPatterns.length; i++) {
+				if (typeof this.hbsData.selectedPatterns[i].equivConcept == "undefined") {
+					this.convertPatternToEquivalentConcept(this.hbsData.selectedPatterns[i]);
 				}
+				drawConceptDiagram (this.hbsData.selectedPatterns[i].equivConcept, $("#ads-" + i), this.options, false);
+			}
+		} else {
+			if (calledCount == 0) {
+				setTimeout(function() {adsObj.drawAdsConceptDiagrams(1);}, 300);
+			} else {
+				console.log ("Skipping ADS draw because not visible");
 			}
 		}
 	},
@@ -62,13 +77,15 @@ var adsObj = {
 				var relationship = {
 						type: {
 							active: true,
-							conceptId : thisPatternPart.id,
-							fsn :  cardinality + thisPatternPart.fsn,
+							conceptId : thisPatternPart.type.sctId,
+							fsn :  cardinality + thisPatternPart.type.fsn,
 							characteristicType: this.characteristicType
 						},
 						target: {
 							active: true,
-							fsn : "TBA"
+							conceptId: thisPatternPart.value.sctId,
+							fsn: thisPatternPart.value.fsn,
+							definitionStatus: "PRIMITIVE"
 						},
 						active: true,
 						groupId: groupId
@@ -120,7 +137,7 @@ var adsObj = {
 			}
 		}
 		adsObj.hbsData.selectedPatterns.sort(function(a,b) {return (a.count > b.count) ? -1 : ((a.count < b.count) ? 1 : 0);} );
-		console.log ("Selected pattern array contains " + peek("adsObj.hbsData.selectedPatterns.length"));
+		//console.log ("Selected pattern array contains " + peek("adsObj.hbsData.selectedPatterns.length"));
 	},
 	
 	mergePrimFdData: function() {

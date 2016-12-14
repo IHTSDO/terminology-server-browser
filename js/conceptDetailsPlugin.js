@@ -1374,7 +1374,7 @@ function conceptDetails(divElement, conceptId, options) {
     
 	this.getAds = function(conceptId, forceShow) {
 		if ( adsObj.conceptId == conceptId) {
-			console.log("skipping ads call...");
+			console.log("skipping ADS call...");
 			adsObj.panel = panel;
 			adsObj.updatePanel();
 		} else {
@@ -1386,9 +1386,7 @@ function conceptDetails(divElement, conceptId, options) {
 						adsObj.result = result;
 						adsObj.options = panel.options;
 						adsObj.panelId = panel.divElement.id;
-						setTimeout(function () {
-							adsObj.updatePanel();
-						}, 1000)
+						adsObj.updatePanel();
 					}).fail(function() {
 							console.log("Failed to recover ADS for " + conceptId);
 							$('#ads-' + panel.divElement.id)
@@ -1672,7 +1670,7 @@ function conceptDetails(divElement, conceptId, options) {
         });
         if (!alreadySubscribed) {
             var subscription = channel.subscribe(panelId, function(data, envelope) {
-                console.log("listening in " + panel.divElement.id);
+                //console.log("listening in " + panel.divElement.id);
                 panel.conceptId = data.conceptId;
                 if ($("#home-children-" + panel.divElement.id + "-body").length > 0){
                 }else{
