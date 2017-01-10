@@ -1379,7 +1379,7 @@ function conceptDetails(divElement, conceptId, options) {
 			adsObj.updatePanel();
 		} else {
 			adsObj.conceptId = conceptId;
-			xhrAds = $.getJSON("/ads_api/concept/" + options.release + "/" + conceptId,
+			xhrAds = $.getJSON("/ads-api/concept/" + options.release + "/" + conceptId,
 							function(result) {}
 					).done(function(result) {
 						console.log("Received ADS data for " + conceptId);
