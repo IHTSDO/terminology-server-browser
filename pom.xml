@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ihtsdo.otf</groupId>
 	<artifactId>terminology-server-browser</artifactId>
-	<version>0.17</version>
-	<name>Snomed Refset Web Front End</name>
-	<description>Snomed Snow Owl Terminology Server Web Front End</description>
+	<version>0.18</version>
+	<name>TS Browser</name>
+	<description>Snomed Snow Owl Terminology Server Browser</description>
 	<url>https://term.ihtsdotools.org/</url>
 
 	<properties>
@@ -48,6 +46,16 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>external.atlassian.jgitflow</groupId>
+				<artifactId>jgitflow-maven-plugin</artifactId>
+				<version>1.0-m4.3</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<enableSshAgent>true</enableSshAgent>
+					<noDeploy>true</noDeploy>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

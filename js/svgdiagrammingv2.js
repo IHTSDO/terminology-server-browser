@@ -23,10 +23,13 @@ function drawSctBox(svg, x, y, label, sctid, cssClass) {
         testText = sctid.toString();
     }
     var fontFamily = '"Helvetica Neue",Helvetica,Arial,sans-serif';
-    //var fontFamily = 'sans-serif';
-    var tempText = svg.text(x, y , testText, {fontFamily: fontFamily, fontSize: '12', fill: 'black'});
+    var tempText = svg.text(x, y , testText, {fontFamily: fontFamily, fontSize: '12px', fill: 'black'});
     var textHeight = tempText.getBBox().height;
     var textWidth = tempText.getBBox().width;
+    if (textWidth < 50) {
+    	console.log ("Warning small box detected");
+    	return;
+    }
     textWidth = Math.round(textWidth* 1.2);
     svg.remove(tempText);
 

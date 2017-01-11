@@ -1,4 +1,5 @@
 <div class="container" style="max-width: 100%;">
+    {{#if allowDownload }}
     <div id="{{divElementId}}-diagram-toolbar" class="row">
         <div class="row" style="margin: 15px;">
             <div class="btn-toolbar pull-right" role="toolbar">
@@ -9,6 +10,7 @@
             </div>
         </div>
     </div>
+    {{/if}}
     <div id="{{divElementId}}-diagram-body" class="row" style="overflow: auto; width: 1000;">
 
     </div>

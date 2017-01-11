@@ -40,6 +40,7 @@ function conceptDetails(divElement, conceptId, options) {
     var xhrReferences = null;
     var xhrParents = null;
     var xhrMembers = null;
+    var xhrAds = null;
     var conceptRequested = 0;
     panel.subscriptionsColor = [];
     panel.subscriptions = [];
@@ -304,6 +305,7 @@ function conceptDetails(divElement, conceptId, options) {
         $('#' + panel.childrenPId).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $("#diagram-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+        $('#ads-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
 
         // load attributes
         if (xhr != null) {
@@ -644,7 +646,7 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#home-' + panel.divElement.id + '-inferred-button').addClass("btn-default");
                 $('#home-' + panel.divElement.id + '-inferred-button').removeClass("btn-primary");
                 $('#home-' + panel.divElement.id + '-inferred-button').click(function (event) {
-                    console.log('inferred');
+                    //console.log('inferred');
                     panel.options.selectedView = "inferred";
                     panel.updateCanvas();
                 });
@@ -1041,10 +1043,11 @@ function conceptDetails(divElement, conceptId, options) {
             if (typeof(switchLanguage) == "function") {
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
-            conceptRequested = 0;
+
 
 //            membersUrl = options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId + "/members";
-
+            panel.getAds(conceptRequested);
+            conceptRequested = 0;
         }).fail(function () {
             panel.relsPId = divElement.id + "-rels-panel";
             panel.attributesPId = divElement.id + "-attributes-panel";
@@ -1368,6 +1371,29 @@ function conceptDetails(divElement, conceptId, options) {
             $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-minus");
         });
     }
+    
+	this.getAds = function(conceptId, forceShow) {
+		if ( adsObj.conceptId == conceptId) {
+			console.log("skipping ADS call...");
+			adsObj.panel = panel;
+			adsObj.updatePanel();
+		} else {
+			adsObj.conceptId = conceptId;
+			xhrAds = $.getJSON("/ads-api/concept/" + options.release + "/" + conceptId,
+							function(result) {}
+					).done(function(result) {
+						console.log("Received ADS data for " + conceptId);
+						adsObj.result = result;
+						adsObj.options = panel.options;
+						adsObj.panelId = panel.divElement.id;
+						adsObj.updatePanel();
+					}).fail(function() {
+							console.log("Failed to recover ADS for " + conceptId);
+							$('#ads-' + panel.divElement.id)
+									.html("<div class='alert alert-warning'><span class='i18n' data-i18n-id='i18n_ajax_failed'>No ADS information available for this concept, check expected project selected</span></div>");
+					});
+		}
+	};
 
     this.getParent = function(conceptId, target){
         if (xhrParents != null) {
@@ -1635,7 +1661,7 @@ function conceptDetails(divElement, conceptId, options) {
     // Subsription methods
     this.subscribe = function(panelToSubscribe) {
         var panelId = panelToSubscribe.divElement.id;
-//        console.log('Subscribing to id: ' + panelId);
+        console.log( panel.divElement.id + ' subscribing to id: ' + panelId);
         var alreadySubscribed = false;
         $.each(panel.subscriptionsColor, function(i, field){
             if (field == panelToSubscribe.markerColor){
@@ -1644,7 +1670,7 @@ function conceptDetails(divElement, conceptId, options) {
         });
         if (!alreadySubscribed) {
             var subscription = channel.subscribe(panelId, function(data, envelope) {
-//                console.log("listening in " + panel.divElement.id);
+                //console.log("listening in " + panel.divElement.id);
                 panel.conceptId = data.conceptId;
                 if ($("#home-children-" + panel.divElement.id + "-body").length > 0){
                 }else{
@@ -1652,12 +1678,6 @@ function conceptDetails(divElement, conceptId, options) {
                     panel.loadMarkers();
                 }
                 panel.updateCanvas();
-//            This creates a cycle
-//            channel.publish(panel.divElement.id, {
-//                term: data.term,
-//                conceptId: data.conceptId,
-//                source: data.source
-//            });
             });
             panel.subscriptions.push(subscription);
             panelToSubscribe.subscribers.push(panel.divElement.id);
