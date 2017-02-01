@@ -112,6 +112,9 @@ var adsObj = {
 	
 	setupData: function() {
 		this.hbsData.divElementId = this.panelId;
+		if (typeof this.result.sctId == 'undefined') {
+			return;
+		}
 		this.hbsData.sctId = this.result.sctId;
 		this.hbsData.fsn = this.result.fsn;
 		
