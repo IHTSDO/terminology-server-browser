@@ -20,6 +20,9 @@ var adsObj = {
 	showPatterns:"Prim",
 
 	updatePanel: function() {
+		if (this.result == null || typeof this.result.sctId == 'undefined') {
+			return;
+		}
 		//console.log ("Updating ADS Panel selectedView: " + this.options.selectedView +
 		//			" adsView: " + this.adsView +
 		//			" showingPatterns: " + this.showPatterns);
@@ -112,9 +115,6 @@ var adsObj = {
 	
 	setupData: function() {
 		this.hbsData.divElementId = this.panelId;
-		if (typeof this.result == 'undefined' || typeof this.result.sctId == 'undefined') {
-			return;
-		}
 		this.hbsData.sctId = this.result.sctId;
 		this.hbsData.fsn = this.result.fsn;
 		
