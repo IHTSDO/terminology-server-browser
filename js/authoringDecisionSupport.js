@@ -20,6 +20,9 @@ var adsObj = {
 	showPatterns:"Prim",
 
 	updatePanel: function() {
+		if (this.result == null || typeof this.result.sctId == 'undefined') {
+			return;
+		}
 		//console.log ("Updating ADS Panel selectedView: " + this.options.selectedView +
 		//			" adsView: " + this.adsView +
 		//			" showingPatterns: " + this.showPatterns);
