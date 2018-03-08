@@ -310,6 +310,7 @@ function conceptDetails(divElement, conceptId, options) {
         // load attributes
         if (xhr != null) {
             xhr.abort();
+            xhr = null;
             console.log("aborting call...");
         }
         xhr = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId, function (result) {
