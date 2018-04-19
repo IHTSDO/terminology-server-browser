@@ -3,7 +3,11 @@
         {{#if active}}
             <li data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{fsn}}' class='treeLabel'>
                 <button class='btn btn-link btn-xs treeButton' style='padding:2px'>
-                    <i class='glyphicon glyphicon-{{#if_eq isLeafInferred "true"}}minus{{else}}chevron-right{{/if_eq}} treeButton' id='{{../../divElementId}}-treeicon-{{conceptId}}'></i>
+                    {{#if_eq isLeafInferred true}}
+                        <i class='glyphicon glyphicon-minus treeButton' id='{{../../divElementId}}-treeicon-{{conceptId}}'></i>
+                    {{else}}
+                        <i class='glyphicon glyphicon-chevron-right treeButton' id='{{../../divElementId}}-treeicon-{{conceptId}}'></i>
+                    {{/if_eq}}
                 </button>
                 {{#if_eq definitionStatus "PRIMITIVE"}}
                     <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{fsn}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
