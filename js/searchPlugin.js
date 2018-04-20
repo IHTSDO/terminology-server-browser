@@ -39,7 +39,7 @@ function searchPanel(divElement, options) {
         var context = {
             divElementId: panel.divElement.id
         };
-        $(divElement).html(JST["views/searchPlugin/aux.hbs"](context));
+        $(divElement).html(JST["views/searchPlugin/search.hbs"](context));
 
         $('#' + panel.divElement.id + '-searchBox').keyup(function () {
             clearTimeout(thread);
