@@ -108,7 +108,7 @@
 				var getProjectList = $.getJSON("/snowowl/snomed-ct/v2/branches/MAIN/children?immediateChildren=true").done(function(result) {
 					var $projectDdl = $('#projectDdl');
 					result.items.sort(function(a,b) {
-						return b.headTimestamp - a.headTimestamp;
+						return b.baseTimestamp - a.baseTimestamp;
 					});
 					$.each(result.items, function() {
 						var relativePath = this.path.substring("MAIN/".length);
