@@ -138,7 +138,7 @@
 						$taskDdl.html("");
 						$('<option>').val("None").text("None").appendTo($taskDdl);
 						result.items.sort(function(a,b) {
-						 	return b.headTimestamp - a.headTimestamp;
+						 	return b.baseTimestamp - a.baseTimestamp;
 						});
 						$.each(result.items, function() {
 							var relativePath = this.path.substring("MAIN/".length);
