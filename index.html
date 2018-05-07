@@ -66,9 +66,12 @@
 		<script type="text/javascript">
 			function initialize() {
 				// Example: common options object
+				var originalTask = "";
 				var options = {
 					serverUrl: "/snowowl/snomed-ct/v2/browser",
 					release: "MAIN",
+					branch: "",
+					task: "",
 					selectedView: "inferred",
 					displayChildren: false,
 					langRefset: "900000000000509007",
@@ -99,6 +102,11 @@
 				if(getUrlParameter('branch'))
 					{
 						options.release = getUrlParameter('branch');
+						var variables = options.release.split('/');
+						options.branch = "MAIN/" + variables[1];
+						if(variables.length > 2) {
+							originalTask = options.release;
+						}						
 					}
 				if(getUrlParameter('concept'))
 				{
@@ -114,11 +122,12 @@
 						var relativePath = this.path.substring("MAIN/".length);
 						$('<option>').val(this.path).text(this.name).appendTo($projectDdl);
 					});
-					$("#projectDdl").val(options.release).change();
 					var projectChanged = function(){
 						getTaskList();
 						var branchPath = $('#projectDdl').val();
 						options.release = branchPath;
+						options.branch = branchPath;
+						options.task = "";
 						var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
 						var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
 						var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
@@ -130,6 +139,15 @@
 					$("#projectDdl").on("change", function(event) { 
 						 projectChanged(this);
 					});
+
+					if(options.branch) {
+						$("#projectDdl").val(options.branch).change();
+						if(originalTask) {
+							options.task = originalTask;
+						}												
+					} else {
+						$("#projectDdl").val(options.release).change();
+					}
 				});
 				
 				var getTaskList = function () {
@@ -144,6 +162,9 @@
 							var relativePath = this.path.substring("MAIN/".length);
 							$('<option>').val(this.path).text(this.name).appendTo($taskDdl);
 						});
+						if(options.task) {
+							$("#taskDdl").val(options.task).change();						
+						}
 						var taskChanged = function(){
 							var branchPath = $('#taskDdl').val();
 							//If no task selected in the task dropdown, use the project
@@ -151,6 +172,7 @@
 								branchPath = $('#projectDdl').val();
 							}
 							options.release = branchPath;
+							options.task = branchPath;
 							var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
 							var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
 							var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
