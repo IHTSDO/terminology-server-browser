@@ -581,7 +581,7 @@ function conceptDetails(divElement, conceptId, options) {
                             auxDescriptions.push(description);
                         }
                     }else{
-                        if (options.displayInactiveDescriptions){
+                        if (panel.options.displayInactiveDescriptions){
                             auxDescriptions.push(description);
                         }else{
                             if (description.active){

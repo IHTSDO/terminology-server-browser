@@ -16,9 +16,6 @@ and open the template in the editor.
     from { -webkit-transform: rotate(0deg);}
     to { -webkit-transform: rotate(359deg);}
 }
-.glyphicon-cog {
-    display:none;
-}
 .icon-spin {
     animation: 1.5s linear 0s normal none infinite spin;
     -webkit-animation: 1.5s linear 0s normal none infinite spin;
