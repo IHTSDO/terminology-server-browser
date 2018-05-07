@@ -1,5 +1,6 @@
 <form role="form" id="{{divElementId}}-options-form">
     <div class="form-group">
+        <!--
         <div class="checkbox">
             <label>
                 {{#if options.displaySynonyms}}
@@ -9,6 +10,8 @@
                 {{/if}}
             </label>
         </div>
+        -->
+        <!--
         <div class="checkbox">
             <label>
                 {{#if options.showIds}}
@@ -18,6 +21,7 @@
                 {{/if}}
             </label>
         </div>
+        -->
         <div class="checkbox">
             <label>
                 {{#if options.displayInactiveDescriptions}}
@@ -36,6 +40,7 @@
                 {{/if}}
             </label>
         </div>
+        <!--
         <div class="checkbox">
             <label>
                 {{#if options.diagrammingMarkupEnabled}}
@@ -45,12 +50,16 @@
                 {{/if}}
             </label>
         </div>
+        -->
+        <!--
         <div class="checkbox">
             <label>
                 <input type="checkbox" id="{{divElementId}}-displayChildren" {{#if options.displayChildren}}checked{{/if}}> <span class="i18n" data-i18n-id="i18n_display_children">{{i18n "i18n_display_children" "Display All Children"}}</span>
             </label>
         </div>
+        -->
     </div>
+    <!--
     <div class="form-group">
         <label for="selectedRelsView"><span class="i18n" data-i18n-id="i18n_rels_view">{{i18n "i18n_rels_view" "Relationships View"}}</span></label>
         <select class="form-control" id="{{divElementId}}-relsViewOption">
@@ -71,6 +80,8 @@
             {{/if_eq}}
         </select>
     </div>
+    -->
+    <!--
     <div class="form-group">
         <label for="{{divElementId}}-langRefsetOption"><span class="i18n" data-i18n-id="i18n_language_refset">{{i18n "i18n_language_refset" "Language Refset"}}</span></label>
         <select class="form-control" id="{{divElementId}}-langRefsetOption">
@@ -116,6 +127,8 @@
             {{/if_eq}}
         </select>
     </div>
+    -->
+    <!--
     <div class="form-group">
         <table class='table table-bordered table-hover'>
             <thead>
@@ -148,4 +161,5 @@
             </tbody>
         </table>
     </div>
+    -->
 </form>
