@@ -568,22 +568,22 @@ function program67(depth0,data,depth1) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-options-form\">\n    <div class=\"form-group\">\n        <div class=\"checkbox\">\n            <label>\n                ";
+    + "-options-form\">\n    <div class=\"form-group\">       \n        <div class=\"checkbox\">\n            <label>\n                ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.displaySynonyms), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                ";
+  buffer += "\n            </label>\n        </div>    \n        <!--\n        <div class=\"checkbox\">\n            <label>\n                ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.showIds), {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                ";
+  buffer += "\n            </label>\n        </div>\n        -->\n        <div class=\"checkbox\">\n            <label>\n                ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.displayInactiveDescriptions), {hash:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.hideNotAcceptable), {hash:{},inverse:self.program(15, program15, data),fn:self.program(13, program13, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                ";
+  buffer += "\n            </label>\n        </div>\n        <!--\n        <div class=\"checkbox\">\n            <label>\n                ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.diagrammingMarkupEnabled), {hash:{},inverse:self.program(19, program19, data),fn:self.program(17, program17, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input type=\"checkbox\" id=\"";
+  buffer += "\n            </label>\n        </div>\n        -->\n        <!--\n        <div class=\"checkbox\">\n            <label>\n                <input type=\"checkbox\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -592,7 +592,7 @@ function program67(depth0,data,depth1) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "> <span class=\"i18n\" data-i18n-id=\"i18n_display_children\">"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_display_children", "Display All Children", options) : helperMissing.call(depth0, "i18n", "i18n_display_children", "Display All Children", options)))
-    + "</span>\n            </label>\n        </div>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"selectedRelsView\"><span class=\"i18n\" data-i18n-id=\"i18n_rels_view\">"
+    + "</span>\n            </label>\n        </div>\n        -->\n    </div>\n    <!--\n    <div class=\"form-group\">\n        <label for=\"selectedRelsView\"><span class=\"i18n\" data-i18n-id=\"i18n_rels_view\">"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_rels_view", "Relationships View", options) : helperMissing.call(depth0, "i18n", "i18n_rels_view", "Relationships View", options)))
     + "</span></label>\n        <select class=\"form-control\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -607,7 +607,7 @@ function program67(depth0,data,depth1) {
   buffer += "\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(33, program33, data),fn:self.program(31, program31, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "all", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "all", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        </select>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"";
+  buffer += "\n        </select>\n    </div>\n    -->\n    <!--\n    <div class=\"form-group\">\n        <label for=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -641,10 +641,10 @@ function program67(depth0,data,depth1) {
   buffer += "\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(65, program65, data),fn:self.program(63, program63, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "31000146106", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "31000146106", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        </select>\n    </div>\n    <div class=\"form-group\">\n        <table class='table table-bordered table-hover'>\n            <thead>\n                <tr>\n                    <th>Panel</th>\n                    <th>Subscribed</th>\n                    <th>Subscriptor</th>\n                </tr>\n            </thead>\n            <tbody>\n                ";
+  buffer += "\n        </select>\n    </div>\n    -->\n    <!--\n    <div class=\"form-group\">\n        <table class='table table-bordered table-hover'>\n            <thead>\n                <tr>\n                    <th>Panel</th>\n                    <th>Subscribed</th>\n                    <th>Subscriptor</th>\n                </tr>\n            </thead>\n            <tbody>\n                ";
   stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(67, program67, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            </tbody>\n        </table>\n    </div>\n</form>";
+  buffer += "\n            </tbody>\n        </table>\n    </div>\n    -->\n</form>";
   return buffer;
   });
 
