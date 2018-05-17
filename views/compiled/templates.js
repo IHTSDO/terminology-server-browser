@@ -246,11 +246,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-configModal'>\r\n    <div class='modal-dialog'>\r\n        <div class='modal-content'>\r\n            <div class='modal-header'>\r\n                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>\r\n                <h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span> (";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + ")</h4>\r\n            </div>\r\n            <div class='modal-body' id='";
+    + "-configModal'>\r\n    <div class='modal-dialog'>\r\n        <div class='modal-content'>\r\n            <div class='modal-header'>\r\n                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>\r\n                <h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span></h4>\r\n            </div>\r\n            <div class='modal-body' id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -577,10 +573,10 @@ function program67(depth0,data,depth1) {
   buffer += "\r\n            </label>\r\n        </div>\r\n        -->\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.displayInactiveDescriptions), {hash:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            </label>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                ";
+  buffer += "\r\n            </label>\r\n        </div>\r\n        <!--\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.hideNotAcceptable), {hash:{},inverse:self.program(15, program15, data),fn:self.program(13, program13, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            </label>\r\n        </div>\r\n        <!--\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                ";
+  buffer += "\r\n            </label>\r\n        </div>\r\n        -->\r\n        <!--\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.diagrammingMarkupEnabled), {hash:{},inverse:self.program(19, program19, data),fn:self.program(17, program17, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n            </label>\r\n        </div>\r\n        -->\r\n        <!--\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" id=\"";
