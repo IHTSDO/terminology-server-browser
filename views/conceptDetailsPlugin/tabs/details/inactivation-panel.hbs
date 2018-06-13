@@ -1,0 +1,23 @@
+<table class='table table-default' >
+<tr>
+	<td colspan="2">
+		Inactivation Reason: {{convertTextFromCode firstMatch.inactivationIndicator}}			
+	</td>
+</tr>
+<tr>
+	<td colspan="2">
+		<div>
+			<div style="display:inline;width: 19%;">Association Targets: &nbsp; </div>
+			<div style="display:table;width: 80%;">
+				{{#each associationTargets}}       
+					<div style="width: 100%;">
+						<div style="width:20%;display: inline-block;">{{convertTextFromCode associationTarget}}</div>
+						<div style="width:20%;display: inline-block;">{{targetId}}</div>
+						<div style="width:57%;display: inline-block;">{{fsn}}</div>
+					</div>		
+				{{/each}}				
+			</div>			
+		</div>				
+	</td>
+</tr>
+</table>
