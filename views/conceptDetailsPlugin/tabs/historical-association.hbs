@@ -1,0 +1,34 @@
+<div style="padding-bottom: 20px"></div>
+<h4>&nbsp; Incoming Historical Associations</h4>
+<table class='table table-hover'>
+    <thead><tr>
+        <th><span>SCTID</span></th>
+		<th><span>Concept FSN</span></th>
+		<th><span>Reason</span></th>		
+    </tr></thead>
+	<tbody>
+		{{#each concepts}}        
+			<tr>
+				<td>{{conceptId}}</td>
+				<td>{{fsn}}</td>
+				<td>{{convertTextFromCode inactivationIndicator}}</td>
+			</tr>		   
+		{{/each}}
+	</tbody>
+</table>
+
+<h4>&nbsp; Inactive descriptions referring to this concept</h4>
+<table class='table table-hover'>
+    <thead><tr>
+        <th><span>SCTID</span></th>
+		<th><span>Description Term</span></th>	
+    </tr></thead>
+	<tbody>
+		{{#each descriptionsWithConceptTarget}}        
+			<tr>
+				<td>{{id}}</td>
+				<td>{{term}}</td>				
+			</tr>		   
+		{{/each}}
+	</tbody>
+</table>

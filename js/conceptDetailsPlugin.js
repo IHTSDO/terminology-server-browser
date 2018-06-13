@@ -40,6 +40,7 @@ function conceptDetails(divElement, conceptId, options) {
     var xhrReferences = null;
     var xhrParents = null;
     var xhrMembers = null;
+	var xhrHistoricalAssocs = null;
     var xhrAds = null;
     var conceptRequested = 0;
     panel.subscriptionsColor = [];
@@ -313,6 +314,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhr = null;
             console.log("aborting call...");
         }
+		panel.loadHistoricalAssociations();
         xhr = $.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + panel.conceptId, function (result) {
 
         }).done(function (result) {
@@ -382,6 +384,14 @@ function conceptDetails(divElement, conceptId, options) {
                     return opts.inverse(this);
                 }
             });
+			Handlebars.registerHelper('convertTextFromCode', function(code, opts){
+                if(!code) {
+					return '';
+				}
+				var text = code.replace(/_/g, " ");
+				text = text.toLowerCase();
+				return text.charAt(0).toUpperCase() + text.slice(1);
+            });
             var context = {
                 panel: panel,
                 firstMatch: firstMatch,
@@ -389,6 +399,62 @@ function conceptDetails(divElement, conceptId, options) {
             };
             $('#home-attributes-' + panel.divElement.id).html(JST["views/conceptDetailsPlugin/tabs/home/attributes.hbs"](context));
 
+			if (!firstMatch.active) {
+				$('#home-attributes-inactivation-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+				var associationTargetObj = firstMatch.associationTargets;
+				if (Object.keys(associationTargetObj).length > 0) {
+					var associationTargetArr = [];
+					var conceptIds = [];
+					for (var key in associationTargetObj) {
+						for (var id in associationTargetObj[key]) {
+							var obj = {};
+							obj.associationTarget = key;
+							obj.targetId = associationTargetObj[key][id];
+							associationTargetArr.push(obj);
+							if (conceptIds.indexOf(obj.targetId) === -1) {
+								conceptIds.push(obj.targetId);
+							}
+						}
+					}
+					if (conceptIds.length > 0) {
+						var getConcepts =  function(list) {     
+							var dfd = $.Deferred();
+							var result = {concepts: []};
+							for (var i = 0 ; i < list.length; i++) {
+								$.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + list[i], function (concept) {
+								}).done(function (concept) {								    
+									result.concepts.push(concept)
+									if (result.concepts.length  === list.length) {
+									  dfd.resolve(result);
+									}
+								}).fail(function (xhr, textStatus, error) {
+									// do nothing
+								});
+							}							  
+							return dfd.promise();
+						};
+				
+						$.when(getConcepts(conceptIds)).then(
+							function( respone ) {
+								if(respone.concepts.length > 0) {
+									for (var i= 0 ; i < respone.concepts.length; i++){
+										for (var j= 0 ; i < associationTargetArr.length; i++){
+											if(respone.concepts[i].conceptId === associationTargetArr[j].targetId){
+												associationTargetArr[j].fsn = respone.concepts[i].fsn;
+											}
+										}
+									}
+								}
+								context.associationTargets = associationTargetArr;
+								$('#home-attributes-inactivation-' + panel.divElement.id).html(JST["views/conceptDetailsPlugin/tabs/details/inactivation-panel.hbs"](context));
+							},
+							function( status ) {
+								// do nothing
+							}
+						);
+					}
+				} 
+			} 
             $(".glyphicon-star-empty").click(function(e){
                 var concept = {
                     module: firstMatch.module,
@@ -1606,6 +1672,151 @@ function conceptDetails(divElement, conceptId, options) {
         });
     }
 
+	this.loadHistoricalAssociations = function(){
+        var historicalAssocUrl = options.serverUrl.replace('/browser','') + "/" + options.release  + "/members?targetComponent=" +  panel.conceptId + "&limit=1000&active=true&expand=referencedComponent(expand(fsn()))";        
+        $('#historical-' + panel.divElement.id).html("<span><i class='glyphicon glyphicon-refresh icon-spin'></i></span>");       
+        if (xhrHistoricalAssocs != null) {
+            xhrHistoricalAssocs.abort();
+			xhrHistoricalAssocs = null;
+            console.log("aborting call...");			
+        }		
+        xhrHistoricalAssocs = $.getJSON(historicalAssocUrl, function(result){
+        }).done(function(result){
+            var context = {
+                result: result.items,               
+                divElementId: panel.divElement.id	                
+            };
+            Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                if (opts != "undefined") {
+                    if(a == b)
+                        return opts.fn(this);
+                    else
+                        return opts.inverse(this);
+                }
+            });
+            Handlebars.registerHelper('if_gr', function(a,b, opts) {
+                if (a){
+                    if(a > b)
+                        return opts.fn(this);
+                    else
+                        return opts.inverse(this);
+                }
+            });
+			Handlebars.registerHelper('convertTextFromCode', function(code, opts){
+                if(!code) {
+					return '';
+				}
+				var text = code.replace(/_/g, " ");
+				text = text.toLowerCase();
+				return text.charAt(0).toUpperCase() + text.slice(1);
+            });
+            
+            if (result.items.length != 0){
+				var parseAssocications =  function(list) {     
+				  var dfd = $.Deferred();
+				  var parsedComponents = {
+					concepts: [],
+					descriptionsWithConceptTarget: [],        
+					other: []
+				  };
+				  for (var i = list.length - 1; i >= 0; i--) {
+					var association = list[i];
+					if(association.active === false) {         
+					  parsedComponents.other.push(association.referencedComponent);
+					  if (parsedComponents.concepts.length + parsedComponents.descriptionsWithConceptTarget.length  + parsedComponents.other.length === list.length) {
+						dfd.resolve(parsedComponents);
+					  }
+					}
+					// check if referenced concept
+					else if (isConceptId(association.referencedComponent.id)) {
+						$.getJSON(options.serverUrl + "/" + options.release + "/concepts/" + association.referencedComponent.id, function (result) {
+						}).done(function (concept) {
+							var item = concept;          
+							if (parsedComponents.concepts.map(function (c) {
+								return c.conceptId
+							  }).indexOf(item.conceptId) === -1) {
+							  parsedComponents.concepts.push(item);
+							}
+						   
+							if (parsedComponents.concepts.length + parsedComponents.descriptionsWithConceptTarget.length  + parsedComponents.other.length === list.length) {
+							  dfd.resolve(parsedComponents);
+							}
+						}).fail(function (xhr, textStatus, error) {
+							
+						});					  
+					}
+					// check if referenced description
+					else if (isDescriptionId(association.referencedComponent.id)) {         
+					  parsedComponents.descriptionsWithConceptTarget.push(association.referencedComponent);
+					  if (parsedComponents.concepts.length + parsedComponents.descriptionsWithConceptTarget.length  + parsedComponents.other.length === list.length) {
+						dfd.resolve(parsedComponents);
+					  }      
+					}
+					// add to other (dump) list
+					else {         
+					  parsedComponents.other.push(association.referencedComponent);
+					  if (parsedComponents.concepts.length + parsedComponents.descriptionsWithConceptTarget.length  + parsedComponents.other.length === list.length) {
+						dfd.resolve(parsedComponents);
+					  }
+					}
+				  }
+				  return dfd.promise();
+				};
+				
+				$.when(parseAssocications(result.items)).then(
+				  function( respone ) {
+					if(respone && (respone.concepts.length > 0 || respone.descriptionsWithConceptTarget.length)) {
+						var context = {
+							concepts: respone.concepts.sort(function(a, b) {
+															if (a.fsn.toLowerCase() < b.fsn.toLowerCase())
+																return -1;
+															if (a.fsn.toLowerCase() > b.fsn.toLowerCase())
+																return 1;
+															return a.conceptId - b.conceptId;
+														}),
+							descriptionsWithConceptTarget: respone.descriptionsWithConceptTarget.sort(function(a, b) {
+															if (a.term.toLowerCase() < b.term.toLowerCase())
+																return -1;
+															if (a.term.toLowerCase() > b.term.toLowerCase())
+																return 1;
+															return 0;
+														})
+						};
+						$('#historical-' + panel.divElement.id).empty();	
+						$('#historical-' + panel.divElement.id).append(JST["views/conceptDetailsPlugin/tabs/historical-association.hbs"](context));						
+					} else {
+						$('#historical-' + panel.divElement.id).html("<div class='alert alert-warning'><span>This concept has no historical associations</span></div>");
+					}
+				  },
+				  function( status ) {
+					$('#historical-' + panel.divElement.id).html("<div class='alert alert-warning'><span>This concept has no historical associations</span></div>");
+				  }
+				);               
+            }else{
+                $('#historical-' + panel.divElement.id).html("<div class='alert alert-warning'><span>This concept has no historical associations</span></div>");
+            }
+        }).fail(function(){
+            $('#historical-' + panel.divElement.id).html("<div class='alert alert-warning'><span>This concept has no historical associations</span></div>");
+        });
+    }
+	function isConceptId(id) {
+		var idStr = String(id);
+		return isSctid(idStr) && idStr.substring(idStr.length - 2, idStr.length - 1) === '0';
+	}
+
+	function isDescriptionId(id) {
+		var idStr = String(id);
+		return isSctid(idStr) && idStr.substring(idStr.length - 2, idStr.length - 1) === '1';
+	}
+	
+	function isSctid(id) {
+        if (!id) {
+          return false;
+        }
+        var match = id.match(/^[0-9]+$/);
+        return match ? true : false;
+	}
+	  
     this.stripDiagrammingMarkup = function(htmlString) {
         htmlString = htmlString.replace(new RegExp(panel.escapeRegExp("sct-primitive-concept-compact"), 'g'), "");
         htmlString = htmlString.replace(new RegExp(panel.escapeRegExp("sct-defined-concept-compact"), 'g'), "");

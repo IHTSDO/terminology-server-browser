@@ -118,7 +118,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" data-toggle=\"tab\" style=\"\"><span class=\"i18n\" data-i18n-id=\"i18n_PatternAnalysis\">Pattern Analysis</span></a></li>\r\n            <div class=\"pull-right\">\r\n                    <div class=\"btn-group\" style=\"margin:3px\" role=\"group\" aria-label=\"...\">\r\n                        <button type=\"button\"  class=\"btn btn-default\" id=\"home-";
+    + "\" data-toggle=\"tab\" style=\"\"><span class=\"i18n\" data-i18n-id=\"i18n_PatternAnalysis\">Pattern Analysis</span></a></li>\r\n			<li id=\"historical-tab\"><a id=\"historical-tab-link-";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" href=\"#historical-";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" data-toggle=\"tab\" style=\"\"><span class=\"i18n\" data-i18n-id=\"i18n_PatternAnalysis\">Historical Association</span></a></li>\r\n            <div class=\"pull-right\">\r\n                    <div class=\"btn-group\" style=\"margin:3px\" role=\"group\" aria-label=\"...\">\r\n                        <button type=\"button\"  class=\"btn btn-default\" id=\"home-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -242,7 +250,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-accordion\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class='modal fade' id='";
+    + "-accordion\">\r\n                </div>\r\n            </div>\r\n			<div class=\"tab-pane fade\" id=\"historical-";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">                \r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class='modal fade' id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -832,6 +844,17 @@ function program13(depth0,data) {
   return "\r\n                , <span class='i18n' data-i18n-id='i18n_inactive'>Inactive</span>\r\n            ";
   }
 
+function program15(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "\r\n	<div id=\"home-attributes-inactivation-";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\"></div>		\r\n";
+  return buffer;
+  }
+
   buffer += "<table class='table table-default' >\r\n    <tr\r\n        ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.effectiveTime), ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.highlightByEffectiveTime), options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.effectiveTime), ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.highlightByEffectiveTime), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -889,6 +912,8 @@ function program13(depth0,data) {
     + "'></form><br>Copy the concept link (e.g. CTRL-C) to save and share a reference to this concept.\r\n                    \" data-html=\"true\"><i class=\"glyphicon glyphicon-share-alt\"></i></button>\r\n            <span class=\"pull-right\">\r\n               <div class=\"phoca-flagbox\" style=\"width:40px;height:40px\">\r\n                   <span class=\"phoca-flag "
     + escapeExpression((helper = helpers.countryIcon || (depth0 && depth0.countryIcon),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module), options) : helperMissing.call(depth0, "countryIcon", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module), options)))
     + "\"></span>\r\n               </div>\r\n            </span>\r\n        </td>\r\n\r\n    </tr>\r\n</table>";
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(15, program15, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.active), false, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.active), false, options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
   });
 
@@ -1220,6 +1245,37 @@ function program1(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-diagram-body\" class=\"row\" style=\"overflow: auto; width: 1000;\">\r\n\r\n    </div>\r\n</div>";
+  return buffer;
+  });
+
+this["JST"]["views/conceptDetailsPlugin/tabs/details/inactivation-panel.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, functionType="function", self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1, helper, options;
+  buffer += "       \r\n					<div style=\"width: 100%;\">\r\n						<div style=\"width:20%;display: inline-block;\">"
+    + escapeExpression((helper = helpers.convertTextFromCode || (depth0 && depth0.convertTextFromCode),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.associationTarget), options) : helperMissing.call(depth0, "convertTextFromCode", (depth0 && depth0.associationTarget), options)))
+    + "</div>\r\n						<div style=\"width:20%;display: inline-block;\">";
+  if (helper = helpers.targetId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.targetId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</div>\r\n						<div style=\"width:57%;display: inline-block;\">";
+  if (helper = helpers.fsn) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.fsn); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</div>\r\n					</div>		\r\n				";
+  return buffer;
+  }
+
+  buffer += "<table class='table table-default' >\r\n<tr>\r\n	<td colspan=\"2\">\r\n		Inactivation Reason: "
+    + escapeExpression((helper = helpers.convertTextFromCode || (depth0 && depth0.convertTextFromCode),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.inactivationIndicator), options) : helperMissing.call(depth0, "convertTextFromCode", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.inactivationIndicator), options)))
+    + "			\r\n	</td>\r\n</tr>\r\n<tr>\r\n	<td colspan=\"2\">\r\n		<div>\r\n			<div style=\"display:inline;width: 19%;\">Association Targets: &nbsp; </div>\r\n			<div style=\"display:table;width: 80%;\">\r\n				";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.associationTargets), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "				\r\n			</div>			\r\n		</div>				\r\n	</td>\r\n</tr>\r\n</table>";
   return buffer;
   });
 
@@ -1602,6 +1658,53 @@ function program39(depth0,data) {
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(30, program30, data),fn:self.program(28, program28, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.statedRelationships), "undefined", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.statedRelationships), "undefined", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n    </tbody>\r\n</table>";
+  return buffer;
+  });
+
+this["JST"]["views/conceptDetailsPlugin/tabs/historical-association.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1, helper, options;
+  buffer += "        \r\n			<tr>\r\n				<td>";
+  if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td>\r\n				<td>";
+  if (helper = helpers.fsn) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.fsn); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td>\r\n				<td>"
+    + escapeExpression((helper = helpers.convertTextFromCode || (depth0 && depth0.convertTextFromCode),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.inactivationIndicator), options) : helperMissing.call(depth0, "convertTextFromCode", (depth0 && depth0.inactivationIndicator), options)))
+    + "</td>\r\n			</tr>		   \r\n		";
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "        \r\n			<tr>\r\n				<td>";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td>\r\n				<td>";
+  if (helper = helpers.term) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td>				\r\n			</tr>		   \r\n		";
+  return buffer;
+  }
+
+  buffer += "<div style=\"padding-bottom: 20px\"></div>\r\n<h4>&nbsp; Incoming Historical Associations</h4>\r\n<table class='table table-hover'>\r\n    <thead><tr>\r\n        <th><span>SCTID</span></th>\r\n		<th><span>Concept FSN</span></th>\r\n		<th><span>Reason</span></th>		\r\n    </tr></thead>\r\n	<tbody>\r\n		";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.concepts), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n	</tbody>\r\n</table>\r\n\r\n<h4>&nbsp; Inactive descriptions referring to this concept</h4>\r\n<table class='table table-hover'>\r\n    <thead><tr>\r\n        <th><span>SCTID</span></th>\r\n		<th><span>Description Term</span></th>	\r\n    </tr></thead>\r\n	<tbody>\r\n		";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.descriptionsWithConceptTarget), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n	</tbody>\r\n</table>\r\n";
   return buffer;
   });
 
