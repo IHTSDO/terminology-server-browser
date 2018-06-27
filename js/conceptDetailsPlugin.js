@@ -438,7 +438,7 @@ function conceptDetails(divElement, conceptId, options) {
 							function( respone ) {
 								if(respone.concepts.length > 0) {
 									for (var i= 0 ; i < respone.concepts.length; i++){
-										for (var j= 0 ; i < associationTargetArr.length; i++){
+										for (var j= 0 ; j < associationTargetArr.length; j++){
 											if(respone.concepts[i].conceptId === associationTargetArr[j].targetId){
 												associationTargetArr[j].fsn = respone.concepts[i].fsn;
 											}
