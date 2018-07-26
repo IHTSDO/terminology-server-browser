@@ -46,6 +46,7 @@ function conceptDetails(divElement, conceptId, options) {
     panel.subscriptionsColor = [];
     panel.subscriptions = [];
     panel.subscribers = [];
+    panel.options.langRefset = ['900000000000509007'];
 
     componentLoaded = false;
     $.each(componentsRegistry, function(i, field) {
@@ -568,6 +569,7 @@ function conceptDetails(divElement, conceptId, options) {
 
             // load descriptions panel
             panel.descsPId = divElement.id + "-descriptions-panel";
+            /*
             var languageName = "";
             if (panel.options.langRefset == "900000000000508004") {
                 languageName = "(GB)";
@@ -667,8 +669,155 @@ function conceptDetails(divElement, conceptId, options) {
             $("#" + panel.descsPId).html(JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context));
             if (panel.options.displaySynonyms) {
                 $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);
+            } */
+            
+            var allLangsHtml = "";
+            var allDescriptions = firstMatch.descriptions.slice(0);
+            var usDialectDescrptions = [];
+            var gbDialectDescrptions = [];
+            var auxDescriptions = [];
+            var context = {};
+
+            var descriptionSortFn = function(a, b) {
+                if (a.active && !b.active)
+                    return -1;
+                if (!a.active && b.active)
+                    return 1;
+                if (a.active == b.active) {
+                    if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
+                        return -1;
+                    if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
+                        return 1;
+                    if (a.type.conceptId < b.type.conceptId)
+                        return -1;
+                    if (a.type.conceptId > b.type.conceptId)
+                        return 1;
+                    if (a.type.conceptId == b.type.conceptId) {
+                        if (a.preferred && !b.preferred)
+                            return -1;
+                        if (!a.preferred && b.preferred)
+                            return 1;
+                        if (a.preferred == b.preferred) {
+                            if (a.term < b.term)
+                                return -1;
+                            if (a.term > b.term)
+                                return 1;
+                        }
+                    }
+                }
+                return 0;
+            };
+
+            $.each(allDescriptions, function(i, description) {                   
+                if (description.acceptabilityMap && description.active) {
+                    if (description.acceptabilityMap['900000000000509007'] 
+                        || description.acceptabilityMap['900000000000508004']) {
+                        
+                        // US dialect
+                        if (description.acceptabilityMap['900000000000509007']) {
+                            if (description.acceptabilityMap['900000000000509007'] === 'PREFERRED'){
+                                description.preferred = true;
+                            }else{
+                                description.acceptable = true;
+                            }
+                            usDialectDescrptions.push(description);   
+                        }
+
+                        // GB dialect
+                        if (description.acceptabilityMap['900000000000508004']) {
+                            if (description.acceptabilityMap['900000000000508004'] === 'PREFERRED'){
+                                description.preferred = true;
+                            }else{
+                                description.acceptable = true;
+                            }
+                            gbDialectDescrptions.push(description);   
+                        }
+
+                    } else {
+                        // Extension dialects
+                        if (description.lang !== 'en') {
+                            auxDescriptions.push(description); 
+                        }                        
+                    }                    
+                }  else {
+                    description.acceptable = false;
+                    if (panel.options.displayInactiveDescriptions && !description.active) {
+                        if (description.lang === 'en') {
+                            usDialectDescrptions.push(description);
+                            gbDialectDescrptions.push(description);
+                        } else {
+                            auxDescriptions.push(description);
+                        }
+                    }                        
+                }
+            });
+
+            usDialectDescrptions.sort(descriptionSortFn);
+            gbDialectDescrptions.sort(descriptionSortFn);
+            auxDescriptions.sort(descriptionSortFn);
+
+            if(panel.options.langRefset.indexOf('900000000000509007') >= 0) {
+                Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                    if (opts != "undefined") {
+                        if (a == b)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                });
+                 var context = {
+                    options: panel.options,
+                    languageName: '(US)',
+                    longLangName: 'United States of America English language reference set',
+                    divElementId: panel.divElement.id,
+                    allDescriptions: usDialectDescrptions
+                };
+               
+                allLangsHtml += JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
             }
 
+            if(panel.options.langRefset.indexOf('900000000000508004') >= 0) {
+                Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                    if (opts != "undefined") {
+                        if (a == b)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                });
+                 var context = {
+                    options: panel.options,
+                    languageName: '(GB)',
+                    longLangName: 'Great Britain English language reference set',
+                    divElementId: panel.divElement.id,
+                    allDescriptions: gbDialectDescrptions
+                };
+               
+                allLangsHtml += JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+            }
+
+            if(auxDescriptions.lang > 0) {
+                Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                    if (opts != "undefined") {
+                        if (a == b)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                });
+                 var context = {
+                    options: panel.options,
+                    languageName: '',
+                    longLangName: 'Extension languages reference set',
+                    divElementId: panel.divElement.id,
+                    allDescriptions: auxDescriptions
+                };
+               
+                allLangsHtml += JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+            }
+
+            $("#" + panel.descsPId).html(allLangsHtml);
+            
             if (panel.options.displaySynonyms != true) { // hide synonyms
                 $('#' + panel.descsPId).find('.synonym-row').each(function (i, val) {
                     $(val).toggle();
@@ -1990,6 +2139,12 @@ function conceptDetails(divElement, conceptId, options) {
                     return opts.inverse(this);
             }
         });
+        Handlebars.registerHelper('ifIn', function(elem, list, options) {
+                    if (list.indexOf(elem) > -1) {
+                        return options.fn(this);
+                    }
+                    return options.inverse(this);
+                });
         $("#" + panel.divElement.id + "-modal-body").html(JST["views/conceptDetailsPlugin/options.hbs"](context));
     }
 
@@ -2001,7 +2156,7 @@ function conceptDetails(divElement, conceptId, options) {
         panel.options.displayInactiveDescriptions = $("#" + panel.divElement.id + "-displayInactiveDescriptionsOption").is(':checked');
         panel.options.diagrammingMarkupEnabled = $("#" + panel.divElement.id + "-diagrammingMarkupEnabledOption").is(':checked');
         panel.options.selectedView = $("#" + panel.divElement.id + "-relsViewOption").val();
-        panel.options.langRefset = $("#" + panel.divElement.id + "-langRefsetOption").val();
+        //panel.options.langRefset = $("#" + panel.divElement.id + "-langRefsetOption").val();
         panel.options.displayChildren = $("#" + panel.divElement.id + "-displayChildren").is(':checked');
         $.each(panel.options.possibleSubscribers, function (i, field){
             field.subscribed = $("#" + panel.divElement.id + "-subscribeTo-" + field.id).is(':checked');
@@ -2025,6 +2180,13 @@ function conceptDetails(divElement, conceptId, options) {
         });
         $.each(componentsRegistry, function (i, field){
             field.loadMarkers();
+        });
+
+        panel.options.langRefset = [];
+        $.each($("#" + panel.divElement.id).find(".langOption"), function(i, field) {
+            if ($(field).is(':checked')) {
+                panel.options.langRefset.push($(field).val());
+            }
         });
         panel.updateCanvas();
     }
