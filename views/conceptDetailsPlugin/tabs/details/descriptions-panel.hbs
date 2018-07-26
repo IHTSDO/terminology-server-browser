@@ -1,10 +1,14 @@
 <table class='table table-bordered' id = '{{divElementId}}-descriptions-panel-table'>
-    <thead><tr>
+    <thead>
+        <tr>
+           <th colspan="2" class="text-center">{{longLangName}}</th>
+        </tr>
+        <tr>
         <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>
-        {{#if options.showIds}}
+        <!-- {{#if options.showIds}}
             <th>SCTID</th>
-        {{/if}}
-<!--        <th><span class='i18n' data-i18n-id='i18n_acceptability'>Acceptability</span>{{languageName}}</th>-->
+        {{/if}} -->
+        <th><span class='i18n' data-i18n-id='i18n_acceptability'>Acceptability</span>{{languageName}}</th>
         </tr>
     </thead>
     <tbody>

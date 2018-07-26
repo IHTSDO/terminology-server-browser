@@ -447,103 +447,7 @@ function program33(depth0,data) {
   return "\r\n                <option value=\"all\">All</option>\r\n            ";
   }
 
-function program35(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"900000000000508004\" selected>GB Language Refset</option>\r\n            ";
-  }
-
-function program37(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"900000000000508004\">GB Language Refset</option>\r\n            ";
-  }
-
-function program39(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"900000000000509007\" selected>US Language Refset</option>\r\n            ";
-  }
-
-function program41(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"900000000000509007\">US Language Refset</option>\r\n            ";
-  }
-
-function program43(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"450828004\" selected>ES Language Refset</option>\r\n            ";
-  }
-
-function program45(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"450828004\">ES Language Refset</option>\r\n            ";
-  }
-
-function program47(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"554461000005103\" selected>DA Language Refset</option>\r\n            ";
-  }
-
-function program49(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"554461000005103\">DA Language Refset</option>\r\n            ";
-  }
-
-function program51(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"46011000052107\" selected>SV Language Refset</option>\r\n            ";
-  }
-
-function program53(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"46011000052107\">SV Language Refset</option>\r\n            ";
-  }
-
-function program55(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"32570271000036106\" selected>AU Language Refset</option>\r\n            ";
-  }
-
-function program57(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"32570271000036106\">AU Language Refset</option>\r\n            ";
-  }
-
-function program59(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"999001251000000103\" selected>UK Language Refset</option>\r\n            ";
-  }
-
-function program61(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"999001251000000103\">UK Language Refset</option>\r\n            ";
-  }
-
-function program63(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"31000146106\" selected>NL Language Refset</option>\r\n            ";
-  }
-
-function program65(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"31000146106\">NL Language Refset</option>\r\n            ";
-  }
-
-function program67(depth0,data,depth1) {
+function program35(depth0,data,depth1) {
   
   var buffer = "", stack1, helper;
   buffer += "\r\n                    <tr>\r\n                        <td>";
@@ -615,42 +519,20 @@ function program67(depth0,data,depth1) {
   buffer += "\r\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(33, program33, data),fn:self.program(31, program31, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "all", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "all", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </select>\r\n    </div>\r\n    -->\r\n    <!--\r\n    <div class=\"form-group\">\r\n        <label for=\"";
+  buffer += "\r\n        </select>\r\n    </div>\r\n    -->    \r\n    <div class=\"form-group\">\r\n        <label for=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-langRefsetOption\"><span class=\"i18n\" data-i18n-id=\"i18n_language_refset\">"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_language_refset", "Language Refset", options) : helperMissing.call(depth0, "i18n", "i18n_language_refset", "Language Refset", options)))
-    + "</span></label>\r\n        <select class=\"form-control\" id=\"";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "-langRefsetOption\">\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(37, program37, data),fn:self.program(35, program35, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "900000000000508004", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "900000000000508004", options));
+    + "</span></label>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000509007\" ";
+  stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, "900000000000509007", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", "900000000000509007", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(41, program41, data),fn:self.program(39, program39, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "900000000000509007", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "900000000000509007", options));
+  buffer += "> United States of America English language reference set (foundation metadata concept)\r\n            </label>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000508004\" ";
+  stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, "900000000000508004", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", "900000000000508004", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(45, program45, data),fn:self.program(43, program43, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "450828004", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "450828004", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(49, program49, data),fn:self.program(47, program47, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "554461000005103", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "554461000005103", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(53, program53, data),fn:self.program(51, program51, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "46011000052107", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "46011000052107", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(57, program57, data),fn:self.program(55, program55, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "32570271000036106", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "32570271000036106", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(61, program61, data),fn:self.program(59, program59, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "999001251000000103", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "999001251000000103", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(65, program65, data),fn:self.program(63, program63, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "31000146106", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), "31000146106", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </select>\r\n    </div>\r\n    -->\r\n    <!--\r\n    <div class=\"form-group\">\r\n        <table class='table table-bordered table-hover'>\r\n            <thead>\r\n                <tr>\r\n                    <th>Panel</th>\r\n                    <th>Subscribed</th>\r\n                    <th>Subscriptor</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                ";
-  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(67, program67, data, depth0),data:data});
+  buffer += ">Great Britain English language reference set (foundation metadata concept)\r\n            </label>\r\n        </div>        \r\n    </div>\r\n \r\n    <!--\r\n    <div class=\"form-group\">\r\n        <table class='table table-bordered table-hover'>\r\n            <thead>\r\n                <tr>\r\n                    <th>Panel</th>\r\n                    <th>Subscribed</th>\r\n                    <th>Subscriptor</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                ";
+  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(35, program35, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n    -->\r\n</form>";
   return buffer;
@@ -1191,14 +1073,18 @@ function program35(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-descriptions-panel-table'>\r\n    <thead><tr>\r\n        <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>\r\n        ";
+    + "-descriptions-panel-table'>\r\n    <thead>\r\n        <tr>\r\n           <th colspan=\"2\" class=\"text-center\">";
+  if (helper = helpers.longLangName) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.longLangName); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</th>\r\n        </tr>\r\n        <tr>\r\n        <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>\r\n        <!-- ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.showIds), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n<!--        <th><span class='i18n' data-i18n-id='i18n_acceptability'>Acceptability</span>";
+  buffer += " -->\r\n        <th><span class='i18n' data-i18n-id='i18n_acceptability'>Acceptability</span>";
   if (helper = helpers.languageName) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.languageName); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</th>-->\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        ";
+    + "</th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.allDescriptions), {hash:{},inverse:self.noop,fn:self.programWithDepth(3, program3, data, depth0, depth1),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n    </tbody>\r\n</table>";
