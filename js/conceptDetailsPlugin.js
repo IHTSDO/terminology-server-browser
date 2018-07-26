@@ -732,11 +732,34 @@ function conceptDetails(divElement, conceptId, options) {
                             }
                             gbDialectDescrptions.push(description);   
                         }
-
+                        var tempAcceptabilityMap = description.acceptabilityMap;
+                        delete tempAcceptabilityMap['900000000000509007'];
+                        delete tempAcceptabilityMap['900000000000508004'];
+                        if (Object.keys(tempAcceptabilityMap).length > 0) {
+                            for (var key in tempAcceptabilityMap) {
+                                var tempDescription = description;
+                                if(tempAcceptabilityMap[key] === 'PREFERRED') {
+                                    tempDescription.preferred = true;
+                                } else{
+                                    tempDescription.acceptable = true;
+                                }
+                                auxDescriptions.push(tempDescription);
+                            }
+                        }
                     } else {
                         // Extension dialects
                         if (description.lang !== 'en') {
-                            auxDescriptions.push(description); 
+                            if (Object.keys(description.acceptabilityMap).length > 0) {
+                                for (var key in description.acceptabilityMap) {
+                                    var tempDescription = description;
+                                    if(description.acceptabilityMap[key] === 'PREFERRED') {
+                                        tempDescription.preferred = true;
+                                    } else{
+                                        tempDescription.acceptable = true;
+                                    }
+                                    auxDescriptions.push(tempDescription);
+                                }
+                            }                            
                         }                        
                     }                    
                 }  else {
@@ -796,7 +819,7 @@ function conceptDetails(divElement, conceptId, options) {
                 allLangsHtml += JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
             }
 
-            if(auxDescriptions.lang > 0) {
+            if(auxDescriptions.length > 0) {
                 Handlebars.registerHelper('if_eq', function(a, b, opts) {
                     if (opts != "undefined") {
                         if (a == b)
