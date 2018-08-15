@@ -115,9 +115,27 @@
 				
 				var getProjectList = $.getJSON("/snowowl/snomed-ct/v2/branches/MAIN/children?immediateChildren=true").done(function(result) {
 					var $projectDdl = $('#projectDdl');
-					result.items.sort(function(a,b) {
-						return b.baseTimestamp - a.baseTimestamp;
+					
+					var projectsInDateFormat = [];
+					var projectsInStringFormat = [];
+					result.items.forEach(function(item) {
+						var strArray = item.name.split('-');
+						if (!isNaN(strArray[0])) {
+							projectsInDateFormat.push(item);
+						} else {
+							projectsInStringFormat.push(item);
+						}
 					});
+
+					projectsInStringFormat.sort(function(a,b) {						
+						return a.name.localeCompare(b.name);
+					});
+
+					projectsInDateFormat.sort(function(a,b) {						
+						return b.name.localeCompare(a.name);
+					});
+					result.items = projectsInStringFormat.concat(projectsInDateFormat);
+					
 					$.each(result.items, function() {
 						var relativePath = this.path.substring("MAIN/".length);
 						$('<option>').val(this.path).text(this.name).appendTo($projectDdl);
