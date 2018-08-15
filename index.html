@@ -173,7 +173,7 @@
 						}						
 					}
 					Object.keys(map).sort(function (a, b) {
-						return map[b][0].baseTimestamp - map[a][0].baseTimestamp;
+						return map[b][0].name.localeCompare(map[a][0].name);
 					});
 
 					var result = [];
