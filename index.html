@@ -172,13 +172,15 @@
 							map[task.name]	= items;
 						}						
 					}
-					Object.keys(map).sort(function (a, b) {
-						return map[b][0].name.localeCompare(map[a][0].name);
+
+					var keys = Object.keys(map);
+					keys.sort(function (a, b) {
+						return a.localeCompare(b);
 					});
 
 					var result = [];
-					for (var key in map) {
-					   result = result.concat(map[key]); 
+					for (var i = 0; i < keys.length; i++) {
+					   result = result.concat(map[keys[i]]); 
 					}
 					return result;
 
