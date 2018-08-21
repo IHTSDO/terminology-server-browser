@@ -182,7 +182,17 @@
 							}
 							items.push(task);
 							items.sort(function(a,b) {
-                            	return b.baseTimestamp - a.baseTimestamp;
+								var strArrayA = a.name.split('-');
+								var strArrayB = b.name.split('-');
+								if(strArrayA[0] > strArrayB[0]) {
+									return -1;
+								} else if(strArrayA[0] < strArrayB[0]) {
+									return 1;
+								} else if (strArrayA.length > 1 && strArrayB.length > 1){
+									return parseInt(strArrayB[1]) - parseInt(strArrayA[1]);
+								} else {
+									return b.name.localeCompare(a.name);
+								}                            	
                         	});
 							map[strArray[0]] = items;
 						} else {
