@@ -49,6 +49,82 @@ function conceptDetails(divElement, conceptId, options) {
     panel.options.langRefset = ['900000000000509007'];
 
     componentLoaded = false;
+    
+    var drugsModelOrdering = [
+      {id: '116680003', display: 1},
+      {id: '411116001', display: 2},
+      {id: '763032000', display: 3},
+      {id: '127489000', display: 4},
+      {id: '762949000', display: 5},
+      {id: '732943007', display: 6},
+      {id: '732944001', display: 7},
+      {id: '732945000', display: 8},
+      {id: '732946004', display: 9},
+      {id: '732947008', display: 10},
+      {id: '733724008', display: 11},
+      {id: '733725009', display: 12},
+      {id: '733723002', display: 13},
+      {id: '733722007', display: 14},
+      {id: '736476002', display: 15},
+      {id: '736474004', display: 16},
+      {id: '736475003', display: 17},
+      {id: '736473005', display: 18},
+      {id: '736472000', display: 19},
+      {id: '766952006', display: 20}, 
+      {id: '766954007', display: 21}, 
+      {id: '766953001', display: 22}
+    ];
+
+    var sortRelationships = function (relationships) {
+        if (relationships && relationships.length > 0) {
+            var isaRels = relationships.filter(function (rel) {
+                return rel.type.conceptId === '116680003';
+              });
+
+              var attrRels = relationships.filter(function (rel) {
+                return rel.type.conceptId !== '116680003';
+              });
+
+              // remove display flag if it's set, and set relationship type to null if concept id or fsn are not set
+              attrRels.forEach(function(rel) {                  
+                if (rel.display) delete rel.display;
+              });                 
+
+              // re-populate display flag if it exists
+              attrRels.forEach(function(rel) {                  
+                for (var i = 0; i < drugsModelOrdering.length; i++) {
+                    var item = drugsModelOrdering[i];
+                    if (rel.type.conceptId === item.id) rel.display = item.display;
+                  }
+              });                
+
+              // NOTE: All isaRels should be group 0, but sort by group anyway
+              isaRels.sort(function (a, b) {
+                if (!a.groupId && b.groupId) {
+                  return -1;
+                }
+                if (!b.groupId && a.groupId) {
+                  return 1;
+                }
+                if (a.groupId === b.groupId) {
+                  return a.target.fsn > b.target.fsn;
+                } else {
+                  return a.groupId - b.groupId;
+                }
+              });
+
+              attrRels.sort(function (a, b) {
+                if (a.groupId === b.groupId && a.display && b.display) {
+                  return a.display > b.display;
+                } else {
+                  return a.groupId - b.groupId;
+                }
+              });
+             
+              return isaRels.concat(attrRels); 
+        }
+    };
+
     $.each(componentsRegistry, function(i, field) {
         if (field.divElement.id == panel.divElement.id) {
             componentLoaded = true;
@@ -912,45 +988,10 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 });
                 firstMatch.relationships = tempArray;
-                firstMatch.statedRelationships = tempArrayStated;
-                firstMatch.relationships.sort(function (a, b) {
-                    if (a.groupId < b.groupId) {
-                        return -1;
-                    } else if (a.groupId > b.groupId) {
-                        return 1;
-                    } else {
-                        if (a.type.conceptId == 116680003) {
-                            return -1;
-                        }
-                        if (b.type.conceptId == 116680003) {
-                            return 1;
-                        }
-                        if (a.target.fsn < b.target.fsn)
-                            return -1;
-                        if (a.target.fsn > b.target.fsn)
-                            return 1;
-                        return 0;
-                    }
-                });
-                firstMatch.statedRelationships.sort(function (a, b) {
-                    if (a.groupId < b.groupId) {
-                        return -1;
-                    } else if (a.groupId > b.groupId) {
-                        return 1;
-                    } else {
-                        if (a.type.conceptId == 116680003) {
-                            return -1;
-                        }
-                        if (b.type.conceptId == 116680003) {
-                            return 1;
-                        }
-                        if (a.target.fsn < b.target.fsn)
-                            return -1;
-                        if (a.target.fsn > b.target.fsn)
-                            return 1;
-                        return 0;
-                    }
-                });
+                firstMatch.statedRelationships = tempArrayStated;               
+
+                firstMatch.relationships = sortRelationships(firstMatch.relationships); 
+                firstMatch.statedRelationships = sortRelationships(firstMatch.statedRelationships);
                 
             }
             Handlebars.registerHelper('push', function (element, array) {
@@ -1162,6 +1203,17 @@ function conceptDetails(divElement, conceptId, options) {
 //                return getRandomColor();
                 return "";
             });
+            
+            // sort stated roles
+            if (panel.statedRoles && panel.statedRoles.length > 0) {
+                panel.statedRoles = sortRelationships(panel.statedRoles);
+            }
+
+            // sort inferred roles
+            if (panel.inferredRoles && panel.inferredRoles.length > 0) {
+                panel.inferredRoles = sortRelationships(panel.inferredRoles);
+            }
+
             var context = {
                 options: panel.options,
                 statedRoles: panel.statedRoles,
