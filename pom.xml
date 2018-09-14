@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ihtsdo.otf</groupId>
 	<artifactId>terminology-server-browser</artifactId>
-	<version>1.1.3</version>
+	<version>1.1.4-SNAPSHOT</version>
 	<name>TS Browser</name>
 	<description>Snomed Snow Owl Terminology Server Browser</description>
 	<url>https://term.ihtsdotools.org/</url>
