@@ -216,7 +216,7 @@
 
 				
 				var getTaskList = function () {
-						$.getJSON("/snowowl/snomed-ct/v2/branches/" + $('#projectDdl').val() +"/children?immediateChild=true").done(function(result) {
+						$.getJSON("/snowowl/snomed-ct/v2/branches/" + $('#projectDdl').val() +"/children?immediateChildren=true").done(function(result) {
 						var $taskDdl = $('#taskDdl');
 						$taskDdl.html("");
 						$('<option>').val("None").text("None").appendTo($taskDdl);
