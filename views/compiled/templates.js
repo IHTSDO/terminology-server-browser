@@ -446,7 +446,7 @@ function program33(depth0,data) {
   
   return "\n                <option value=\"all\">All</option>\n            ";
   }
-  
+
 function program35(depth0,data,depth1) {
   
   var buffer = "", stack1, helper;
@@ -519,19 +519,19 @@ function program35(depth0,data,depth1) {
   buffer += "\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(33, program33, data),fn:self.program(31, program31, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "all", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "all", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </select>\r\n    </div>\r\n    -->    \r\n    <div class=\"form-group\">\r\n        <label for=\"";
+  buffer += "\n        </select>\n    </div>\n    -->    \n    <div class=\"form-group\">\n        <label for=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-langRefsetOption\"><span class=\"i18n\" data-i18n-id=\"i18n_language_refset\">"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_language_refset", "Language Refset", options) : helperMissing.call(depth0, "i18n", "i18n_language_refset", "Language Refset", options)))
-    + "</span></label>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000509007\" ";
+    + "</span></label>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000509007\" ";
   stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, "900000000000509007", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", "900000000000509007", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "> United States of America English language reference set (foundation metadata concept)\r\n            </label>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000508004\" ";
+  buffer += "> United States of America English language reference set (foundation metadata concept)\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000508004\" ";
   stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, "900000000000508004", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", "900000000000508004", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += ">Great Britain English language reference set (foundation metadata concept)\r\n            </label>\r\n        </div>        \r\n    </div>\r\n \r\n    <!--\r\n    <div class=\"form-group\">\r\n        <table class='table table-bordered table-hover'>\r\n            <thead>\r\n                <tr>\r\n                    <th>Panel</th>\r\n                    <th>Subscribed</th>\r\n                    <th>Subscriptor</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                ";
+  buffer += ">Great Britain English language reference set (foundation metadata concept)\n            </label>\n        </div>        \n    </div>\n \n    <!--\n    <div class=\"form-group\">\n        <table class='table table-bordered table-hover'>\n            <thead>\n                <tr>\n                    <th>Panel</th>\n                    <th>Subscribed</th>\n                    <th>Subscriptor</th>\n                </tr>\n            </thead>\n            <tbody>\n                ";
   stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(35, program35, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            </tbody>\n        </table>\n    </div>\n    -->\n</form>";
@@ -1073,18 +1073,18 @@ function program35(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-descriptions-panel-table'>\r\n    <thead>\r\n        <tr>\r\n           <th colspan=\"2\" class=\"text-center\">";
+    + "-descriptions-panel-table'>\n    <thead>\n        <tr>\n           <th colspan=\"2\" class=\"text-center\">";
   if (helper = helpers.longLangName) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.longLangName); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</th>\r\n        </tr>\r\n        <tr>\r\n        <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>\r\n        <!-- ";
+    + "</th>\n        </tr>\n        <tr>\n        <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>\n        <!-- ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.showIds), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " -->\r\n        <th><span class='i18n' data-i18n-id='i18n_acceptability'>Acceptability</span>";
+  buffer += " -->\n        <th><span class='i18n' data-i18n-id='i18n_acceptability'>Acceptability</span>";
   if (helper = helpers.languageName) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.languageName); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        ";
+    + "</th>\n        </tr>\n    </thead>\n    <tbody>\n        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.allDescriptions), {hash:{},inverse:self.noop,fn:self.programWithDepth(3, program3, data, depth0, depth1),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    </tbody>\n</table>";

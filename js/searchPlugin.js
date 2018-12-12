@@ -611,6 +611,10 @@ function searchPanel(divElement, options) {
                     xhr = $.getJSON(searchUrl,function (result) {
 
                     }).done(function (result) {
+                        console.log(result);
+                        if(result.items !== null && result.items !== undefined){
+                            result = result.items;
+                        };
                         $('#' + panel.divElement.id + '-resultsTable').find('.more-row').remove();
                         var endTime = Date.now();
                         var elapsed = (endTime - startTime)/1000;
